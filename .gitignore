@@ -1,0 +1,39 @@
+# pixi environments
+.pixi/*
+!.pixi/config.toml
+
+# mkdocs
+site/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_backup
+
+# Temporary files
+*.tmp
+*.bak
+*.log

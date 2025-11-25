@@ -1,0 +1,22 @@
+[workspace]
+authors = ["Kousheek Chakraborty <kousheekc@gmail.com>"]
+channels = ["conda-forge"]
+name = "ai4rob_course"
+platforms = ["win-64", "osx-arm64", "linux-64"]
+version = "0.1.0"
+
+[tasks]
+serve = "mkdocs serve"
+build = "mkdocs build"
+
+[dependencies]
+python = ">=3.12"
+mkdocs = ">=1.6.1,<2"
+mkdocs-material = ">=9.7.0,<10"
+mkdocs-jupyter = ">=0.25.1,<0.26"
+pymdown-extensions = ">=10.17.1,<11"
+markdown-include = ">=0.8.1,<0.9"
+click = "==8.2.1"
+
+[pypi-dependencies]
+mkdocs-mcq = ">=0.1.4, <0.2"
