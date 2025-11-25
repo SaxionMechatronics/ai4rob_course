@@ -13,13 +13,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - uses: prefix-dev/setup-pixi@v0.8.1
         with:
-          python-version: 3.x
-
-      - name: Installing dependencies
-        run: |
-          pip install -r requirements.txt
+          pixi-version: v0.34.0
+          cache: true
 
       - run: |
           git config user.name 'github-actions[bot]'
@@ -27,9 +24,4 @@ jobs:
 
       - name: Build and Deployment
         run: |
-          mkdocs gh-deploy --force
-
-      - name: Checking Links
-        continue-on-error: true
-        run: |
-          mkdocs-linkcheck --sync -r docs/ -m get --verbose
+          pixi run mkdocs gh-deploy --force
