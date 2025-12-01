@@ -52,9 +52,7 @@
 ---
 ## Link to the Google Colab 
 
-<a target="_blank" href="https://colab.research.google.com/github/SaxionMechatronics/ai4rob_course/tree/main/docs/notebooks/deep_learning/code1.ipynb">
-  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-</a>
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SaxionMechatronics/ai4rob_course/blob/main/docs/notebooks/deep_learning/code1.ipynb)
 ---
 ## Check your understanding
 [Quiz 1](1_mcq.md){ .md-button }
