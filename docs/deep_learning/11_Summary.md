@@ -46,4 +46,8 @@ You are now challenged to design and train a compact DNN that meets **all** of t
 | **Model Parameters** | ≤ **8,000** |
 
 ---
+
+## Check your understanding
+[Quiz](mcq.md){ .md-button }
+---
 [← Back to Learning Rate Scheduling](10_Code.md){ .md-button }

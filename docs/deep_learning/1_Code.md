@@ -56,6 +56,9 @@
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 ---
+## Check your understanding
+[Quiz 1](1_mcq.md){ .md-button }
 
+---
 [← Back to Introduction](12_Introduction.md){ .md-button }
 [Start with Model Skeleton →](2_Code.md){ .md-button .md-button--primary }

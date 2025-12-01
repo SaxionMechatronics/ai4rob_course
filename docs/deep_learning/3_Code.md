@@ -51,6 +51,8 @@
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 ---
-
+## Check your understanding
+[Quiz 3](3_mcq.md){ .md-button }
+---
 [← Back to Model Skeleton](2_Code.md){ .md-button }
 [Start with Batch Normalization Integration →](4_Code.md){ .md-button .md-button--primary }

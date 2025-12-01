@@ -40,6 +40,8 @@
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 ---
-
+## Check your understanding
+[Quiz 10](10_mcq.md){ .md-button }
+---
 [← Back to Image Augmentation](9_Code.md){ .md-button }
 [Start with Summary →](11_Summary.md){ .md-button .md-button--primary }

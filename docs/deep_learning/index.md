@@ -63,16 +63,27 @@ Design a compact DNN that meets the following performance criteria:
 - [Introduction to Git | Python 101 | Pytorch 101](0_Git_Python_Pytorch.md) - Basic intution into Git, Python and Pytorch 
 - [Introduction to Deep Learning](12_Introduction.md) - Overview of course
 - [Code 1](1_Code.md) - Model Setup
+- [Quiz 1](1_mcq.md)
 - [Code 2](2_Code.md) - Model Skeleton
+- [Quiz 2](2_mcq.md)
 - [Code 3](3_Code.md) - Lighter Model
+- [Quiz 3](3_mcq.md)
 - [Code 4](4_Code.md) - Batch Normalization Integration
+- [Quiz 4](4_mcq.md)
 - [Code 5](5_Code.md) - Regularization
+- [Quiz 5](5_mcq.md)
 - [Code 6](6_Code.md) - Global Average Pooling
+- [Quiz 6](6_mcq.md)
 - [Code 7](7_Code.md) - Increasing Model Capacity
+- [Quiz 7](7_mcq.md)
 - [Code 8](8_Code.md) - Correcting MaxPooling Location
+- [Quiz 8](8_mcq.md)
 - [Code 9](9_Code.md) - Image Augmentation
+- [Quiz 9](9_mcq.md)
 - [Code 10](10_Code.md) - Learning Rate Scheduling
+- [Quiz 10](10_mcq.md)
 - [Summary](11_Summary.md) - Summary
+- [Quiz](mcq.md)
 - [Backward Propagation](Backward_Propagation.md) - Inroducion to Backward Propagation
 
  

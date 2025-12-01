@@ -48,6 +48,10 @@
 </a>
 ---
 
+## Check your understanding
+[Quiz 7](7_mcq.md){ .md-button }
+---
+
 
 [← Back to Global Average Pooling](6_Code.md){ .md-button }
 [Start with Correcting MaxPooling Location →](8_Code.md){ .md-button .md-button--primary }

@@ -49,6 +49,9 @@
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 ---
+## Check your understanding
+[Quiz 4](4_mcq.md){ .md-button }
+---
 
 [← Back to Lighter Model](3_Code.md){ .md-button }
 [Start with BRegularization →](5_Code.md){ .md-button .md-button--primary }

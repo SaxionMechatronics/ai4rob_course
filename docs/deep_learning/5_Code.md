@@ -47,6 +47,9 @@
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 ---
+## Check your understanding
+[Quiz 5](5_mcq.md){ .md-button }
+---
 
 [← Back to Batch Normalization Integration](4_Code.md){ .md-button }
 [Start with Global Average Pooling →](6_Code.md){ .md-button .md-button--primary }

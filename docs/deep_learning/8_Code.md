@@ -48,6 +48,8 @@
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 ---
-
+## Check your understanding
+[Quiz 8](8_mcq.md){ .md-button }
+---
 [← Back to Increasing Model Capacity](7_Code.md){ .md-button }
 [Start with Image Augmentation →](9_Code.md){ .md-button .md-button--primary }

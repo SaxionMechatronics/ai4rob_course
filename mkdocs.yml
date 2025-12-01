@@ -38,6 +38,7 @@ plugins:
       include_source: True
       ignore_h1_titles: True
       widgets: false
+  - mcq
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -77,16 +78,27 @@ nav:
       - Introduction to Git | Python 101 | Pytorch 101: deep_learning/0_Git_Python_Pytorch.md
       - Introduction to Deep Learning: deep_learning/12_Introduction.md
       - Model Setup: deep_learning/1_Code.md
+      - Quiz 1: deep_learning/1_mcq.md
       - Model Skeleton: deep_learning/2_Code.md
+      - Quiz 2: deep_learning/2_mcq.md
       - Lighter Model: deep_learning/3_Code.md
+      - Quiz 3: deep_learning/3_mcq.md
       - Batch Normalization Integration: deep_learning/4_Code.md
+      - Quiz 4: deep_learning/4_mcq.md
       - Regularization: deep_learning/5_Code.md
+      - Quiz 5: deep_learning/5_mcq.md
       - Global Average Pooling: deep_learning/6_Code.md
+      - Quiz 6: deep_learning/6_mcq.md
       - Increasing Model Capacity: deep_learning/7_Code.md
+      - Quiz 7: deep_learning/7_mcq.md
       - Correcting MaxPooling Location: deep_learning/8_Code.md
+      - Quiz 8: deep_learning/8_mcq.md
       - Image Augmentation: deep_learning/9_Code.md
+      - Quiz 9: deep_learning/9_mcq.md
       - Learning Rate Scheduling: deep_learning/10_Code.md
+      - Quiz 10: deep_learning/10_mcq.md
       - Summary: deep_learning/11_Summary.md
+      - Quiz: deep_learning/mcq.md
       - Backward Propagation: deep_learning/Backward_Propagation.md
 
   - Reinforcement Learning:
