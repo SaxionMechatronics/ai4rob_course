@@ -1,0 +1,2567 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A course on AI for robotics by SMART Mechatronics and Robotics Group, Saxion University of Applied Sciences">
+      
+      
+        <meta name="author" content="Stephan Jaspar, Rahul Moongayil Ramakrishnan, Kousheek Chakraborty">
+      
+      
+      
+        <link rel="prev" href="../mcq/">
+      
+      
+        <link rel="next" href="../../reinforcement_learning/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Backward Propagation - AI for Robotics Course</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/mcq.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#backpropagation-part-1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI for Robotics Course" class="md-header__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI for Robotics Course
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Backward Propagation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../foundations/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Foundations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deep Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reinforcement_learning/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reinforcement Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI for Robotics Course" class="md-nav__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI for Robotics Course
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../foundations/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0_Git_Python_Pytorch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Git | Python 101 | Pytorch 101
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lighter Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Normalization Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Global Average Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Increasing Model Capacity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Correcting MaxPooling Location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 9
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Rate Scheduling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_Summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backward Propagation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backward Propagation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-network-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Network Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Network Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-forward-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Forward Propagation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Forward Propagation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-terminologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Terminologies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Terminologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-terminologies_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Terminologies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Terminologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mathematical-formulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mathematical Formulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-forward-pass-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Forward Pass Visualization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Forward Pass Visualization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initial-weight-setup-and-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial Weight Setup and Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-forward-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram – Forward Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-of-forward-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of Forward Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../reinforcement_learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to RL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/mdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markov Decision Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/policy_vs_value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy vs Value-Based
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/value_based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/policy_based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy Gradients (REINFORCE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/practical_tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practical Tutorial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-network-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Network Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Network Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-forward-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Forward Propagation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Forward Propagation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-terminologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Terminologies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Terminologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-terminologies_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Terminologies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Terminologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mathematical-formulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mathematical Formulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-forward-pass-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Forward Pass Visualization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Forward Pass Visualization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initial-weight-setup-and-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial Weight Setup and Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-forward-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram – Forward Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-of-forward-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of Forward Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="backpropagation-part-1">Backpropagation – Part 1</h1>
+<h2 id="overview">Overview</h2>
+<p>This notebook explains the <strong>forward and backward propagation</strong> process of a simple neural network through both <strong>mathematical derivation</strong> and <strong>spreadsheet implementation</strong>.<br />
+The goal is to compute how the network learns by adjusting weights to minimize the total error.</p>
+<p>This Markdown file contains:
+- Complete forward and backward pass equations<br />
+- Gradient derivations<br />
+- Visual diagrams<br />
+- Excel-based loss tracking<br />
+- Learning rate comparisons  </p>
+<hr />
+<h2 id="1-network-architecture">1. Network Architecture</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Layer</th>
+<th style="text-align: left;">Neurons</th>
+<th style="text-align: left;">Activation</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Input Layer</td>
+<td style="text-align: left;">i₁, i₂</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Two input features</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hidden Layer</td>
+<td style="text-align: left;">h₁, h₂</td>
+<td style="text-align: left;">σ (sigmoid)</td>
+<td style="text-align: left;">Hidden activations</td>
+</tr>
+<tr>
+<td style="text-align: left;">Output Layer</td>
+<td style="text-align: left;">o₁, o₂</td>
+<td style="text-align: left;">σ (sigmoid)</td>
+<td style="text-align: left;">Two outputs</td>
+</tr>
+<tr>
+<td style="text-align: left;">Loss</td>
+<td style="text-align: left;">E₁, E₂</td>
+<td style="text-align: left;">MSE</td>
+<td style="text-align: left;">Mean-Squared Error per output</td>
+</tr>
+</tbody>
+</table>
+<h3 id="diagram">Diagram</h3>
+<p><img alt="Backpropagation Network" src="../BP/bp.png" /></p>
+<p>The model consists of:
+- <strong>2 input nodes (i₁, i₂)</strong><br />
+- <strong>2 hidden neurons (h₁, h₂)</strong><br />
+- <strong>2 output neurons (o₁, o₂)</strong><br />
+- <strong>8 weights (w₁–w₈)</strong> connecting all layers.</p>
+<hr />
+<h2 id="2-forward-propagation">2. Forward Propagation</h2>
+<h3 id="equations">Equations</h3>
+<p>```text
+h1 = w1<em>i1 + w2</em>i2
+h2 = w3<em>i1 + w4</em>i2</p>
+<p>a_h1 = σ(h1) = 1 / (1 + e^(−h1))
+a_h2 = σ(h2) = 1 / (1 + e^(−h2))</p>
+<p>o1 = w5<em>a_h1 + w6</em>a_h2
+o2 = w7<em>a_h1 + w8</em>a_h2</p>
+<p>a_o1 = σ(o1)
+a_o2 = σ(o2)</p>
+<p>E1 = ½ (t1 − a_o1)²
+E2 = ½ (t2 − a_o2)²
+E_total = E1 + E2</p>
+<h2 id="3-terminologies">3. Terminologies</h2>
+<p>This section defines all symbols and notations used throughout the forward and backward propagation derivations.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Definition</strong></th>
+<th style="text-align: left;"><strong>Layer</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>i₁, i₂</strong></td>
+<td style="text-align: left;">Input feature values</td>
+<td style="text-align: left;">Input Layer</td>
+<td style="text-align: left;">Given input data for the network</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>w₁–w₄</strong></td>
+<td style="text-align: left;">Weights connecting input → hidden layer</td>
+<td style="text-align: left;">Between Input–Hidden</td>
+<td style="text-align: left;">Responsible for linear transformation of inputs</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>h₁, h₂</strong></td>
+<td style="text-align: left;">Weighted sum of inputs (pre-activation)</td>
+<td style="text-align: left;">Hidden Layer</td>
+<td style="text-align: left;"><span class="arithmatex">\( h₁ = w₁i₁ + w₂i₂ \)</span>, <span class="arithmatex">\( h₂ = w₃i₁ + w₄i₂ \)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>aₕ₁, aₕ₂</strong></td>
+<td style="text-align: left;">Activated hidden layer outputs</td>
+<td style="text-align: left;">Hidden Layer</td>
+<td style="text-align: left;"><span class="arithmatex">\( aₕ = σ(h) = \frac{1}{1 + e^{-h}} \)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>w₅–w₈</strong></td>
+<td style="text-align: left;">Weights connecting hidden → output layer</td>
+<td style="text-align: left;">Between Hidden–Output</td>
+<td style="text-align: left;">Used to compute output layer weighted sums</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>o₁, o₂</strong></td>
+<td style="text-align: left;">Weighted sum at output neurons (pre-activation)</td>
+<td style="text-align: left;">Output Layer</td>
+<td style="text-align: left;"><span class="arithmatex">\( o₁ = w₅aₕ₁ + w₆aₕ₂ \)</span>, <span class="arithmatex">\( o₂ = w₇aₕ₁ + w₈aₕ₂ \)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>aₒ₁, aₒ₂</strong></td>
+<td style="text-align: left;">Activated output neuron values</td>
+<td style="text-align: left;">Output Layer</td>
+<td style="text-align: left;"><span class="arithmatex">\( aₒ = σ(o) = \frac{1}{1 + e^{-o}} \)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>t₁, t₂</strong></td>
+<td style="text-align: left;">Target outputs</td>
+<td style="text-align: left;">Output Layer</td>
+<td style="text-align: left;">Ground truth labels for comparison</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E₁, E₂</strong></td>
+<td style="text-align: left;">Individual output errors</td>
+<td style="text-align: left;">Loss Computation</td>
+<td style="text-align: left;"><span class="arithmatex">\( E₁ = \frac{1}{2}(t₁ - aₒ₁)^2 \)</span>, <span class="arithmatex">\( E₂ = \frac{1}{2}(t₂ - aₒ₂)^2 \)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E_total</strong></td>
+<td style="text-align: left;">Total error (sum of all output errors)</td>
+<td style="text-align: left;">Loss Function</td>
+<td style="text-align: left;"><span class="arithmatex">\( E_{total} = E₁ + E₂ \)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>η (eta)</strong></td>
+<td style="text-align: left;">Learning rate</td>
+<td style="text-align: left;">Training Parameter</td>
+<td style="text-align: left;">Controls update magnitude for each iteration</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>σ(x)</strong></td>
+<td style="text-align: left;">Sigmoid activation function</td>
+<td style="text-align: left;">Activation Function</td>
+<td style="text-align: left;"><span class="arithmatex">\( σ(x) = \frac{1}{1 + e^{-x}} \)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>∂E/∂w</strong></td>
+<td style="text-align: left;">Partial derivative of loss w.r.t. weight</td>
+<td style="text-align: left;">Gradient</td>
+<td style="text-align: left;">Used to compute weight updates</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Δw</strong></td>
+<td style="text-align: left;">Weight update</td>
+<td style="text-align: left;">Optimization Step</td>
+<td style="text-align: left;"><span class="arithmatex">\( Δw = -η \frac{∂E}{∂w} \)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="notes">Notes</h3>
+<ul>
+<li><strong>Hidden Layer:</strong> transforms inputs into intermediate representations.  </li>
+<li><strong>Output Layer:</strong> produces final predictions through a sigmoid activation.  </li>
+<li><strong>Loss Function:</strong> quantifies the difference between prediction and target.  </li>
+<li><strong>Gradients:</strong> measure how much each weight influences the error.  </li>
+</ul>
+<hr />
+<h2 id="3-terminologies_1">3. Terminologies</h2>
+<p>This section defines all symbols used throughout forward and backward propagation.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Meaning</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>i₁, i₂</strong></td>
+<td style="text-align: left;">Input features</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>h₁, h₂</strong></td>
+<td style="text-align: left;">Weighted hidden neuron sums</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>aₕ₁, aₕ₂</strong></td>
+<td style="text-align: left;">Activated hidden outputs</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>o₁, o₂</strong></td>
+<td style="text-align: left;">Weighted output neuron sums</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>aₒ₁, aₒ₂</strong></td>
+<td style="text-align: left;">Activated output values</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>t₁, t₂</strong></td>
+<td style="text-align: left;">Target (expected) values</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E₁, E₂</strong></td>
+<td style="text-align: left;">Individual output errors</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E<sub>total</sub></strong></td>
+<td style="text-align: left;">Total loss = (E₁ + E₂)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="mathematical-formulation">Mathematical Formulation</h3>
+<p>For the total error to be minimized, we must compute partial derivatives of<br />
+<span class="arithmatex">\(E_{total}\)</span> with respect to all weights <span class="arithmatex">\(w₁\)</span> – <span class="arithmatex">\(w₈\)</span>:</p>
+<div class="arithmatex">\[
+\frac{\partial E_{total}}{\partial w_i}, \quad i = 1,2,\dots,8
+\]</div>
+<hr />
+<h2 id="4-forward-pass-visualization">4. Forward Pass Visualization</h2>
+<h3 id="initial-weight-setup-and-flow">Initial Weight Setup and Flow</h3>
+<ol>
+<li>Inputs (<span class="arithmatex">\(i₁\)</span>, <span class="arithmatex">\(i₂\)</span>) are multiplied by weights <span class="arithmatex">\(w₁\)</span>–<span class="arithmatex">\(w₄\)</span> to produce <span class="arithmatex">\(h₁\)</span>, <span class="arithmatex">\(h₂\)</span>.  </li>
+<li>Apply the sigmoid activation function:
+   $$
+   a_{h} = \sigma(h) = \frac{1}{1 + e^{-h}}
+   $$</li>
+<li>Outputs from hidden neurons (<span class="arithmatex">\(a_{h₁}\)</span>, <span class="arithmatex">\(a_{h₂}\)</span>) connect to output weights <span class="arithmatex">\(w₅\)</span>–<span class="arithmatex">\(w₈\)</span>.  </li>
+<li>Compute output sums <span class="arithmatex">\(o₁\)</span>, <span class="arithmatex">\(o₂\)</span> and apply activation:
+   $$
+   a_o = \sigma(o) = \frac{1}{1 + e^{-o}}
+   $$</li>
+<li>Compute losses for each output neuron using Mean Squared Error:
+   $$
+   E_k = \frac{1}{2}(t_k - a_{ok})^2
+   $$</li>
+<li>Total loss:
+   $$
+   E_{total} = E_1 + E_2
+   $$</li>
+</ol>
+<hr />
+<h3 id="diagram-forward-propagation">Diagram – Forward Propagation</h3>
+<p><img alt="Forward Flow" src="../BP/BP4.png" /></p>
+<hr />
+<h3 id="summary-of-forward-computation">Summary of Forward Computation</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Computation</strong></th>
+<th style="text-align: left;"><strong>Equation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Hidden sum</td>
+<td style="text-align: left;"><span class="arithmatex">\(h_j = \sum_i w_{ij} i_i\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Hidden activation</td>
+<td style="text-align: left;"><span class="arithmatex">\(a_{h_j} = \sigma(h_j)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Output sum</td>
+<td style="text-align: left;"><span class="arithmatex">\(o_k = \sum_j w_{jk} a_{h_j}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Output activation</td>
+<td style="text-align: left;"><span class="arithmatex">\(a_{o_k} = \sigma(o_k)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Loss</td>
+<td style="text-align: left;"><span class="arithmatex">\(E_{total} = \tfrac{1}{2} \sum_k (t_k - a_{o_k})^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="backpropagation-detailed-explanation-part-2">Backpropagation — Detailed Explanation (Part 2)</h1>
+<h2 id="5-backpropagation-derivations">5. Backpropagation ( Derivations )</h2>
+<p>Backpropagation applies the <strong>chain rule of calculus</strong> to compute gradients of the total error<br />
+with respect to each network weight.</p>
+<hr />
+<h3 id="step-1-derivatives-for-output-layer">Step 1 – Derivatives for Output Layer</h3>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{\partial E_{total}}{\partial w_5} &amp;= (a_{o1} - t_1)\, a_{o1}(1 - a_{o1})\, a_{h1} \\
+\frac{\partial E_{total}}{\partial w_6} &amp;= (a_{o1} - t_1)\, a_{o1}(1 - a_{o1})\, a_{h2} \\
+\frac{\partial E_{total}}{\partial w_7} &amp;= (a_{o2} - t_2)\, a_{o2}(1 - a_{o2})\, a_{h1} \\
+\frac{\partial E_{total}}{\partial w_8} &amp;= (a_{o2} - t_2)\, a_{o2}(1 - a_{o2})\, a_{h2}
+\end{aligned}
+\]</div>
+<hr />
+<h3 id="step-2-hidden-layer-gradients">Step 2 – Hidden Layer Gradients</h3>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{\partial E_{total}}{\partial a_{h1}} &amp;= (a_{o1} - t_1)\, a_{o1}(1 - a_{o1})\, w_5 \;+\; (a_{o2} - t_2)\, a_{o2}(1 - a_{o2})\, w_7 \\
+\frac{\partial E_{total}}{\partial a_{h2}} &amp;= (a_{o1} - t_1)\, a_{o1}(1 - a_{o1})\, w_6 \;+\; (a_{o2} - t_2)\, a_{o2}(1 - a_{o2})\, w_8
+\end{aligned}
+\]</div>
+<hr />
+<h3 id="step-3-derivatives-with-respect-to-input-weights">Step 3 – Derivatives with Respect to Input Weights</h3>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{\partial E_{total}}{\partial w_1} &amp;= \frac{\partial E_{total}}{\partial a_{h1}}\, a_{h1}(1 - a_{h1})\, i_1 \\
+\frac{\partial E_{total}}{\partial w_2} &amp;= \frac{\partial E_{total}}{\partial a_{h1}}\, a_{h1}(1 - a_{h1})\, i_2 \\
+\frac{\partial E_{total}}{\partial w_3} &amp;= \frac{\partial E_{total}}{\partial a_{h2}}\, a_{h2}(1 - a_{h2})\, i_1 \\
+\frac{\partial E_{total}}{\partial w_4} &amp;= \frac{\partial E_{total}}{\partial a_{h2}}\, a_{h2}(1 - a_{h2})\, i_2
+\end{aligned}
+\]</div>
+<hr />
+<h3 id="step-4-consolidated-chain-rule-summary">Step 4 – Consolidated Chain Rule Summary</h3>
+<h4 id="forward-pass">Forward Pass</h4>
+<div class="arithmatex">\[
+\begin{aligned}
+h_j &amp;= \sum_i (w_{ij}\, i_i) \\
+a_{h_j} &amp;= \sigma(h_j) \\
+o_k &amp;= \sum_j (w_{jk}\, a_{h_j}) \\
+a_{o_k} &amp;= \sigma(o_k) \\
+E_{total} &amp;= \frac{1}{2} \sum_k (t_k - a_{o_k})^2
+\end{aligned}
+\]</div>
+<h4 id="backward-pass">Backward Pass</h4>
+<div class="arithmatex">\[
+\begin{aligned}
+\delta_k &amp;= (a_{o_k} - t_k)\, a_{o_k}(1 - a_{o_k}) \\
+\delta_j &amp;= \Big(\sum_k \delta_k\, w_{jk}\Big)\, a_{h_j}(1 - a_{h_j}) \\
+\Delta w_{jk} &amp;= -\eta\, \frac{\partial E_{total}}{\partial w_{jk}} = \eta\, \delta_k\, a_{h_j} \\
+\Delta w_{ij} &amp;= -\eta\, \frac{\partial E_{total}}{\partial w_{ij}} = \eta\, \delta_j\, i_i
+\end{aligned}
+\]</div>
+<hr />
+<h3 id="weight-update-equation">Weight Update Equation</h3>
+<p>Each weight is updated according to:</p>
+<div class="arithmatex">\[
+w^{new} = w^{old} - \eta \, \frac{\partial E_{total}}{\partial w}
+\]</div>
+<p>where <span class="arithmatex">\(\eta\)</span> is the <strong>learning rate</strong>.</p>
+<hr />
+<h3 id="visualization-of-gradient-flow">Visualization of Gradient Flow</h3>
+<p><img alt="Gradient Flow Diagram" src="../BP/BP5.png" /></p>
+<hr />
+<h3 id="summary-of-steps">Summary of Steps</h3>
+<ol>
+<li>Compute <strong>forward pass</strong> (activations and outputs).  </li>
+<li>Evaluate <strong>total loss</strong> <span class="arithmatex">\(E_{total}\)</span>.  </li>
+<li>Compute <strong>gradients</strong> for output weights (<span class="arithmatex">\(w₅\)</span>–<span class="arithmatex">\(w₈\)</span>).  </li>
+<li>Propagate gradients back to hidden weights (<span class="arithmatex">\(w₁\)</span>–<span class="arithmatex">\(w₄\)</span>).  </li>
+<li>Update all weights using the learning rate η.  </li>
+</ol>
+<hr />
+<h1 id="backpropagation-detailed-explanation-part-3">Backpropagation — Detailed Explanation (Part 3)</h1>
+<h2 id="6-weight-update-rule">6. Weight Update Rule</h2>
+<p>Every iteration of training updates the network’s weights to minimize the total loss.</p>
+<h3 id="general-update-equation">General Update Equation</h3>
+<div class="arithmatex">\[
+w_{new} = w_{old} - \eta \, \frac{\partial E_{total}}{\partial w}
+\]</div>
+<p>where:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Meaning</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(w\)</span></td>
+<td style="text-align: left;">Weight parameter being updated</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(\eta\)</span></td>
+<td style="text-align: left;">Learning rate controlling the update step</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{\partial E_{total}}{\partial w}\)</span></td>
+<td style="text-align: left;">Gradient of loss w.r.t. the weight</td>
+</tr>
+</tbody>
+</table>
+<h3 id="concept">Concept</h3>
+<ul>
+<li>If <span class="arithmatex">\(\frac{\partial E_{total}}{\partial w} &gt; 0\)</span>, decrease the weight.  </li>
+<li>If <span class="arithmatex">\(\frac{\partial E_{total}}{\partial w} &lt; 0\)</span>, increase the weight.  </li>
+<li>The magnitude of the update depends on <strong>η (learning rate)</strong>.</li>
+</ul>
+<h3 id="visualization">Visualization</h3>
+<p><img alt="Weight Update Process" src="bp.png" /></p>
+<hr />
+<h2 id="7-spreadsheet-implementation">7. Spreadsheet Implementation</h2>
+<p>The accompanying Excel sheet <strong><code>bp.xlsx</code></strong> demonstrates how each gradient and weight update evolves during training.</p>
+<h3 id="excel-contents">Excel Contents</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sheet Component</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Weight columns (<span class="arithmatex">\(w_1\)</span>–<span class="arithmatex">\(w_8\)</span>)</td>
+<td style="text-align: left;">Iterative weight values across epochs</td>
+</tr>
+<tr>
+<td style="text-align: left;">Activation columns (<span class="arithmatex">\(a_{h1}\)</span>, <span class="arithmatex">\(a_{h2}\)</span>, <span class="arithmatex">\(a_{o1}\)</span>, <span class="arithmatex">\(a_{o2}\)</span>)</td>
+<td style="text-align: left;">Hidden &amp; output activations</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gradient columns (<span class="arithmatex">\(\partial E / \partial w_i\)</span>)</td>
+<td style="text-align: left;">Computed partial derivatives</td>
+</tr>
+<tr>
+<td style="text-align: left;">Error metrics (<span class="arithmatex">\(E_1\)</span>, <span class="arithmatex">\(E_2\)</span>, <span class="arithmatex">\(E_{total}\)</span>)</td>
+<td style="text-align: left;">Loss values per iteration</td>
+</tr>
+<tr>
+<td style="text-align: left;">Learning Rate (η)</td>
+<td style="text-align: left;">Adjustable parameter in the header</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Loss Graph</strong></td>
+<td style="text-align: left;">Visual convergence of <span class="arithmatex">\(E_{total}\)</span> over time</td>
+</tr>
+</tbody>
+</table>
+<h3 id="screenshot-example">Screenshot Example</h3>
+<p><img alt="Loss Graph" src="bp.png" /></p>
+<hr />
+<h2 id="8-learning-rate-experiments">8. Learning Rate Experiments</h2>
+<p>Different learning rates (η) were tested to analyze convergence speed and stability.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Learning Rate (η)</strong></th>
+<th style="text-align: left;"><strong>Behavior / Observation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0.1</td>
+<td style="text-align: left;">Stable but slow convergence</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.2</td>
+<td style="text-align: left;">Faster convergence, smooth decay</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.5</td>
+<td style="text-align: left;">Optimal speed–stability trade-off</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.8</td>
+<td style="text-align: left;">Slight oscillation, partial overshoot</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.0</td>
+<td style="text-align: left;">Unstable convergence</td>
+</tr>
+<tr>
+<td style="text-align: left;">2.0</td>
+<td style="text-align: left;">Divergent (error increases)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="visual-comparison">Visual Comparison</h3>
+<p>Each loss curve (from Excel) demonstrates how the choice of η affects <span class="arithmatex">\(E_{total}\)</span>:</p>
+<div class="arithmatex">\[
+E_{total}^{(t)} = \frac{1}{2}\sum_k \big(t_k - a_{o_k}^{(t)}\big)^2
+\]</div>
+<p>Lower η → slower convergence  Higher η → instability.</p>
+<hr />
+<h2 id="9-loss-visualization-and-interpretation">9. Loss Visualization and Interpretation</h2>
+<p><strong>Observation from Excel:</strong>
+- The loss curve gradually decreases across epochs, confirming correct implementation of gradient descent.<br />
+- Occasional oscillations appear at higher learning rates.</p>
+<p><strong>Graphical Trend:</strong>
+<img alt="Loss Curve Across Iterations" src="bp.png" /></p>
+<hr />
+<h2 id="10-key-insights">10. Key Insights</h2>
+<ol>
+<li><strong>Sigmoid activation</strong> introduces non-linearity but may cause vanishing gradients.  </li>
+<li>Proper <strong>gradient flow</strong> is essential for stable weight updates.  </li>
+<li><strong>Learning rate tuning</strong> governs convergence quality.  </li>
+<li><strong>Backpropagation</strong> mathematically ensures each parameter moves toward minimizing <span class="arithmatex">\(E_{total}\)</span>.  </li>
+<li><strong>Visualization in Excel</strong> clarifies the relationship between parameter change and error reduction.</li>
+</ol>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.indexes", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/mcq.js"></script>
+      
+    
+  </body>
+</html>

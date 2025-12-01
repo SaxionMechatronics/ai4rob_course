@@ -1,0 +1,2938 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A course on AI for robotics by SMART Mechatronics and Robotics Group, Saxion University of Applied Sciences">
+      
+      
+        <meta name="author" content="Stephan Jaspar, Rahul Moongayil Ramakrishnan, Kousheek Chakraborty">
+      
+      
+      
+        <link rel="prev" href="../policy_vs_value/">
+      
+      
+        <link rel="next" href="../policy_based/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Q-Learning - AI for Robotics Course</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/mcq.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#q-learning-value-based-reinforcement-learning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI for Robotics Course" class="md-header__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI for Robotics Course
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Q-Learning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../foundations/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Foundations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deep_learning/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deep Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reinforcement Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI for Robotics Course" class="md-nav__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI for Robotics Course
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../foundations/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../deep_learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/0_Git_Python_Pytorch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Git | Python 101 | Pytorch 101
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/12_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/1_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/1_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/2_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/2_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/3_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lighter Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/3_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/4_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Normalization Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/4_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/5_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/5_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/6_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Global Average Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/6_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/7_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Increasing Model Capacity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/7_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/8_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Correcting MaxPooling Location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/8_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/9_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/9_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 9
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/10_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Rate Scheduling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/10_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/11_Summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/Backward_Propagation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backward Propagation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to RL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markov Decision Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy_vs_value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy vs Value-Based
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-Learning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-q-function-what-are-we-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Q-Function: What Are We Learning?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-bellman-optimality-equation-for-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Bellman Optimality Equation for Q
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#q-learning-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q-Learning Algorithm
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Q-Learning Algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-update-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Update Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-the-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding the Update
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-complete-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Complete Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploration-the-greedy-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploration: The ε-Greedy Policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-grid-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example: Grid World
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Worked Example: Grid World">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#episode-1-random-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Episode 1: Random Exploration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#after-many-episodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After Many Episodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tabular-vs-function-approximation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabular vs Function Approximation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tabular vs Function Approximation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tabular-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabular Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-approximation-deep-q-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Function Approximation (Deep Q-Networks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-q-networks-dqn-a-brief-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Q-Networks (DQN): A Brief Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep Q-Networks (DQN): A Brief Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-experience-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Experience Replay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-target-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Target Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-python-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple Python Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hyperparameters-and-their-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hyperparameters and Their Effects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hyperparameters and Their Effects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learning-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Rate (α)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discount-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discount Factor (γ)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploration-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploration Rate (ε)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convergence-and-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convergence and Guarantees
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#q-learning-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q-Learning Variants
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Q-Learning Variants">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sarsa-on-policy-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SARSA (On-Policy Q-Learning)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Double Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expected-sarsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected SARSA
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-of-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations of Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use Q-Learning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When to Use Q-Learning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perfect-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perfect for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avoid for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy_based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy Gradients (REINFORCE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../practical_tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practical Tutorial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-q-function-what-are-we-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Q-Function: What Are We Learning?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-bellman-optimality-equation-for-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Bellman Optimality Equation for Q
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#q-learning-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q-Learning Algorithm
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Q-Learning Algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-update-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Update Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-the-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding the Update
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-complete-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Complete Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploration-the-greedy-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploration: The ε-Greedy Policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-grid-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example: Grid World
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Worked Example: Grid World">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#episode-1-random-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Episode 1: Random Exploration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#after-many-episodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After Many Episodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tabular-vs-function-approximation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabular vs Function Approximation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tabular vs Function Approximation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tabular-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabular Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-approximation-deep-q-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Function Approximation (Deep Q-Networks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-q-networks-dqn-a-brief-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Q-Networks (DQN): A Brief Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep Q-Networks (DQN): A Brief Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-experience-replay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Experience Replay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-target-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Target Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-python-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple Python Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hyperparameters-and-their-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hyperparameters and Their Effects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hyperparameters and Their Effects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learning-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Rate (α)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discount-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discount Factor (γ)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploration-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploration Rate (ε)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convergence-and-guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convergence and Guarantees
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#q-learning-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q-Learning Variants
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Q-Learning Variants">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sarsa-on-policy-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SARSA (On-Policy Q-Learning)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Double Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expected-sarsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected SARSA
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-of-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations of Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use Q-Learning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When to Use Q-Learning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perfect-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perfect for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avoid for:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="q-learning-value-based-reinforcement-learning">Q-Learning: Value-Based Reinforcement Learning</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Q-Learning is one of the most important algorithms in reinforcement learning. It's elegant, powerful, and surprisingly simple!</p>
+<p><strong>Core idea:</strong> Learn the value of taking each action in each state, then act greedily by choosing the best action.</p>
+<h2 id="the-q-function-what-are-we-learning">The Q-Function: What Are We Learning?</h2>
+<p>Recall the <strong>action-value function</strong>:</p>
+<div class="arithmatex">\[
+Q^\pi(s, a) = \mathbb{E}_\pi\left[\sum_{t=0}^{\infty} \gamma^t R_t \mid S_0 = s, A_0 = a\right]
+\]</div>
+<p><strong>Interpretation:</strong> "If I'm in state <span class="arithmatex">\( s \)</span>, take action <span class="arithmatex">\( a \)</span>, then follow policy <span class="arithmatex">\( \pi \)</span>, what total discounted reward will I get?"</p>
+<p><strong>The optimal Q-function</strong> <span class="arithmatex">\( Q^*(s, a) \)</span> tells us the best possible value:</p>
+<div class="arithmatex">\[
+Q^*(s, a) = \max_\pi Q^\pi(s, a)
+\]</div>
+<p><strong>Key insight:</strong> If we know <span class="arithmatex">\( Q^*(s, a) \)</span>, the optimal policy is trivial:</p>
+<div class="arithmatex">\[
+\pi^*(s) = \arg\max_a Q^*(s, a)
+\]</div>
+<p>Just pick the action with the highest Q-value!</p>
+<h2 id="the-bellman-optimality-equation-for-q">The Bellman Optimality Equation for Q</h2>
+<p>The optimal Q-function satisfies the <strong>Bellman optimality equation</strong>:</p>
+<div class="arithmatex">\[
+Q^*(s, a) = \mathbb{E}_{s' \sim P(s'|s,a)}\left[R(s, a, s') + \gamma \max_{a'} Q^*(s', a')\right]
+\]</div>
+<p><strong>Intuition:</strong> The value of taking action <span class="arithmatex">\( a \)</span> in state <span class="arithmatex">\( s \)</span> equals:
+1. The immediate reward <span class="arithmatex">\( R(s, a, s') \)</span>
+2. Plus the discounted value of the best action in the next state</p>
+<p>This gives us a way to iteratively improve our estimates!</p>
+<h2 id="q-learning-algorithm">Q-Learning Algorithm</h2>
+<h3 id="the-update-rule">The Update Rule</h3>
+<p>Q-Learning uses the Bellman equation to update Q-values:</p>
+<div class="arithmatex">\[
+Q(s, a) \leftarrow Q(s, a) + \alpha \left[r + \gamma \max_{a'} Q(s', a') - Q(s, a)\right]
+\]</div>
+<p>Where:
+- <span class="arithmatex">\( \alpha \)</span> is the <strong>learning rate</strong> (step size)
+- <span class="arithmatex">\( r \)</span> is the <strong>immediate reward</strong>
+- <span class="arithmatex">\( \gamma \)</span> is the <strong>discount factor</strong>
+- The term in brackets is called the <strong>temporal difference (TD) error</strong></p>
+<h3 id="understanding-the-update">Understanding the Update</h3>
+<p>Let's break down the TD error:</p>
+<div class="arithmatex">\[
+\delta = \underbrace{r + \gamma \max_{a'} Q(s', a')}_{\text{TD target}} - \underbrace{Q(s, a)}_{\text{Current estimate}}
+\]</div>
+<ul>
+<li><strong>TD target</strong>: Our new estimate of <span class="arithmatex">\( Q(s, a) \)</span> based on the reward we just received and the best action in the next state</li>
+<li><strong>Current estimate</strong>: What we currently think <span class="arithmatex">\( Q(s, a) \)</span> is</li>
+<li><strong>TD error</strong>: How wrong our current estimate was</li>
+</ul>
+<p>We move our estimate in the direction of the TD target:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>New estimate = Old estimate + learning_rate × TD_error
+</code></pre></div>
+<h3 id="the-complete-algorithm">The Complete Algorithm</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Pseudocode for Q-Learning</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">Initialize</span> <span class="n">Q</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="n">arbitrarily</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">s</span><span class="p">,</span> <span class="n">a</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">Set</span> <span class="n">Q</span><span class="p">(</span><span class="n">terminal_state</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">For</span> <span class="n">each</span> <span class="n">episode</span><span class="p">:</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">Initialize</span> <span class="n">state</span> <span class="n">s</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">While</span> <span class="n">s</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">terminal</span><span class="p">:</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="c1"># Choose action (ε-greedy)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="n">With</span> <span class="n">probability</span> <span class="n">ε</span><span class="p">:</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>            <span class="n">a</span> <span class="o">=</span> <span class="n">random</span> <span class="n">action</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        <span class="n">Otherwise</span><span class="p">:</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>            <span class="n">a</span> <span class="o">=</span> <span class="n">argmax_a</span><span class="s1">&#39; Q(s, a&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>        <span class="c1"># Take action, observe outcome</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        <span class="n">Take</span> <span class="n">action</span> <span class="n">a</span><span class="p">,</span> <span class="n">observe</span> <span class="n">reward</span> <span class="n">r</span> <span class="ow">and</span> <span class="nb">next</span> <span class="n">state</span> <span class="n">s</span><span class="s1">&#39;</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        <span class="c1"># Q-Learning update</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>        <span class="n">Q</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="err">←</span> <span class="n">Q</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">α</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="n">γ</span> <span class="n">max_a</span><span class="s1">&#39; Q(s&#39;</span><span class="p">,</span> <span class="n">a</span><span class="s1">&#39;) - Q(s, a)]</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>        <span class="c1"># Move to next state</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>        <span class="n">s</span> <span class="err">←</span> <span class="n">s</span><span class="s1">&#39;</span>
+</code></pre></div>
+<h3 id="key-properties">Key Properties</h3>
+<p>✅ <strong>Off-policy</strong>: Learns optimal policy while following exploratory policy (ε-greedy)</p>
+<p>✅ <strong>Model-free</strong>: Doesn't need to know transition probabilities <span class="arithmatex">\( P(s'|s, a) \)</span></p>
+<p>✅ <strong>Converges to optimal</strong>: Under certain conditions (visiting all state-action pairs infinitely often, appropriate learning rate schedule)</p>
+<h2 id="exploration-the-greedy-policy">Exploration: The ε-Greedy Policy</h2>
+<p>Q-Learning needs to <strong>explore</strong> to discover good actions, but also <strong>exploit</strong> what it has learned.</p>
+<p><strong>ε-greedy policy:</strong></p>
+<div class="arithmatex">\[
+\pi(s) = \begin{cases}
+\text{random action} &amp; \text{with probability } \epsilon \\
+\arg\max_a Q(s, a) &amp; \text{with probability } 1 - \epsilon
+\end{cases}
+\]</div>
+<p><strong>Typical schedule:</strong>
+- Start with high ε (e.g., 1.0): Explore extensively at first
+- Decay ε over time (e.g., to 0.01): Exploit more as we learn
+- Keep small ε forever: Continue exploring slightly to adapt to changes</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Epsilon decay schedule</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">epsilon_min</span><span class="p">,</span> <span class="n">epsilon_start</span> <span class="o">*</span> <span class="n">epsilon_decay</span> <span class="o">**</span> <span class="n">episode</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="worked-example-grid-world">Worked Example: Grid World</h2>
+<p>Let's walk through Q-Learning on a simple 3×3 grid world.</p>
+<p><strong>Setup:</strong>
+- Start: Bottom-left (0, 0)
+- Goal: Top-right (2, 2), reward = +10
+- Each step: reward = -1 (encourages finding shortest path)
+- Actions: {up, down, left, right}
+- Discount factor: γ = 0.9
+- Learning rate: α = 0.1</p>
+<p><strong>Initial Q-table:</strong> All zeros</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>State | Up   | Down | Left | Right
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>------|------|------|------|------
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>(0,0) | 0.0  | 0.0  | 0.0  | 0.0
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>(0,1) | 0.0  | 0.0  | 0.0  | 0.0
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>...
+</code></pre></div>
+<h3 id="episode-1-random-exploration">Episode 1: Random Exploration</h3>
+<p><strong>Step 1:</strong> State (0,0), choose random action: Right
+- Take action, observe: s' = (1,0), r = -1
+- Update:
+  [
+  Q((0,0), \text{right}) = 0 + 0.1[-1 + 0.9 \times 0 - 0] = -0.1
+  ]</p>
+<p><strong>Step 2:</strong> State (1,0), choose random action: Up
+- Take action, observe: s' = (1,1), r = -1
+- Update:
+  [
+  Q((1,0), \text{up}) = 0 + 0.1[-1 + 0.9 \times 0 - 0] = -0.1
+  ]</p>
+<p><strong>Continue until reaching goal...</strong></p>
+<h3 id="after-many-episodes">After Many Episodes</h3>
+<p>The Q-table converges to show the value of each action:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>State (1,1) - one step from goal:
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  Up    = 7.9   (one step → goal, r=-1, then +10)
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  Right = 7.9   (one step → goal, r=-1, then +10)
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  Down  = -1.0  (moves away)
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  Left  = -1.0  (moves away)
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Optimal policy at (1,1): Up or Right (both lead to goal in 1 step)
+</code></pre></div>
+<p>The agent has learned that:
+- Actions toward the goal have high Q-values
+- Actions away from the goal have low Q-values
+- The optimal path is visible from the Q-values</p>
+<h2 id="tabular-vs-function-approximation">Tabular vs Function Approximation</h2>
+<h3 id="tabular-q-learning">Tabular Q-Learning</h3>
+<p>Store Q-values in a table: one entry for each (state, action) pair.</p>
+<p><strong>Pros:</strong>
+- Simple to implement
+- Guaranteed convergence (under conditions)
+- Easy to inspect and debug</p>
+<p><strong>Cons:</strong>
+- Only works for discrete, small state/action spaces
+- Doesn't generalize: must visit every (s, a) pair
+- Memory explodes with large spaces</p>
+<p><strong>When to use:</strong> Simple grid worlds, small discrete problems</p>
+<h3 id="function-approximation-deep-q-networks">Function Approximation (Deep Q-Networks)</h3>
+<p>Approximate Q-function with a parameterized function (e.g., neural network):</p>
+<div class="arithmatex">\[
+Q(s, a) \approx Q_\theta(s, a)
+\]</div>
+<p>Where <span class="arithmatex">\( \theta \)</span> are the parameters (weights) of the neural network.</p>
+<p><strong>Update rule:</strong></p>
+<div class="arithmatex">\[
+\theta \leftarrow \theta + \alpha \left[r + \gamma \max_{a'} Q_\theta(s', a') - Q_\theta(s, a)\right] \nabla_\theta Q_\theta(s, a)
+\]</div>
+<p><strong>Pros:</strong>
+- Handles large/continuous state spaces
+- Generalizes to unseen states
+- Can learn from images, sensors, etc.</p>
+<p><strong>Cons:</strong>
+- Can be unstable and diverge
+- Requires careful tuning
+- Loss of convergence guarantees</p>
+<p><strong>When to use:</strong> Complex state spaces (images, continuous sensors)</p>
+<h2 id="deep-q-networks-dqn-a-brief-overview">Deep Q-Networks (DQN): A Brief Overview</h2>
+<p>DQN (DeepMind, 2015) made Q-Learning work with neural networks by introducing two key innovations:</p>
+<h3 id="1-experience-replay">1. Experience Replay</h3>
+<p>Store experiences <span class="arithmatex">\( (s, a, r, s') \)</span> in a <strong>replay buffer</strong>.</p>
+<p>Sample random mini-batches from the buffer for training.</p>
+<p><strong>Why it helps:</strong>
+- Breaks correlation between consecutive samples
+- Reuses data multiple times (sample efficient)
+- Stabilizes training</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Experience replay</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">replay_buffer</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># During interaction</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">experience</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">s</span><span class="s1">&#39;)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">replay_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">experience</span><span class="p">)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1"># During training</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">batch</span> <span class="o">=</span> <span class="n">random_sample</span><span class="p">(</span><span class="n">replay_buffer</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">s</span><span class="s1">&#39;) in batch:</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="n">target</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">γ</span> <span class="o">*</span> <span class="n">max_a</span><span class="s1">&#39; Q(s&#39;</span><span class="p">,</span> <span class="n">a</span><span class="s1">&#39;)</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="n">target</span><span class="p">)</span><span class="err">²</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="n">Update</span> <span class="n">Q</span><span class="o">-</span><span class="n">network</span> <span class="n">using</span> <span class="n">this</span> <span class="n">loss</span>
+</code></pre></div>
+<h3 id="2-target-network">2. Target Network</h3>
+<p>Maintain two networks:
+- <strong>Online network</strong> <span class="arithmatex">\( Q_\theta \)</span>: Updated every step
+- <strong>Target network</strong> <span class="arithmatex">\( Q_{\theta^-} \)</span>: Updated periodically (e.g., every 1000 steps)</p>
+<p>Use target network for computing TD target:</p>
+<div class="arithmatex">\[
+\text{TD target} = r + \gamma \max_{a'} Q_{\theta^-}(s', a')
+\]</div>
+<p><strong>Why it helps:</strong>
+- Prevents the target from moving too quickly
+- Reduces harmful correlations
+- Stabilizes training</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Target network update (every C steps)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">if</span> <span class="n">step</span> <span class="o">%</span> <span class="n">C</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="n">target_network</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">online_network</span><span class="o">.</span><span class="n">weights</span>
+</code></pre></div>
+<h2 id="simple-python-implementation">Simple Python Implementation</h2>
+<p>Here's a minimal Q-Learning implementation for a discrete environment:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">QLearningAgent</span><span class="p">:</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_states</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> 
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>                 <span class="n">discount</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">epsilon_decay</span><span class="o">=</span><span class="mf">0.995</span><span class="p">,</span> 
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>                 <span class="n">epsilon_min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">n_states</span> <span class="o">=</span> <span class="n">n_states</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">n_actions</span> <span class="o">=</span> <span class="n">n_actions</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">learning_rate</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="n">discount</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon_decay</span> <span class="o">=</span> <span class="n">epsilon_decay</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon_min</span> <span class="o">=</span> <span class="n">epsilon_min</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>        <span class="c1"># Initialize Q-table</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_states</span><span class="p">,</span> <span class="n">n_actions</span><span class="p">))</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">select_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;ε-greedy action selection&quot;&quot;&quot;</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">:</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_actions</span><span class="p">)</span>  <span class="c1"># Explore</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">state</span><span class="p">])</span>  <span class="c1"># Exploit</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">done</span><span class="p">):</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Q-Learning update&quot;&quot;&quot;</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>        <span class="c1"># Current Q-value</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>        <span class="n">current_q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">]</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>        <span class="c1"># TD target</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>        <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>            <span class="n">target_q</span> <span class="o">=</span> <span class="n">reward</span>  <span class="c1"># No future value at terminal state</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>            <span class="n">target_q</span> <span class="o">=</span> <span class="n">reward</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">next_state</span><span class="p">])</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>        <span class="c1"># Q-Learning update</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>        <span class="n">td_error</span> <span class="o">=</span> <span class="n">target_q</span> <span class="o">-</span> <span class="n">current_q</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">[</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">td_error</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>
+<a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">decay_epsilon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Decay exploration rate&quot;&quot;&quot;</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epsilon_min</span><span class="p">,</span> 
+<a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a>                          <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon_decay</span><span class="p">)</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>
+<a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a><span class="c1"># Training loop</span>
+<a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a><span class="n">agent</span> <span class="o">=</span> <span class="n">QLearningAgent</span><span class="p">(</span><span class="n">n_states</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_actions</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a>
+<a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a><span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+<a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a>    <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a>    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a>    <span class="n">total_reward</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a>
+<a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a>    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+<a id="__codelineno-7-54" name="__codelineno-7-54" href="#__codelineno-7-54"></a>        <span class="c1"># Select and take action</span>
+<a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a>        <span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">select_action</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-7-56" name="__codelineno-7-56" href="#__codelineno-7-56"></a>        <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<a id="__codelineno-7-57" name="__codelineno-7-57" href="#__codelineno-7-57"></a>
+<a id="__codelineno-7-58" name="__codelineno-7-58" href="#__codelineno-7-58"></a>        <span class="c1"># Update Q-values</span>
+<a id="__codelineno-7-59" name="__codelineno-7-59" href="#__codelineno-7-59"></a>        <span class="n">agent</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">done</span><span class="p">)</span>
+<a id="__codelineno-7-60" name="__codelineno-7-60" href="#__codelineno-7-60"></a>
+<a id="__codelineno-7-61" name="__codelineno-7-61" href="#__codelineno-7-61"></a>        <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
+<a id="__codelineno-7-62" name="__codelineno-7-62" href="#__codelineno-7-62"></a>        <span class="n">total_reward</span> <span class="o">+=</span> <span class="n">reward</span>
+<a id="__codelineno-7-63" name="__codelineno-7-63" href="#__codelineno-7-63"></a>
+<a id="__codelineno-7-64" name="__codelineno-7-64" href="#__codelineno-7-64"></a>    <span class="c1"># Decay exploration</span>
+<a id="__codelineno-7-65" name="__codelineno-7-65" href="#__codelineno-7-65"></a>    <span class="n">agent</span><span class="o">.</span><span class="n">decay_epsilon</span><span class="p">()</span>
+<a id="__codelineno-7-66" name="__codelineno-7-66" href="#__codelineno-7-66"></a>
+<a id="__codelineno-7-67" name="__codelineno-7-67" href="#__codelineno-7-67"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Episode </span><span class="si">{</span><span class="n">episode</span><span class="si">}</span><span class="s2">: Total Reward = </span><span class="si">{</span><span class="n">total_reward</span><span class="si">}</span><span class="s2">, ε = </span><span class="si">{</span><span class="n">agent</span><span class="o">.</span><span class="n">epsilon</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="hyperparameters-and-their-effects">Hyperparameters and Their Effects</h2>
+<h3 id="learning-rate">Learning Rate (α)</h3>
+<p>Controls how much we update Q-values each step.</p>
+<div class="arithmatex">\[
+Q(s,a) \leftarrow Q(s,a) + \alpha [TD\_target - Q(s,a)]
+\]</div>
+<ul>
+<li><strong>Too high</strong> (e.g., α = 1.0): Forgets old information, unstable</li>
+<li><strong>Too low</strong> (e.g., α = 0.001): Learns very slowly</li>
+<li><strong>Typical values</strong>: 0.001 to 0.1</li>
+</ul>
+<p><strong>Schedule:</strong> Often decayed over time (fast learning early, refinement later)</p>
+<h3 id="discount-factor">Discount Factor (γ)</h3>
+<p>Controls how much we value future rewards.</p>
+<div class="arithmatex">\[
+Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a'} Q(s',a') - Q(s,a)]
+\]</div>
+<ul>
+<li><strong>γ = 0</strong>: Only care about immediate reward (myopic)</li>
+<li><strong>γ = 1</strong>: Care equally about all future rewards (far-sighted)</li>
+<li><strong>Typical values</strong>: 0.95 to 0.99</li>
+</ul>
+<p><strong>Effect:</strong> Higher γ considers longer-term consequences.</p>
+<h3 id="exploration-rate">Exploration Rate (ε)</h3>
+<p>Controls exploration vs exploitation trade-off.</p>
+<ul>
+<li><strong>High ε</strong> (e.g., 1.0): Random actions, lots of exploration</li>
+<li><strong>Low ε</strong> (e.g., 0.01): Mostly greedy, little exploration</li>
+<li><strong>Typical schedule</strong>: Start at 1.0, decay to 0.01</li>
+</ul>
+<p><strong>Decay schedule:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">epsilon_min</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">decay_rate</span><span class="p">)</span>  <span class="c1"># Exponential decay</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">epsilon_min</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">-</span> <span class="n">decay_step</span><span class="p">)</span>  <span class="c1"># Linear decay</span>
+</code></pre></div></p>
+<h2 id="convergence-and-guarantees">Convergence and Guarantees</h2>
+<p>Q-Learning is <strong>proven to converge</strong> to the optimal Q-function under these conditions:</p>
+<ol>
+<li><strong>All state-action pairs visited infinitely often</strong></li>
+<li>
+<p>Ensured by sufficient exploration (ε-greedy with ε &gt; 0)</p>
+</li>
+<li>
+<p><strong>Learning rate schedule</strong></p>
+</li>
+<li>Must satisfy: <span class="arithmatex">\( \sum_{t=1}^{\infty} \alpha_t = \infty \)</span> and <span class="arithmatex">\( \sum_{t=1}^{\infty} \alpha_t^2 &lt; \infty \)</span></li>
+<li>
+<p>Example: <span class="arithmatex">\( \alpha_t = \frac{1}{t} \)</span></p>
+</li>
+<li>
+<p><strong>Tabular representation</strong></p>
+</li>
+<li>Each (s, a) has independent Q-value</li>
+<li>With function approximation, no guarantees!</li>
+</ol>
+<p><strong>Practical note:</strong> In practice, we use constant learning rates and function approximation. While theoretical guarantees don't hold, Q-Learning often works well!</p>
+<h2 id="q-learning-variants">Q-Learning Variants</h2>
+<h3 id="sarsa-on-policy-q-learning">SARSA (On-Policy Q-Learning)</h3>
+<p>Instead of using <span class="arithmatex">\( \max_{a'} Q(s', a') \)</span>, use the action actually taken:</p>
+<div class="arithmatex">\[
+Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma Q(s', a') - Q(s, a)]
+\]</div>
+<p>Where <span class="arithmatex">\( a' \)</span> is the action selected by the current policy.</p>
+<p><strong>Difference:</strong>
+- Q-Learning: Off-policy (learns optimal policy while acting exploratively)
+- SARSA: On-policy (learns policy being followed, including exploration)</p>
+<p><strong>When to use SARSA:</strong> When you want the learned policy to account for exploration risk (e.g., near cliffs).</p>
+<h3 id="double-q-learning">Double Q-Learning</h3>
+<p>Q-Learning can <strong>overestimate</strong> values due to maximization bias.</p>
+<p><strong>Solution:</strong> Use two Q-functions, select action with one, evaluate with the other:</p>
+<div class="arithmatex">\[
+Q_1(s, a) \leftarrow Q_1(s, a) + \alpha [r + \gamma Q_2(s', \arg\max_{a'} Q_1(s', a')) - Q_1(s, a)]
+\]</div>
+<p><strong>Why it helps:</strong> Reduces overestimation, more stable learning.</p>
+<h3 id="expected-sarsa">Expected SARSA</h3>
+<p>Average over all possible next actions weighted by policy:</p>
+<div class="arithmatex">\[
+Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \sum_{a'} \pi(a'|s') Q(s', a') - Q(s, a)]
+\]</div>
+<p><strong>Benefits:</strong> Lower variance than SARSA, still considers exploration policy.</p>
+<h2 id="limitations-of-q-learning">Limitations of Q-Learning</h2>
+<p>❌ <strong>Limited to discrete actions</strong>
+- Need to compute <span class="arithmatex">\( \arg\max_a Q(s, a) \)</span>
+- Difficult or impossible with continuous actions</p>
+<p>❌ <strong>Overestimation bias</strong>
+- Always taking max can lead to overly optimistic estimates
+- Mitigated by Double Q-Learning</p>
+<p>❌ <strong>Sample inefficiency</strong>
+- Each update only affects one (s, a) pair (in tabular case)
+- Needs many samples to converge</p>
+<p>❌ <strong>Instability with function approximation</strong>
+- Neural network Q-functions can diverge
+- Requires experience replay, target networks, careful tuning</p>
+<p>❌ <strong>No explicit exploration strategy</strong>
+- Must add ε-greedy or other heuristics
+- Not principled like entropy regularization in policy methods</p>
+<h2 id="when-to-use-q-learning">When to Use Q-Learning</h2>
+<h3 id="perfect-for">Perfect for:</h3>
+<p>✅ Discrete action spaces (games, navigation with discrete moves)</p>
+<p>✅ Offline learning from logged data</p>
+<p>✅ Simple environments where tabular methods suffice</p>
+<p>✅ When you want off-policy learning</p>
+<h3 id="avoid-for">Avoid for:</h3>
+<p>❌ Continuous action spaces (use policy gradient methods or actor-critic)</p>
+<p>❌ Extremely large state spaces without good function approximation</p>
+<p>❌ Real-time learning with strict sample budgets (consider policy gradients)</p>
+<h2 id="summary">Summary</h2>
+<p><strong>Q-Learning in a nutshell:</strong></p>
+<ol>
+<li><strong>Learn Q-values</strong>: Estimate the value of each action in each state</li>
+<li><strong>Bellman updates</strong>: Use immediate reward + value of best next action</li>
+<li><strong>Act greedily</strong>: Choose action with highest Q-value</li>
+<li><strong>Explore</strong>: Use ε-greedy to discover better strategies</li>
+</ol>
+<p><strong>Key equation:</strong>
+[
+Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]
+]</p>
+<p><strong>Strengths:</strong> Simple, off-policy, proven convergence (tabular case)</p>
+<p><strong>Weaknesses:</strong> Discrete actions only, can be sample inefficient, requires careful exploration</p>
+<p><strong>Modern extensions:</strong> DQN, Double DQN, Dueling DQN, Rainbow DQN</p>
+<p>Now let's move to the other side: <strong>policy gradient methods</strong> that directly learn the policy!</p>
+<hr />
+<p><a class="md-button" href="../policy_vs_value/">← Back to Policy vs Value-Based</a>
+<a class="md-button md-button--primary" href="../policy_based/">Continue to Policy Gradients (REINFORCE) →</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.indexes", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/mcq.js"></script>
+      
+    
+  </body>
+</html>

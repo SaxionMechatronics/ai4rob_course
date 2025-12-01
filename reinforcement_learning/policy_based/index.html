@@ -1,0 +1,3103 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A course on AI for robotics by SMART Mechatronics and Robotics Group, Saxion University of Applied Sciences">
+      
+      
+        <meta name="author" content="Stephan Jaspar, Rahul Moongayil Ramakrishnan, Kousheek Chakraborty">
+      
+      
+      
+        <link rel="prev" href="../value_based/">
+      
+      
+        <link rel="next" href="../practical_tutorial/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Policy Gradients (REINFORCE) - AI for Robotics Course</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/mcq.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#policy-gradients-reinforce-algorithm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI for Robotics Course" class="md-header__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI for Robotics Course
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Policy Gradients (REINFORCE)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../foundations/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Foundations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deep_learning/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deep Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reinforcement Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI for Robotics Course" class="md-nav__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI for Robotics Course
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../foundations/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../deep_learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/0_Git_Python_Pytorch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Git | Python 101 | Pytorch 101
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/12_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/1_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/1_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/2_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/2_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/3_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lighter Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/3_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/4_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Normalization Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/4_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/5_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/5_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/6_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Global Average Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/6_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/7_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Increasing Model Capacity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/7_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/8_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Correcting MaxPooling Location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/8_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/9_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/9_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 9
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/10_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Rate Scheduling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/10_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/11_Summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/Backward_Propagation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backward Propagation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to RL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markov Decision Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy_vs_value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy vs Value-Based
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../value_based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy Gradients (REINFORCE)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy Gradients (REINFORCE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#from-values-to-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Values to Policies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-policy-gradient-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Policy Gradient Approach
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Policy Gradient Approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameterized-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameterized Policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradient-ascent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient Ascent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-policy-gradient-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Policy Gradient Theorem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reinforce-the-monte-carlo-policy-gradient-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REINFORCE: The Monte Carlo Policy Gradient Algorithm
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="REINFORCE: The Monte Carlo Policy Gradient Algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-works-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Works: Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-log-probability-trick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Log-Probability Trick
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reinforce-with-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REINFORCE with Baseline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="REINFORCE with Baseline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-high-variance-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The High Variance Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#introducing-a-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducing a Baseline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-a-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing a Baseline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reinforce-with-baseline-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REINFORCE with Baseline Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policy Representations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Policy Representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#discrete-actions-softmax-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discrete Actions: Softmax Policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continuous-actions-gaussian-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Actions: Gaussian Policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-python-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple Python Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reinforce-with-baseline-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REINFORCE with Baseline Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advantages-of-policy-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages of Policy Gradients
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disadvantages-of-policy-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages of Policy Gradients
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variance-reduction-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variance Reduction Techniques
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variance Reduction Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-reward-to-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Reward-to-Go
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-generalized-advantage-estimation-gae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Generalized Advantage Estimation (GAE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-entropy-regularization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Entropy Regularization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modern-policy-gradient-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modern Policy Gradient Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Modern Policy Gradient Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ppo-proximal-policy-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PPO (Proximal Policy Optimization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trpo-trust-region-policy-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TRPO (Trust Region Policy Optimization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3ca2c-advantage-actor-critic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A3C/A2C (Advantage Actor-Critic)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparing-reinforce-to-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparing REINFORCE to Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-tips-for-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Tips for Training
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Tips for Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-normalize-returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Normalize Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-gradient-clipping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Gradient Clipping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-learning-rate-scheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Learning Rate Scheduling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-early-stopping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Early Stopping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-multiple-random-seeds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Multiple Random Seeds
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../practical_tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practical Tutorial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#from-values-to-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Values to Policies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-policy-gradient-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Policy Gradient Approach
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Policy Gradient Approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameterized-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameterized Policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradient-ascent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient Ascent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-policy-gradient-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Policy Gradient Theorem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reinforce-the-monte-carlo-policy-gradient-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REINFORCE: The Monte Carlo Policy Gradient Algorithm
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="REINFORCE: The Monte Carlo Policy Gradient Algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-works-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Works: Intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-log-probability-trick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Log-Probability Trick
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reinforce-with-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REINFORCE with Baseline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="REINFORCE with Baseline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-high-variance-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The High Variance Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#introducing-a-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducing a Baseline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-a-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing a Baseline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reinforce-with-baseline-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REINFORCE with Baseline Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policy Representations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Policy Representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#discrete-actions-softmax-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discrete Actions: Softmax Policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continuous-actions-gaussian-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Actions: Gaussian Policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-python-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple Python Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reinforce-with-baseline-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REINFORCE with Baseline Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advantages-of-policy-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages of Policy Gradients
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disadvantages-of-policy-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages of Policy Gradients
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variance-reduction-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variance Reduction Techniques
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variance Reduction Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-reward-to-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Reward-to-Go
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-generalized-advantage-estimation-gae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Generalized Advantage Estimation (GAE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-entropy-regularization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Entropy Regularization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modern-policy-gradient-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modern Policy Gradient Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Modern Policy Gradient Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ppo-proximal-policy-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PPO (Proximal Policy Optimization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trpo-trust-region-policy-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TRPO (Trust Region Policy Optimization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3ca2c-advantage-actor-critic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A3C/A2C (Advantage Actor-Critic)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparing-reinforce-to-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparing REINFORCE to Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-tips-for-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Tips for Training
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Tips for Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-normalize-returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Normalize Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-gradient-clipping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Gradient Clipping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-learning-rate-scheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Learning Rate Scheduling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-early-stopping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Early Stopping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-multiple-random-seeds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Multiple Random Seeds
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="policy-gradients-reinforce-algorithm">Policy Gradients: REINFORCE Algorithm</h1>
+<h2 id="from-values-to-policies">From Values to Policies</h2>
+<p>In Q-Learning, we learned to estimate the value of actions and then derived a policy from those values. But what if we <strong>directly learn the policy</strong> instead?</p>
+<p><strong>Policy gradient methods</strong> do exactly this: they parameterize the policy and optimize it using gradient ascent to maximize expected return.</p>
+<h2 id="the-policy-gradient-approach">The Policy Gradient Approach</h2>
+<h3 id="parameterized-policy">Parameterized Policy</h3>
+<p>Instead of learning Q-values, we directly parameterize the policy with parameters <span class="arithmatex">\( \theta \)</span>:</p>
+<div class="arithmatex">\[
+\pi_\theta(a | s)
+\]</div>
+<p><strong>Examples:</strong>
+- <strong>Neural network</strong>: Input state, output action probabilities
+- <strong>Linear model</strong>: <span class="arithmatex">\( \pi_\theta(a|s) = \text{softmax}(\theta^T \phi(s)) \)</span>
+- <strong>Gaussian policy</strong>: <span class="arithmatex">\( \pi_\theta(a|s) = \mathcal{N}(\mu_\theta(s), \sigma_\theta(s)) \)</span></p>
+<h3 id="the-objective">The Objective</h3>
+<p>We want to find parameters <span class="arithmatex">\( \theta \)</span> that maximize expected return:</p>
+<div class="arithmatex">\[
+J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} [G(\tau)] = \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_{t=0}^{T} \gamma^t r_t \right]
+\]</div>
+<p>Where <span class="arithmatex">\( \tau = (s_0, a_0, r_0, s_1, a_1, r_1, ...) \)</span> is a trajectory sampled by following policy <span class="arithmatex">\( \pi_\theta \)</span>.</p>
+<p><strong>Intuition:</strong> We're directly optimizing what we care about—the total reward!</p>
+<h3 id="gradient-ascent">Gradient Ascent</h3>
+<p>To maximize <span class="arithmatex">\( J(\theta) \)</span>, we use gradient ascent:</p>
+<div class="arithmatex">\[
+\theta \leftarrow \theta + \alpha \nabla_\theta J(\theta)
+\]</div>
+<p>Move parameters in the direction that increases expected return.</p>
+<p><strong>The challenge:</strong> How do we compute <span class="arithmatex">\( \nabla_\theta J(\theta) \)</span>?</p>
+<h2 id="the-policy-gradient-theorem">The Policy Gradient Theorem</h2>
+<p>The <strong>policy gradient theorem</strong> gives us a practical way to compute the gradient:</p>
+<div class="arithmatex">\[
+\nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t | s_t) G_t \right]
+\]</div>
+<p>Where <span class="arithmatex">\( G_t = \sum_{k=t}^{T} \gamma^{k-t} r_k \)</span> is the return from time <span class="arithmatex">\( t \)</span>.</p>
+<p><strong>What this means:</strong>
+- Sample trajectories using current policy <span class="arithmatex">\( \pi_\theta \)</span>
+- For each action taken, compute its log-probability gradient
+- Weight by the return obtained from that point onward
+- Average over many trajectories</p>
+<p><strong>Intuitive interpretation:</strong>
+- If action <span class="arithmatex">\( a_t \)</span> led to high return <span class="arithmatex">\( G_t \)</span>: increase <span class="arithmatex">\( \pi_\theta(a_t | s_t) \)</span>
+- If action <span class="arithmatex">\( a_t \)</span> led to low return <span class="arithmatex">\( G_t \)</span>: decrease <span class="arithmatex">\( \pi_\theta(a_t | s_t) \)</span></p>
+<h2 id="reinforce-the-monte-carlo-policy-gradient-algorithm">REINFORCE: The Monte Carlo Policy Gradient Algorithm</h2>
+<p><strong>REINFORCE</strong> (Williams, 1992) is the classic policy gradient algorithm. It's beautifully simple!</p>
+<h3 id="the-algorithm">The Algorithm</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Initialize policy parameters θ randomly
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>For each episode:
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    1. Generate trajectory τ = (s₀, a₀, r₁, s₁, ..., sT)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>       by following πθ
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    2. For each timestep t in the episode:
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        Compute return: Gt = Σ(k=t to T) γ^(k-t) * r_k
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        Compute gradient: ∇θ log πθ(at | st)
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        Update: θ ← θ + α * Gt * ∇θ log πθ(at | st)
+</code></pre></div>
+<h3 id="why-this-works-intuition">Why This Works: Intuition</h3>
+<p>Imagine training a robot to navigate:</p>
+<p><strong>Episode 1:</strong> Robot wanders randomly, finds goal by luck
+- Total return: G = 50 (pretty good!)
+- Actions taken are reinforced (made more likely)</p>
+<p><strong>Episode 2:</strong> Robot goes wrong direction, fails
+- Total return: G = -10 (bad!)
+- Actions taken are suppressed (made less likely)</p>
+<p>Over many episodes, good actions become more probable, bad actions less probable.</p>
+<h3 id="the-log-probability-trick">The Log-Probability Trick</h3>
+<p>Why do we use <span class="arithmatex">\( \nabla_\theta \log \pi_\theta(a|s) \)</span> instead of <span class="arithmatex">\( \nabla_\theta \pi_\theta(a|s) \)</span>?</p>
+<p><strong>Mathematical reason:</strong> The policy gradient theorem gives us this form.</p>
+<p><strong>Practical reason:</strong> It's easier to compute!</p>
+<p>For a softmax policy:
+[
+\pi_\theta(a|s) = \frac{e^{\theta^T \phi(s, a)}}{\sum_{a'} e^{\theta^T \phi(s, a')}}
+]</p>
+<div class="arithmatex">\[
+\nabla_\theta \log \pi_\theta(a|s) = \phi(s, a) - \mathbb{E}_{a' \sim \pi_\theta}[\phi(s, a')]
+\]</div>
+<p>The gradient is just the feature vector minus its expectation!</p>
+<p>For neural networks with automatic differentiation (PyTorch, TensorFlow), computing log-probability gradients is straightforward.</p>
+<h2 id="reinforce-with-baseline">REINFORCE with Baseline</h2>
+<h3 id="the-high-variance-problem">The High Variance Problem</h3>
+<p>Pure REINFORCE has a critical issue: <strong>very high variance</strong> in gradient estimates.</p>
+<p><strong>Why?</strong> Returns <span class="arithmatex">\( G_t \)</span> can vary wildly between episodes, even for similar actions.</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Episode 1: Gt = 100  → Big update!
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Episode 2: Gt = 95   → Big update in slightly different direction
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Episode 3: Gt = 5    → Big negative update
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Episode 4: Gt = 90   → Big positive update again
+</code></pre></div></p>
+<p>The agent gets conflicting signals, making learning slow and unstable.</p>
+<h3 id="introducing-a-baseline">Introducing a Baseline</h3>
+<p>We can subtract a <strong>baseline</strong> <span class="arithmatex">\( b(s_t) \)</span> from the return without changing the expected gradient:</p>
+<div class="arithmatex">\[
+\nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t | s_t) (G_t - b(s_t)) \right]
+\]</div>
+<p><strong>Why this doesn't introduce bias:</strong> The expectation of <span class="arithmatex">\( \nabla_\theta \log \pi_\theta(a|s) \)</span> is zero, so adding/subtracting baselines doesn't change the expected gradient.</p>
+<p><strong>Why it reduces variance:</strong> By centering the returns around zero, we reduce the magnitude of gradient updates.</p>
+<h3 id="choosing-a-baseline">Choosing a Baseline</h3>
+<p><strong>Best baseline:</strong> The state-value function <span class="arithmatex">\( V(s_t) \)</span>!</p>
+<div class="arithmatex">\[
+G_t - V(s_t) = A_t
+\]</div>
+<p>This is called the <strong>advantage</strong> <span class="arithmatex">\( A_t \)</span>: how much better was this action compared to the average?</p>
+<p><strong>Interpretation:</strong>
+- <span class="arithmatex">\( A_t &gt; 0 \)</span>: Action was better than expected → increase probability
+- <span class="arithmatex">\( A_t &lt; 0 \)</span>: Action was worse than expected → decrease probability
+- <span class="arithmatex">\( A_t = 0 \)</span>: Action was as expected → no change</p>
+<p><strong>Practical implementation:</strong> Learn <span class="arithmatex">\( V(s) \)</span> using a separate value network (this leads to Actor-Critic methods!)</p>
+<h3 id="reinforce-with-baseline-algorithm">REINFORCE with Baseline Algorithm</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Initialize policy parameters θ and value function parameters w
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>For each episode:
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    Generate trajectory τ = (s₀, a₀, r₁, s₁, ..., sT) using πθ
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    For each timestep t:
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        Compute return: Gt = Σ(k=t to T) γ^(k-t) * r_k
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        Compute advantage: At = Gt - V_w(st)
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        Update policy: θ ← θ + α * At * ∇θ log πθ(at | st)
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        Update value: w ← w + β * (Gt - V_w(st)) * ∇w V_w(st)
+</code></pre></div>
+<h2 id="policy-representations">Policy Representations</h2>
+<h3 id="discrete-actions-softmax-policy">Discrete Actions: Softmax Policy</h3>
+<p>For discrete action spaces, use a <strong>softmax (categorical) policy</strong>:</p>
+<div class="arithmatex">\[
+\pi_\theta(a | s) = \frac{e^{f_\theta(s, a)}}{\sum_{a'} e^{f_\theta(s, a')}}
+\]</div>
+<p>Where <span class="arithmatex">\( f_\theta(s, a) \)</span> is a neural network that outputs action logits.</p>
+<p><strong>Network architecture:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>State s → [Neural Network] → [Logits for each action] → Softmax → Probabilities
+</code></pre></div></p>
+<p><strong>Sampling:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">logits</span> <span class="o">=</span> <span class="n">policy_network</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">action_probs</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">action</span> <span class="o">=</span> <span class="n">categorical_sample</span><span class="p">(</span><span class="n">action_probs</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>Log-probability:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">log_prob</span> <span class="o">=</span> <span class="n">log_softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">)[</span><span class="n">action</span><span class="p">]</span>
+</code></pre></div></p>
+<h3 id="continuous-actions-gaussian-policy">Continuous Actions: Gaussian Policy</h3>
+<p>For continuous action spaces, use a <strong>Gaussian policy</strong>:</p>
+<div class="arithmatex">\[
+\pi_\theta(a | s) = \mathcal{N}(a | \mu_\theta(s), \sigma_\theta(s))
+\]</div>
+<p>Where the neural network outputs mean <span class="arithmatex">\( \mu_\theta(s) \)</span> and standard deviation <span class="arithmatex">\( \sigma_\theta(s) \)</span>.</p>
+<p><strong>Network architecture:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>State s → [Neural Network] → [μ₁, μ₂, ..., μn, σ₁, σ₂, ..., σn]
+</code></pre></div></p>
+<p><strong>Sampling:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">policy_network</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">action</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">random_normal</span><span class="p">()</span>
+</code></pre></div></p>
+<p><strong>Log-probability:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">log_prob</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">action</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span><span class="p">)</span><span class="err">²</span> <span class="o">-</span> <span class="n">log</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="n">π</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>Practical tip:</strong> Often use a diagonal Gaussian (independent dimensions) for simplicity.</p>
+<h2 id="simple-python-implementation">Simple Python Implementation</h2>
+<p>Here's a minimal REINFORCE implementation using PyTorch:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch.distributions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Categorical</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="k">class</span><span class="w"> </span><span class="nc">PolicyNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dim</span><span class="p">,</span> <span class="n">action_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">state_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">),</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">),</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">action_dim</span><span class="p">)</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>        <span class="p">)</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>        <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>        <span class="k">return</span> <span class="n">logits</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="k">class</span><span class="w"> </span><span class="nc">REINFORCE</span><span class="p">:</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dim</span><span class="p">,</span> <span class="n">action_dim</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.99</span><span class="p">):</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">policy</span> <span class="o">=</span> <span class="n">PolicyNetwork</span><span class="p">(</span><span class="n">state_dim</span><span class="p">,</span> <span class="n">action_dim</span><span class="p">)</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">select_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Select action and compute log probability&quot;&quot;&quot;</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a>        <span class="n">state</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>        <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>        <span class="c1"># Sample from categorical distribution</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a>        <span class="n">dist</span> <span class="o">=</span> <span class="n">Categorical</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">)</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>        <span class="n">action</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a>        <span class="n">log_prob</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a>
+<a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a>        <span class="k">return</span> <span class="n">action</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">log_prob</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a>
+<a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_returns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rewards</span><span class="p">):</span>
+<a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute discounted returns for each timestep&quot;&quot;&quot;</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a>        <span class="n">returns</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a>        <span class="n">G</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-9-43" name="__codelineno-9-43" href="#__codelineno-9-43"></a>        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">rewards</span><span class="p">):</span>
+<a id="__codelineno-9-44" name="__codelineno-9-44" href="#__codelineno-9-44"></a>            <span class="n">G</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">G</span>
+<a id="__codelineno-9-45" name="__codelineno-9-45" href="#__codelineno-9-45"></a>            <span class="n">returns</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">G</span><span class="p">)</span>
+<a id="__codelineno-9-46" name="__codelineno-9-46" href="#__codelineno-9-46"></a>
+<a id="__codelineno-9-47" name="__codelineno-9-47" href="#__codelineno-9-47"></a>        <span class="n">returns</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">returns</span><span class="p">)</span>
+<a id="__codelineno-9-48" name="__codelineno-9-48" href="#__codelineno-9-48"></a>        <span class="c1"># Normalize returns for stability</span>
+<a id="__codelineno-9-49" name="__codelineno-9-49" href="#__codelineno-9-49"></a>        <span class="n">returns</span> <span class="o">=</span> <span class="p">(</span><span class="n">returns</span> <span class="o">-</span> <span class="n">returns</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">returns</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+<a id="__codelineno-9-50" name="__codelineno-9-50" href="#__codelineno-9-50"></a>        <span class="k">return</span> <span class="n">returns</span>
+<a id="__codelineno-9-51" name="__codelineno-9-51" href="#__codelineno-9-51"></a>
+<a id="__codelineno-9-52" name="__codelineno-9-52" href="#__codelineno-9-52"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_probs</span><span class="p">,</span> <span class="n">rewards</span><span class="p">):</span>
+<a id="__codelineno-9-53" name="__codelineno-9-53" href="#__codelineno-9-53"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update policy using REINFORCE&quot;&quot;&quot;</span>
+<a id="__codelineno-9-54" name="__codelineno-9-54" href="#__codelineno-9-54"></a>        <span class="c1"># Compute returns</span>
+<a id="__codelineno-9-55" name="__codelineno-9-55" href="#__codelineno-9-55"></a>        <span class="n">returns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_returns</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span>
+<a id="__codelineno-9-56" name="__codelineno-9-56" href="#__codelineno-9-56"></a>
+<a id="__codelineno-9-57" name="__codelineno-9-57" href="#__codelineno-9-57"></a>        <span class="c1"># Compute policy gradient loss</span>
+<a id="__codelineno-9-58" name="__codelineno-9-58" href="#__codelineno-9-58"></a>        <span class="n">policy_loss</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-9-59" name="__codelineno-9-59" href="#__codelineno-9-59"></a>        <span class="k">for</span> <span class="n">log_prob</span><span class="p">,</span> <span class="n">G</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">log_probs</span><span class="p">,</span> <span class="n">returns</span><span class="p">):</span>
+<a id="__codelineno-9-60" name="__codelineno-9-60" href="#__codelineno-9-60"></a>            <span class="n">policy_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="n">log_prob</span> <span class="o">*</span> <span class="n">G</span><span class="p">)</span>
+<a id="__codelineno-9-61" name="__codelineno-9-61" href="#__codelineno-9-61"></a>
+<a id="__codelineno-9-62" name="__codelineno-9-62" href="#__codelineno-9-62"></a>        <span class="c1"># Perform gradient ascent</span>
+<a id="__codelineno-9-63" name="__codelineno-9-63" href="#__codelineno-9-63"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<a id="__codelineno-9-64" name="__codelineno-9-64" href="#__codelineno-9-64"></a>        <span class="n">policy_loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">policy_loss</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<a id="__codelineno-9-65" name="__codelineno-9-65" href="#__codelineno-9-65"></a>        <span class="n">policy_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<a id="__codelineno-9-66" name="__codelineno-9-66" href="#__codelineno-9-66"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<a id="__codelineno-9-67" name="__codelineno-9-67" href="#__codelineno-9-67"></a>
+<a id="__codelineno-9-68" name="__codelineno-9-68" href="#__codelineno-9-68"></a><span class="c1"># Training loop</span>
+<a id="__codelineno-9-69" name="__codelineno-9-69" href="#__codelineno-9-69"></a><span class="n">agent</span> <span class="o">=</span> <span class="n">REINFORCE</span><span class="p">(</span><span class="n">state_dim</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">action_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-9-70" name="__codelineno-9-70" href="#__codelineno-9-70"></a>
+<a id="__codelineno-9-71" name="__codelineno-9-71" href="#__codelineno-9-71"></a><span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+<a id="__codelineno-9-72" name="__codelineno-9-72" href="#__codelineno-9-72"></a>    <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<a id="__codelineno-9-73" name="__codelineno-9-73" href="#__codelineno-9-73"></a>    <span class="n">log_probs</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-9-74" name="__codelineno-9-74" href="#__codelineno-9-74"></a>    <span class="n">rewards</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-9-75" name="__codelineno-9-75" href="#__codelineno-9-75"></a>    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-9-76" name="__codelineno-9-76" href="#__codelineno-9-76"></a>
+<a id="__codelineno-9-77" name="__codelineno-9-77" href="#__codelineno-9-77"></a>    <span class="c1"># Collect trajectory</span>
+<a id="__codelineno-9-78" name="__codelineno-9-78" href="#__codelineno-9-78"></a>    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+<a id="__codelineno-9-79" name="__codelineno-9-79" href="#__codelineno-9-79"></a>        <span class="n">action</span><span class="p">,</span> <span class="n">log_prob</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">select_action</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-9-80" name="__codelineno-9-80" href="#__codelineno-9-80"></a>        <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<a id="__codelineno-9-81" name="__codelineno-9-81" href="#__codelineno-9-81"></a>
+<a id="__codelineno-9-82" name="__codelineno-9-82" href="#__codelineno-9-82"></a>        <span class="n">log_probs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">log_prob</span><span class="p">)</span>
+<a id="__codelineno-9-83" name="__codelineno-9-83" href="#__codelineno-9-83"></a>        <span class="n">rewards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reward</span><span class="p">)</span>
+<a id="__codelineno-9-84" name="__codelineno-9-84" href="#__codelineno-9-84"></a>        <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
+<a id="__codelineno-9-85" name="__codelineno-9-85" href="#__codelineno-9-85"></a>
+<a id="__codelineno-9-86" name="__codelineno-9-86" href="#__codelineno-9-86"></a>    <span class="c1"># Update policy</span>
+<a id="__codelineno-9-87" name="__codelineno-9-87" href="#__codelineno-9-87"></a>    <span class="n">agent</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">log_probs</span><span class="p">,</span> <span class="n">rewards</span><span class="p">)</span>
+<a id="__codelineno-9-88" name="__codelineno-9-88" href="#__codelineno-9-88"></a>
+<a id="__codelineno-9-89" name="__codelineno-9-89" href="#__codelineno-9-89"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Episode </span><span class="si">{</span><span class="n">episode</span><span class="si">}</span><span class="s2">: Total Reward = </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="reinforce-with-baseline-implementation">REINFORCE with Baseline Implementation</h2>
+<p>Adding a value function baseline:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">ValueNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">state_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">),</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">),</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>        <span class="p">)</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="k">class</span><span class="w"> </span><span class="nc">REINFORCEWithBaseline</span><span class="p">:</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dim</span><span class="p">,</span> <span class="n">action_dim</span><span class="p">,</span> <span class="n">lr_policy</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">lr_value</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.99</span><span class="p">):</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">policy</span> <span class="o">=</span> <span class="n">PolicyNetwork</span><span class="p">(</span><span class="n">state_dim</span><span class="p">,</span> <span class="n">action_dim</span><span class="p">)</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">ValueNetwork</span><span class="p">(</span><span class="n">state_dim</span><span class="p">)</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">policy_optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr_policy</span><span class="p">)</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">value_optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr_value</span><span class="p">)</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">log_probs</span><span class="p">,</span> <span class="n">rewards</span><span class="p">):</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update policy and value function&quot;&quot;&quot;</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>        <span class="c1"># Compute returns</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>        <span class="n">returns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_returns</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>        <span class="n">states</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>        <span class="n">returns</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">returns</span><span class="p">)</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>        <span class="c1"># Compute value predictions</span>
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>        <span class="c1"># Compute advantages</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a>        <span class="n">advantages</span> <span class="o">=</span> <span class="n">returns</span> <span class="o">-</span> <span class="n">values</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>  <span class="c1"># Don&#39;t backprop through value for policy</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a>
+<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a>        <span class="c1"># Update policy</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a>        <span class="n">policy_loss</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a>        <span class="k">for</span> <span class="n">log_prob</span><span class="p">,</span> <span class="n">advantage</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">log_probs</span><span class="p">,</span> <span class="n">advantages</span><span class="p">):</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a>            <span class="n">policy_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="n">log_prob</span> <span class="o">*</span> <span class="n">advantage</span><span class="p">)</span>
+<a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a>
+<a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">policy_optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<a id="__codelineno-10-44" name="__codelineno-10-44" href="#__codelineno-10-44"></a>        <span class="n">policy_loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">policy_loss</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<a id="__codelineno-10-45" name="__codelineno-10-45" href="#__codelineno-10-45"></a>        <span class="n">policy_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<a id="__codelineno-10-46" name="__codelineno-10-46" href="#__codelineno-10-46"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">policy_optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<a id="__codelineno-10-47" name="__codelineno-10-47" href="#__codelineno-10-47"></a>
+<a id="__codelineno-10-48" name="__codelineno-10-48" href="#__codelineno-10-48"></a>        <span class="c1"># Update value function (minimize MSE)</span>
+<a id="__codelineno-10-49" name="__codelineno-10-49" href="#__codelineno-10-49"></a>        <span class="n">value_loss</span> <span class="o">=</span> <span class="p">((</span><span class="n">values</span> <span class="o">-</span> <span class="n">returns</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-10-50" name="__codelineno-10-50" href="#__codelineno-10-50"></a>
+<a id="__codelineno-10-51" name="__codelineno-10-51" href="#__codelineno-10-51"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">value_optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<a id="__codelineno-10-52" name="__codelineno-10-52" href="#__codelineno-10-52"></a>        <span class="n">value_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<a id="__codelineno-10-53" name="__codelineno-10-53" href="#__codelineno-10-53"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">value_optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="advantages-of-policy-gradients">Advantages of Policy Gradients</h2>
+<p>✅ <strong>Continuous actions</strong>: Naturally handles continuous action spaces</p>
+<p>✅ <strong>Stochastic policies</strong>: Can learn optimal stochastic policies</p>
+<p>✅ <strong>Convergence</strong>: Better convergence properties than value-based methods</p>
+<p>✅ <strong>High-dimensional actions</strong>: Doesn't need argmax over action space</p>
+<p>✅ <strong>Stable</strong>: Generally more stable than Q-learning with function approximation</p>
+<h2 id="disadvantages-of-policy-gradients">Disadvantages of Policy Gradients</h2>
+<p>❌ <strong>Sample inefficient</strong>: Requires many episodes to estimate gradients accurately</p>
+<p>❌ <strong>High variance</strong>: Gradient estimates can be very noisy</p>
+<p>❌ <strong>On-policy</strong>: Must collect new data after each policy update (expensive!)</p>
+<p>❌ <strong>Local optima</strong>: Gradient ascent can get stuck in local maxima</p>
+<p>❌ <strong>Slow convergence</strong>: Can take many iterations to learn</p>
+<h2 id="variance-reduction-techniques">Variance Reduction Techniques</h2>
+<p>Beyond baselines, several techniques reduce gradient variance:</p>
+<h3 id="1-reward-to-go">1. Reward-to-Go</h3>
+<p>Instead of using full episode return <span class="arithmatex">\( G_0 \)</span>, use <strong>reward-to-go</strong> <span class="arithmatex">\( G_t \)</span>:</p>
+<div class="arithmatex">\[
+G_t = \sum_{k=t}^{T} \gamma^{k-t} r_k
+\]</div>
+<p><strong>Why it helps:</strong> Action at time <span class="arithmatex">\( t \)</span> doesn't affect rewards before time <span class="arithmatex">\( t \)</span>, so we shouldn't credit it for those rewards.</p>
+<h3 id="2-generalized-advantage-estimation-gae">2. Generalized Advantage Estimation (GAE)</h3>
+<p>Combine multiple <span class="arithmatex">\( n \)</span>-step returns with exponential weighting:</p>
+<div class="arithmatex">\[
+A_t^{\text{GAE}} = \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l}
+\]</div>
+<p>Where <span class="arithmatex">\( \delta_t = r_t + \gamma V(s_{t+1}) - V(s_t) \)</span> is the TD error.</p>
+<p><strong>Parameter <span class="arithmatex">\( \lambda \)</span>:</strong> Controls bias-variance tradeoff
+- <span class="arithmatex">\( \lambda = 0 \)</span>: Low variance, high bias (like TD)
+- <span class="arithmatex">\( \lambda = 1 \)</span>: High variance, low bias (like Monte Carlo)</p>
+<h3 id="3-entropy-regularization">3. Entropy Regularization</h3>
+<p>Add entropy bonus to encourage exploration:</p>
+<div class="arithmatex">\[
+J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[G(\tau)] + \beta \mathcal{H}(\pi_\theta)
+\]</div>
+<p>Where <span class="arithmatex">\( \mathcal{H}(\pi_\theta) = -\sum_a \pi_\theta(a|s) \log \pi_\theta(a|s) \)</span> is the policy entropy.</p>
+<p><strong>Effect:</strong> Prevents premature convergence to deterministic policy, encourages exploration.</p>
+<h2 id="modern-policy-gradient-methods">Modern Policy Gradient Methods</h2>
+<p>REINFORCE is the foundation, but modern methods add improvements:</p>
+<h3 id="ppo-proximal-policy-optimization">PPO (Proximal Policy Optimization)</h3>
+<p><strong>Key idea:</strong> Limit how much the policy can change in one update.</p>
+<p><strong>Clipped objective:</strong>
+[
+L(\theta) = \mathbb{E} \left[ \min(r_t(\theta) A_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t) \right]
+]</p>
+<p>Where <span class="arithmatex">\( r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t|s_t)} \)</span> is the probability ratio.</p>
+<p><strong>Why it works:</strong> Prevents destructively large updates, more stable training.</p>
+<h3 id="trpo-trust-region-policy-optimization">TRPO (Trust Region Policy Optimization)</h3>
+<p><strong>Key idea:</strong> Constrain policy updates to stay within a "trust region."</p>
+<p><strong>Constraint:</strong>
+[
+\mathbb{E}[D_{KL}(\pi_{\theta_{\text{old}}} || \pi_\theta)] \leq \delta
+]</p>
+<p>Ensures new policy isn't too different from old policy.</p>
+<p><strong>Why it works:</strong> Guarantees monotonic improvement, very stable.</p>
+<h3 id="a3ca2c-advantage-actor-critic">A3C/A2C (Advantage Actor-Critic)</h3>
+<p><strong>Key idea:</strong> Use value function as baseline, update after every step (not full episodes).</p>
+<p><strong>Benefits:</strong>
+- Lower variance (value function baseline)
+- More sample efficient (use bootstrapping like TD)
+- Can train in parallel (A3C)</p>
+<p>We'll cover actor-critic methods in detail in the next section!</p>
+<h2 id="comparing-reinforce-to-q-learning">Comparing REINFORCE to Q-Learning</h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Q-Learning</th>
+<th>REINFORCE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>What we learn</strong></td>
+<td>Q(s, a) values</td>
+<td>Policy πθ directly</td>
+</tr>
+<tr>
+<td><strong>Update frequency</strong></td>
+<td>Every step</td>
+<td>Every episode</td>
+</tr>
+<tr>
+<td><strong>Sample efficiency</strong></td>
+<td>More efficient</td>
+<td>Less efficient</td>
+</tr>
+<tr>
+<td><strong>Action space</strong></td>
+<td>Discrete only</td>
+<td>Discrete or continuous</td>
+</tr>
+<tr>
+<td><strong>Variance</strong></td>
+<td>Lower</td>
+<td>Higher</td>
+</tr>
+<tr>
+<td><strong>Bias</strong></td>
+<td>Biased (with function approx)</td>
+<td>Unbiased</td>
+</tr>
+<tr>
+<td><strong>Convergence</strong></td>
+<td>Can diverge</td>
+<td>More stable</td>
+</tr>
+<tr>
+<td><strong>Off-policy</strong></td>
+<td>Yes</td>
+<td>No (by default)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>When to use REINFORCE over Q-Learning:</strong>
+- Continuous action spaces (robot control)
+- Stochastic policies needed
+- Stability more important than sample efficiency</p>
+<h2 id="practical-tips-for-training">Practical Tips for Training</h2>
+<h3 id="1-normalize-returns">1. Normalize Returns</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">returns</span> <span class="o">=</span> <span class="p">(</span><span class="n">returns</span> <span class="o">-</span> <span class="n">returns</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">returns</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+</code></pre></div>
+<p>Helps stabilize training by keeping gradients in reasonable range.</p>
+<h3 id="2-gradient-clipping">2. Gradient Clipping</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">policy</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">max_norm</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<p>Prevents exploding gradients.</p>
+<h3 id="3-learning-rate-scheduling">3. Learning Rate Scheduling</h3>
+<p>Start with higher learning rate, decay over time:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">scheduler</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">StepLR</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="4-early-stopping">4. Early Stopping</h3>
+<p>Monitor validation performance and stop if not improving.</p>
+<h3 id="5-multiple-random-seeds">5. Multiple Random Seeds</h3>
+<p>Train with different random seeds, report mean and std of performance.</p>
+<h2 id="summary">Summary</h2>
+<p><strong>REINFORCE in a nutshell:</strong></p>
+<ol>
+<li><strong>Sample trajectories</strong>: Follow current policy to collect episodes</li>
+<li><strong>Compute returns</strong>: Calculate discounted reward-to-go for each timestep  </li>
+<li><strong>Compute advantages</strong>: Subtract baseline (optional but recommended)</li>
+<li><strong>Update policy</strong>: Gradient ascent weighted by advantages</li>
+</ol>
+<p><strong>Key equation:</strong>
+[
+\theta \leftarrow \theta + \alpha \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t | s_t) (G_t - b(s_t))
+]</p>
+<p><strong>Strengths:</strong> Simple, direct optimization, handles continuous actions, stable convergence</p>
+<p><strong>Weaknesses:</strong> Sample inefficient, high variance, on-policy</p>
+<p><strong>Modern extensions:</strong> PPO, TRPO, A3C (address sample efficiency and variance)</p>
+<p>Now let's see REINFORCE in action with a hands-on implementation!</p>
+<hr />
+<p><a class="md-button" href="../value_based/">← Back to Q-Learning</a>
+<a class="md-button md-button--primary" href="../practical_tutorial/">Continue to Practical Tutorial →</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.indexes", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/mcq.js"></script>
+      
+    
+  </body>
+</html>

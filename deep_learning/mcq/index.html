@@ -1,0 +1,2319 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A course on AI for robotics by SMART Mechatronics and Robotics Group, Saxion University of Applied Sciences">
+      
+      
+        <meta name="author" content="Stephan Jaspar, Rahul Moongayil Ramakrishnan, Kousheek Chakraborty">
+      
+      
+      
+        <link rel="prev" href="../11_Summary/">
+      
+      
+        <link rel="next" href="../Backward_Propagation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Quiz - AI for Robotics Course</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/mcq.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#question-1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI for Robotics Course" class="md-header__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI for Robotics Course
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quiz
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../foundations/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Foundations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deep Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reinforcement_learning/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reinforcement Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI for Robotics Course" class="md-nav__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI for Robotics Course
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../foundations/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0_Git_Python_Pytorch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Git | Python 101 | Pytorch 101
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lighter Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Normalization Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Global Average Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Increasing Model Capacity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Correcting MaxPooling Location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 9
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Rate Scheduling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_Summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#question-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 4
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 5
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 6
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 7
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 8
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 9
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 10
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 11
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 12
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 13
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 14
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 15
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 16
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 17
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 18
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 19
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 20
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Backward_Propagation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backward Propagation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../reinforcement_learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to RL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/mdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markov Decision Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/policy_vs_value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy vs Value-Based
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/value_based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/policy_based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy Gradients (REINFORCE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/practical_tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practical Tutorial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#question-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 4
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 5
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 6
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 7
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 8
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 9
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 10
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 11
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 12
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 13
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 14
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 15
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 16
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 17
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 18
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 19
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 20
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Quiz</h1>
+
+<form id="mkdocs-mcq-form"><h2 id="question-1">Question 1</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzFd">
+            <div class="mcq-question"><p>What is the role of a baseline model in a deep learning project?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>Final optimized model</p></label></li><li class="task-list-item" data-feedback="PHA+VGhlIGJhc2VsaW5lIGFjdHMgYXMgYSBmaXhlZCByZWZlcmVuY2UgdG8gZXZhbHVhdGUgZnV0dXJlIGFyY2hpdGVjdHVyYWwgYW5kIHRyYWluaW5nIGNoYW5nZXMuPC9wPg==">    <label><input type="checkbox"> <p>A reference architecture to compare later improvements</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>Model used only for validation</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>Pretrained model on ImageNet</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-2">Question 2</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>Why do large models with millions of parameters often overfit small datasets?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+V2hlbiBhIG1vZGVsIGhhcyB0b28gbWFueSBwYXJhbWV0ZXJzIHJlbGF0aXZlIHRvIGRhdGFzZXQgc2l6ZSwgaXQgbGVhcm5zIG5vaXNlIHJhdGhlciB0aGFuIGdlbmVyYWwgcGF0dGVybnMuPC9wPg==">    <label><input type="checkbox"> <p>They memorize training data due to excessive capacity</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>They have too few features</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>They use small kernels</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>They skip normalization</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-3">Question 3</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>What is the purpose of establishing a model “skeleton” before experimentation?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+QSBza2VsZXRvbiBwcm92aWRlcyBhIHJlcHJvZHVjaWJsZSBiYXNlIHNvIHRoYXQgbGF0ZXIgYXJjaGl0ZWN0dXJhbCBjaGFuZ2VzIGNhbiBiZSBvYmplY3RpdmVseSBjb21wYXJlZC48L3A+">    <label><input type="checkbox"> <p>To ensure consistent structure for controlled experiments</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>To maximize training speed</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>To randomize layer order</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>To perform data augmentation</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-4">Question 4</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>Why is reducing model parameters often beneficial?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+U21hbGxlciBtb2RlbHMgYXJlIGxlc3MgbGlrZWx5IHRvIG1lbW9yaXplIGRhdGEgYW5kIHVzdWFsbHkgZ2VuZXJhbGl6ZSBiZXR0ZXIgb24gdW5zZWVuIGlucHV0cy48L3A+">    <label><input type="checkbox"> <p>It helps reduce overfitting and improves generalization</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It increases computational cost</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It always increases accuracy</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It improves visualization quality</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-5">Question 5</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>What is the main purpose of Batch Normalization in neural networks?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+QmF0Y2ggTm9ybWFsaXphdGlvbiByZWR1Y2VzIGludGVybmFsIGNvdmFyaWF0ZSBzaGlmdCwgbGVhZGluZyB0byBmYXN0ZXIgYW5kIG1vcmUgc3RhYmxlIGNvbnZlcmdlbmNlLjwvcD4=">    <label><input type="checkbox"> <p>To stabilize learning by normalizing activations</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>To increase regularization strength</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>To freeze gradients</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>To modify optimizer behavior</p></label></li></ul></div>
+        </div>
+        </p>
+<h2 id="question-6">Question 6</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>Why can Batch Normalization sometimes increase overfitting?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+UmFwaWQgbGVhcm5pbmcgZHVlIHRvIHN0YWJpbGl6ZWQgZ3JhZGllbnRzIG1heSBhbXBsaWZ5IG92ZXJmaXR0aW5nIGlmIG5vIHJlZ3VsYXJpemF0aW9uIGlzIGFwcGxpZWQuPC9wPg==">    <label><input type="checkbox"> <p>It allows faster convergence, causing the model to memorize data more easily</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It randomly drops neurons</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It reduces model size too much</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It introduces noisy gradients</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-7">Question 7</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>How does Dropout help improve model generalization?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+RHJvcG91dCBwcmV2ZW50cyBjby1hZGFwdGF0aW9uIG9mIG5ldXJvbnMsIGZvcmNpbmcgdGhlIG1vZGVsIHRvIGxlYXJuIHJlZHVuZGFudCwgcm9idXN0IGZlYXR1cmVzLjwvcD4=">    <label><input type="checkbox"> <p>By randomly deactivating neurons during training</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>By increasing learning rate dynamically</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>By freezing selected layers</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>By normalizing weights</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-8">Question 8</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>What is the main effect of Global Average Pooling in a CNN?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+R0FQIGF2ZXJhZ2VzIGZlYXR1cmUgbWFwcywgbG93ZXJpbmcgcGFyYW1ldGVyIGNvdW50IGFuZCByZWR1Y2luZyBvdmVyZml0dGluZyByaXNrLjwvcD4=">    <label><input type="checkbox"> <p>It replaces dense layers to reduce parameters while preserving spatial information</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It adds additional convolutional filters</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It increases receptive field size</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It removes spatial structure completely</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-9">Question 9</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>Why is proper MaxPooling placement important in CNN architectures?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+UHJvcGVyIHBvb2xpbmcgb3JkZXIgbWFpbnRhaW5zIHNwYXRpYWwgaGllcmFyY2h5IGFuZCBwcmV2ZW50cyBmZWF0dXJlIGxvc3MuPC9wPg==">    <label><input type="checkbox"> <p>It ensures correct receptive field coverage and hierarchical feature extraction</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It increases GPU memory usage</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It improves training speed only</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It has no real impact on performance</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-10">Question 10</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>How does data augmentation improve model performance?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+QXVnbWVudGF0aW9ucyBsaWtlIHJvdGF0aW9uLCBzaGlmdCwgb3IgZmxpcCBwcmV2ZW50IHRoZSBuZXR3b3JrIGZyb20gb3ZlcmZpdHRpbmcgdG8gdHJhaW5pbmcgc2FtcGxlcy48L3A+">    <label><input type="checkbox"> <p>It introduces variations that help the model generalize better to unseen data</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It increases dataset redundancy</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It reduces training speed</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It adds noise to labels</p></label></li></ul></div>
+        </div>
+        </p>
+<h2 id="question-11">Question 11</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>Why might increasing model capacity improve accuracy in certain cases?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+V2hlbiBhIG1vZGVsIGlzIHRvbyBzaW1wbGUsIGl0IG1heSB1bmRlcmZpdDsgbW9yZSBjYXBhY2l0eSBoZWxwcyBsZWFybiByaWNoZXIgZmVhdHVyZSBoaWVyYXJjaGllcy48L3A+">    <label><input type="checkbox"> <p>It allows the network to capture more complex representations of data</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It prevents overfitting automatically</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It reduces the need for regularization</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It slows down gradient updates intentionally</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-12">Question 12</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>Which part of a CNN architecture typically has the greatest influence on classification accuracy?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+VGhlIGVuZCBsYXllcnMgYWdncmVnYXRlIGxlYXJuZWQgZmVhdHVyZXMgYW5kIGRpcmVjdGx5IGltcGFjdCBwcmVkaWN0aW9uIHBlcmZvcm1hbmNlLjwvcD4=">    <label><input type="checkbox"> <p>The final fully connected or classification layers</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>The input normalization layer</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>The pooling layers</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>The data loader configuration</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-13">Question 13</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>What is the main reason to use a Learning Rate Scheduler during training?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+R3JhZHVhbGx5IGxvd2VyaW5nIHRoZSBMUiBoZWxwcyBmaW5lLXR1bmUgbmVhciB0aGUgbG9zcyBtaW5pbXVtLCBpbXByb3Zpbmcgc3RhYmlsaXR5IGFuZCBhY2N1cmFjeS48L3A+">    <label><input type="checkbox"> <p>To reduce the learning rate over time for stable convergence</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>To randomly change the learning rate each epoch</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>To speed up training by increasing LR</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>To disable gradient updates periodically</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-14">Question 14</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>What problem can occur if the learning rate is too high?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+QSBsYXJnZSBMUiBvdmVyc2hvb3RzIHRoZSBvcHRpbWFsIHBvaW50LCBwcmV2ZW50aW5nIHByb3BlciBjb252ZXJnZW5jZS48L3A+">    <label><input type="checkbox"> <p>The model may diverge or oscillate around the minimum</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>The model underfits slowly</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>Training stops immediately</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>Gradients vanish completely</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-15">Question 15</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>How does reducing the learning rate later in training improve results?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+TG93ZXJpbmcgTFIgYWZ0ZXIgaW5pdGlhbCBjb252ZXJnZW5jZSBoZWxwcyB0aGUgbW9kZWwgc2V0dGxlIGludG8gYSBzdGFibGUgbWluaW11bS48L3A+">    <label><input type="checkbox"> <p>It allows finer weight adjustments for improved generalization</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It increases gradient magnitude</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It resets optimizer states</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It prevents backpropagation entirely</p></label></li></ul></div>
+        </div>
+        </p>
+<h2 id="question-16">Question 16</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>Why does Dropout sometimes reduce training accuracy but improve test accuracy?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+RHJvcG91dCBmb3JjZXMgZ2VuZXJhbCBmZWF0dXJlIGxlYXJuaW5nIGluc3RlYWQgb2YgbWVtb3JpemF0aW9uLCBsZWFkaW5nIHRvIGJldHRlciBnZW5lcmFsaXphdGlvbi48L3A+">    <label><input type="checkbox"> <p>It prevents overfitting by randomly disabling parts of the network</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It increases regularization loss</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It slows batch normalization</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It introduces bias in weight updates</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-17">Question 17</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>How does Global Average Pooling differ from Flatten + Dense layers?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+R0FQIG1pbmltaXplcyB0aGUgbnVtYmVyIG9mIHdlaWdodHMgYW5kIGxvd2VycyBvdmVyZml0dGluZyByaXNrIGNvbXBhcmVkIHRvIGRlbnNlIGxheWVycy48L3A+">    <label><input type="checkbox"> <p>GAP uses averaging instead of trainable connections, reducing parameters significantly</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>GAP adds additional bias terms</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>GAP multiplies feature maps by filters</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>GAP removes activation functions</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-18">Question 18</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>What happens if MaxPooling is applied too early in a CNN?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+RWFybHkgcG9vbGluZyBkaXNjYXJkcyBmaW5lIGRldGFpbHMgdGhhdCBhcmUgY3J1Y2lhbCBmb3IgbGVhcm5pbmcgY29tcGxleCBwYXR0ZXJucy48L3A+">    <label><input type="checkbox"> <p>Important spatial features may be lost prematurely</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It increases computation time</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It enhances feature granularity</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It doubles the receptive field automatically</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-19">Question 19</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>Why does data augmentation improve robustness to unseen images?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+VHJhaW5pbmcgb24gcm90YXRlZCwgZmxpcHBlZCwgb3Igc2hpZnRlZCBpbWFnZXMgdGVhY2hlcyBpbnZhcmlhbmNlIHRvIHJlYWwtd29ybGQgdmFyaWF0aW9ucy48L3A+">    <label><input type="checkbox"> <p>It exposes the model to diverse transformations of the same data</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It decreases effective dataset size</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It alters the optimizer dynamics</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It freezes convolutional kernels</p></label></li></ul></div>
+        </div>
+        </p>
+<hr />
+<h2 id="question-20">Question 20</h2>
+<p>
+        <div class="mcq-container" data-mcq-type="single" data-key="WzBd">
+            <div class="mcq-question"><p>What overall benefit does combining normalization, dropout, and LR scheduling achieve?</p></div>
+            <div class="mcq-choices"><ul class="task-list"><li class="task-list-item" data-feedback="PHA+VG9nZXRoZXIsIHRoZXNlIHRlY2huaXF1ZXMgY29udHJvbCBncmFkaWVudCBmbG93LCBwcmV2ZW50IG92ZXJmaXR0aW5nLCBhbmQgZmluZS10dW5lIGxlYXJuaW5nIGVmZmljaWVuY3kuPC9wPg==">    <label><input type="checkbox"> <p>It balances convergence speed, stability, and generalization</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It reduces model depth</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It eliminates the need for backpropagation</p></label></li><li class="task-list-item" data-feedback="">    <label><input type="checkbox"> <p>It guarantees 100% accuracy</p></label></li></ul></div>
+        </div>
+        </p></form>
+            <button type="submit" id="mcq-quiz-submit" form="mkdocs-mcq-form" class="md-button md-button--primary">
+                Submit Quiz
+            </button>
+            
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.indexes", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/mcq.js"></script>
+      
+    
+  </body>
+</html>

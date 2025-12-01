@@ -1,0 +1,2911 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A course on AI for robotics by SMART Mechatronics and Robotics Group, Saxion University of Applied Sciences">
+      
+      
+        <meta name="author" content="Stephan Jaspar, Rahul Moongayil Ramakrishnan, Kousheek Chakraborty">
+      
+      
+      
+        <link rel="prev" href="../mdp/">
+      
+      
+        <link rel="next" href="../value_based/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Policy vs Value-Based - AI for Robotics Course</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/mcq.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#policy-based-vs-value-based-methods" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI for Robotics Course" class="md-header__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI for Robotics Course
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Policy vs Value-Based
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../foundations/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Foundations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deep_learning/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deep Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reinforcement Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI for Robotics Course" class="md-nav__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI for Robotics Course
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../foundations/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../deep_learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/0_Git_Python_Pytorch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Git | Python 101 | Pytorch 101
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/12_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/1_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/1_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/2_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/2_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/3_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lighter Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/3_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/4_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Normalization Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/4_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/5_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/5_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/6_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Global Average Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/6_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/7_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Increasing Model Capacity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/7_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/8_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Correcting MaxPooling Location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/8_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/9_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/9_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 9
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/10_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Rate Scheduling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/10_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/11_Summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/Backward_Propagation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backward Propagation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to RL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markov Decision Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy vs Value-Based
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy vs Value-Based
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#two-philosophies-for-solving-rl-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two Philosophies for Solving RL Problems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#value-based-methods-learn-the-value-extract-the-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value-Based Methods: Learn the Value, Extract the Policy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Value-Based Methods: Learn the Value, Extract the Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-learning-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Learning Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples-of-value-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples of Value-Based Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages ❌
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-value-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use Value-Based Methods?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy-based-methods-learn-the-policy-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policy-Based Methods: Learn the Policy Directly
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Policy-Based Methods: Learn the Policy Directly">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-idea_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-learning-process_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Learning Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples-of-policy-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples of Policy-Based Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advantages_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages ❌
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-policy-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use Policy-Based Methods?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#side-by-side-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Side-by-Side Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intuitive-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuitive Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Intuitive Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-grid-world-navigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 1: Grid World Navigation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-robot-arm-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 2: Robot Arm Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-exploration-strategy-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Exploration Strategy Difference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Exploration Strategy Difference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#value-based-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value-Based Exploration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#policy-based-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policy-Based Exploration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continuous-action-spaces-why-policy-methods-shine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Action Spaces: Why Policy Methods Shine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Continuous Action Spaces: Why Policy Methods Shine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-challenge-with-value-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Challenge with Value Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#policy-methods-natural-fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policy Methods: Natural Fit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stochastic-vs-deterministic-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stochastic vs Deterministic Policies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stochastic vs Deterministic Policies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-is-a-stochastic-policy-optimal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When is a Stochastic Policy Optimal?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-methods-struggle-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value Methods Struggle Here
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#actor-critic-best-of-both-worlds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actor-Critic: Best of Both Worlds?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-which-approach-should-you-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary: Which Approach Should You Use?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary: Which Approach Should You Use?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-value-based-methods-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Value-Based Methods When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-policy-based-methods-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Policy-Based Methods When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-actor-critic-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Actor-Critic When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-big-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Big Picture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coming-up-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coming Up Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../value_based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policy_based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy Gradients (REINFORCE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../practical_tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practical Tutorial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#two-philosophies-for-solving-rl-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two Philosophies for Solving RL Problems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#value-based-methods-learn-the-value-extract-the-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value-Based Methods: Learn the Value, Extract the Policy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Value-Based Methods: Learn the Value, Extract the Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-learning-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Learning Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples-of-value-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples of Value-Based Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages ❌
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-value-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use Value-Based Methods?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy-based-methods-learn-the-policy-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policy-Based Methods: Learn the Policy Directly
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Policy-Based Methods: Learn the Policy Directly">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-idea_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-learning-process_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Learning Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples-of-policy-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples of Policy-Based Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advantages_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages ❌
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-policy-based-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use Policy-Based Methods?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#side-by-side-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Side-by-Side Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intuitive-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuitive Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Intuitive Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-grid-world-navigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 1: Grid World Navigation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-robot-arm-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 2: Robot Arm Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-exploration-strategy-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Exploration Strategy Difference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Exploration Strategy Difference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#value-based-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value-Based Exploration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#policy-based-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policy-Based Exploration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continuous-action-spaces-why-policy-methods-shine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Action Spaces: Why Policy Methods Shine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Continuous Action Spaces: Why Policy Methods Shine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-challenge-with-value-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Challenge with Value Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#policy-methods-natural-fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policy Methods: Natural Fit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stochastic-vs-deterministic-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stochastic vs Deterministic Policies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stochastic vs Deterministic Policies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-is-a-stochastic-policy-optimal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When is a Stochastic Policy Optimal?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-methods-struggle-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value Methods Struggle Here
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#actor-critic-best-of-both-worlds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actor-Critic: Best of Both Worlds?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-which-approach-should-you-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary: Which Approach Should You Use?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary: Which Approach Should You Use?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-value-based-methods-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Value-Based Methods When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-policy-based-methods-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Policy-Based Methods When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-actor-critic-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Actor-Critic When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-big-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Big Picture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coming-up-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coming Up Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="policy-based-vs-value-based-methods">Policy-Based vs Value-Based Methods</h1>
+<h2 id="two-philosophies-for-solving-rl-problems">Two Philosophies for Solving RL Problems</h2>
+<p>Now that we understand the MDP framework, how do we actually find the optimal policy <span class="arithmatex">\( \pi^* \)</span>?</p>
+<p>There are two fundamentally different approaches:</p>
+<ol>
+<li><strong>Value-Based Methods</strong>: Learn to estimate how good states or actions are, then derive a policy</li>
+<li><strong>Policy-Based Methods</strong>: Directly learn the policy that maps states to actions</li>
+</ol>
+<p>Both aim to find <span class="arithmatex">\( \pi^* \)</span>, but they take very different paths to get there!</p>
+<h2 id="value-based-methods-learn-the-value-extract-the-policy">Value-Based Methods: Learn the Value, Extract the Policy</h2>
+<h3 id="core-idea">Core Idea</h3>
+<p><strong>"If I know how valuable each action is, I can just pick the best one!"</strong></p>
+<p>Value-based methods learn a value function (typically <span class="arithmatex">\( Q(s, a) \)</span>) that estimates the expected return for taking action <span class="arithmatex">\( a \)</span> in state <span class="arithmatex">\( s \)</span>. Once we have good estimates of <span class="arithmatex">\( Q(s, a) \)</span>, the policy is trivial:</p>
+<div class="arithmatex">\[
+\pi(s) = \arg\max_a Q(s, a)
+\]</div>
+<p><strong>Simple interpretation:</strong> In each state, choose the action with the highest Q-value!</p>
+<h3 id="the-learning-process">The Learning Process</h3>
+<pre class="mermaid"><code>graph LR
+    A[Experience&lt;br/&gt;s, a, r, s'] --&gt; B[Update Q-values]
+    B --&gt; C[Q-table or&lt;br/&gt;Q-network]
+    C --&gt; D[Policy: π(s) = argmax Q(s,a)]
+    D --&gt; E[Take action]
+    E --&gt; A</code></pre>
+<h3 id="examples-of-value-based-methods">Examples of Value-Based Methods</h3>
+<ul>
+<li><strong>Q-Learning</strong>: Learn Q-values through Bellman updates</li>
+<li><strong>SARSA</strong>: On-policy variant of Q-learning</li>
+<li><strong>DQN (Deep Q-Network)</strong>: Use neural networks to approximate Q-values</li>
+<li><strong>Double DQN, Dueling DQN</strong>: Improvements on DQN</li>
+</ul>
+<h3 id="advantages">Advantages ✅</h3>
+<ol>
+<li><strong>Sample efficient</strong>: Each experience can update many action values</li>
+<li><strong>Off-policy learning</strong>: Can learn from any experience (even random actions!)</li>
+<li><strong>Deterministic optimal policy</strong>: For many problems, the optimal policy is deterministic</li>
+<li><strong>Easy to understand</strong>: "Pick the action with highest value" is intuitive</li>
+<li><strong>Stable in discrete action spaces</strong>: Clear max operation over actions</li>
+</ol>
+<h3 id="disadvantages">Disadvantages ❌</h3>
+<ol>
+<li><strong>Limited to discrete actions</strong>: Computing <span class="arithmatex">\( \arg\max_a Q(s,a) \)</span> is hard when actions are continuous</li>
+<li><strong>No stochasticity</strong>: Derived policy is deterministic (can be addressed with exploration strategies)</li>
+<li><strong>Instability with function approximation</strong>: Can diverge when using neural networks (though solutions exist)</li>
+<li><strong>Maximization bias</strong>: Taking max can overestimate values</li>
+</ol>
+<h3 id="when-to-use-value-based-methods">When to Use Value-Based Methods?</h3>
+<p>✅ <strong>Discrete action spaces</strong> (e.g., game controls, discrete robot commands)</p>
+<p>✅ <strong>Off-policy learning is valuable</strong> (want to learn from demonstrations or replay buffers)</p>
+<p>✅ <strong>Deterministic policies are acceptable</strong></p>
+<p>❌ <strong>Continuous action spaces</strong> (robotics with motor torques, joint angles)</p>
+<h2 id="policy-based-methods-learn-the-policy-directly">Policy-Based Methods: Learn the Policy Directly</h2>
+<h3 id="core-idea_1">Core Idea</h3>
+<p><strong>"Why bother with value functions? Just learn the policy itself!"</strong></p>
+<p>Policy-based methods directly parameterize the policy <span class="arithmatex">\( \pi_\theta(a|s) \)</span> with parameters <span class="arithmatex">\( \theta \)</span> and optimize it to maximize expected return.</p>
+<p><strong>Key insight:</strong> We optimize <span class="arithmatex">\( \theta \)</span> to maximize:</p>
+<div class="arithmatex">\[
+J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[G(\tau)] = \mathbb{E}_{\tau \sim \pi_\theta}\left[\sum_t \gamma^t r_t\right]
+\]</div>
+<p>This is a <strong>direct optimization</strong> of what we care about!</p>
+<h3 id="the-learning-process_1">The Learning Process</h3>
+<pre class="mermaid"><code>graph LR
+    A[Collect trajectories&lt;br/&gt;using πθ] --&gt; B[Compute returns]
+    B --&gt; C[Compute gradients&lt;br/&gt;∇θ J(θ)]
+    C --&gt; D[Update policy&lt;br/&gt;θ ← θ + α∇θJ(θ)]
+    D --&gt; A</code></pre>
+<h3 id="examples-of-policy-based-methods">Examples of Policy-Based Methods</h3>
+<ul>
+<li><strong>REINFORCE</strong>: Basic policy gradient algorithm</li>
+<li><strong>TRPO (Trust Region Policy Optimization)</strong>: Safe policy updates</li>
+<li><strong>PPO (Proximal Policy Optimization)</strong>: More practical version of TRPO</li>
+<li><strong>A3C (Asynchronous Advantage Actor-Critic)</strong>: Parallel policy learning</li>
+</ul>
+<h3 id="advantages_1">Advantages ✅</h3>
+<ol>
+<li><strong>Natural for continuous actions</strong>: Can directly output continuous values</li>
+<li><strong>Can learn stochastic policies</strong>: Sometimes optimal policy is stochastic!</li>
+<li><strong>Better convergence properties</strong>: Typically more stable than value-based methods</li>
+<li><strong>Effective in high-dimensional action spaces</strong>: No need to evaluate all actions</li>
+<li><strong>Can learn from limited observability</strong>: Works naturally in POMDPs</li>
+</ol>
+<h3 id="disadvantages_1">Disadvantages ❌</h3>
+<ol>
+<li><strong>Sample inefficient</strong>: Need many trajectories to estimate gradients</li>
+<li><strong>High variance</strong>: Gradient estimates can be noisy</li>
+<li><strong>On-policy by default</strong>: Must collect new data after each update (can be expensive)</li>
+<li><strong>Can converge to local optima</strong>: Gradient-based optimization doesn't guarantee global optimum</li>
+<li><strong>Slower to train</strong>: Needs more environment interactions</li>
+</ol>
+<h3 id="when-to-use-policy-based-methods">When to Use Policy-Based Methods?</h3>
+<p>✅ <strong>Continuous action spaces</strong> (robotic control, motor commands)</p>
+<p>✅ <strong>High-dimensional action spaces</strong></p>
+<p>✅ <strong>Stochastic policies needed</strong> (e.g., rock-paper-scissors, partially observable environments)</p>
+<p>✅ <strong>Stability is important</strong></p>
+<p>❌ <strong>Sample efficiency is critical</strong> (real-world robot learning with limited trials)</p>
+<h2 id="side-by-side-comparison">Side-by-Side Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Value-Based</th>
+<th>Policy-Based</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>What do we learn?</strong></td>
+<td><span class="arithmatex">\( Q(s, a) \)</span> or <span class="arithmatex">\( V(s) \)</span></td>
+<td><span class="arithmatex">\( \pi_\theta(a \mid s) \)</span></td>
+</tr>
+<tr>
+<td><strong>Policy extraction</strong></td>
+<td><span class="arithmatex">\( \pi(s) = \arg\max_a Q(s,a) \)</span></td>
+<td>Policy is directly learned</td>
+</tr>
+<tr>
+<td><strong>Action space</strong></td>
+<td>Best for discrete</td>
+<td>Best for continuous</td>
+</tr>
+<tr>
+<td><strong>Policy type</strong></td>
+<td>Deterministic (usually)</td>
+<td>Can be stochastic</td>
+</tr>
+<tr>
+<td><strong>Sample efficiency</strong></td>
+<td>More efficient</td>
+<td>Less efficient</td>
+</tr>
+<tr>
+<td><strong>Convergence</strong></td>
+<td>Can be unstable</td>
+<td>More stable</td>
+</tr>
+<tr>
+<td><strong>Off-policy learning</strong></td>
+<td>Natural</td>
+<td>Requires importance sampling</td>
+</tr>
+<tr>
+<td><strong>Exploration</strong></td>
+<td>Via ε-greedy, etc.</td>
+<td>Via stochastic policy</td>
+</tr>
+<tr>
+<td><strong>Examples</strong></td>
+<td>Q-Learning, DQN</td>
+<td>REINFORCE, PPO</td>
+</tr>
+</tbody>
+</table>
+<h2 id="intuitive-examples">Intuitive Examples</h2>
+<p>Let's understand the difference with concrete examples:</p>
+<h3 id="example-1-grid-world-navigation">Example 1: Grid World Navigation</h3>
+<p><strong>Value-Based Approach:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Learn Q-values for each state-action pair:
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>State (2,3):
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  Q(s, up)    = 5.2
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  Q(s, down)  = 3.1
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  Q(s, left)  = 4.8
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  Q(s, right) = 7.3  ← Highest!
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Policy: π(s) = right
+</code></pre></div>
+<p>The agent learns "how good is each direction?" then picks the best.</p>
+<p><strong>Policy-Based Approach:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Learn policy directly:
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>State (2,3):
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  π(up | s)    = 0.10
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  π(down | s)  = 0.05
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  π(left | s)  = 0.15
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  π(right | s) = 0.70  ← Most likely
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Sample action from this distribution
+</code></pre></div>
+<p>The agent learns "which direction should I go?" directly.</p>
+<h3 id="example-2-robot-arm-control">Example 2: Robot Arm Control</h3>
+<p><strong>Problem:</strong> Move robot arm to target position</p>
+<p><strong>Action space:</strong> 7 joint torques (continuous, <span class="arithmatex">\(\mathbb{R}^7\)</span>)</p>
+<p><strong>Value-Based Challenge:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>How do we compute argmax Q(s, a) when a ∈ ℝ⁷?
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>- Would need to evaluate Q for infinitely many actions!
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>- Or discretize actions (loses precision)
+</code></pre></div></p>
+<p><strong>Policy-Based Solution:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Policy directly outputs continuous actions:
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>π_θ(s) → [τ₁, τ₂, τ₃, τ₄, τ₅, τ₆, τ₇]
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Or outputs distribution parameters:
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>π_θ(s) → μ(s), σ(s)
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Sample: a ~ N(μ(s), σ(s))
+</code></pre></div></p>
+<p>This is natural and efficient!</p>
+<h2 id="the-exploration-strategy-difference">The Exploration Strategy Difference</h2>
+<h3 id="value-based-exploration">Value-Based Exploration</h3>
+<p>Must add exploration explicitly:</p>
+<p><strong>ε-greedy:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">if</span> <span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">action</span> <span class="o">=</span> <span class="n">random_action</span><span class="p">()</span>  <span class="c1"># Explore</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">action</span> <span class="o">=</span> <span class="n">argmax_a</span> <span class="n">Q</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>  <span class="c1"># Exploit</span>
+</code></pre></div></p>
+<p><strong>Boltzmann exploration:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">probabilities</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">Q_values</span> <span class="o">/</span> <span class="n">temperature</span><span class="p">)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">action</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="policy-based-exploration">Policy-Based Exploration</h3>
+<p>Exploration is <strong>built into the policy</strong>!</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Stochastic policy (e.g., Gaussian)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">mean</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="n">policy_network</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">action</span> <span class="o">=</span> <span class="n">sample_normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>  <span class="c1"># Naturally explores!</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Entropy bonus encourages exploration</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">expected_return</span> <span class="o">+</span> <span class="n">entropy_coefficient</span> <span class="o">*</span> <span class="n">entropy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+</code></pre></div>
+<p>The randomness of the policy provides natural exploration.</p>
+<h2 id="continuous-action-spaces-why-policy-methods-shine">Continuous Action Spaces: Why Policy Methods Shine</h2>
+<h3 id="the-challenge-with-value-methods">The Challenge with Value Methods</h3>
+<p>For continuous actions <span class="arithmatex">\( a \in \mathbb{R}^n \)</span>:</p>
+<div class="arithmatex">\[
+\pi(s) = \arg\max_{a \in \mathbb{R}^n} Q(s, a)
+\]</div>
+<p>This is an <strong>optimization problem at every timestep</strong>!</p>
+<p><strong>Options:</strong>
+1. <strong>Discretize actions</strong>: Loses precision, curse of dimensionality
+2. <strong>Use optimization</strong>: Expensive, need many Q-function evaluations
+3. <strong>Assume Q is simple</strong>: Rarely true (quadratic approximations, etc.)</p>
+<h3 id="policy-methods-natural-fit">Policy Methods: Natural Fit</h3>
+<p>Policy network directly outputs continuous actions:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Policy network architecture</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">state</span> <span class="err">→</span> <span class="p">[</span><span class="n">Neural</span> <span class="n">Network</span><span class="p">]</span> <span class="err">→</span> <span class="n">action_mean</span><span class="p">,</span> <span class="n">action_std</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Gaussian policy</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">action</span> <span class="o">=</span> <span class="n">action_mean</span> <span class="o">+</span> <span class="n">action_std</span> <span class="o">*</span> <span class="n">random_normal</span><span class="p">()</span>
+</code></pre></div>
+<p><strong>No argmax needed!</strong> Just a forward pass through the network.</p>
+<h2 id="stochastic-vs-deterministic-policies">Stochastic vs Deterministic Policies</h2>
+<h3 id="when-is-a-stochastic-policy-optimal">When is a Stochastic Policy Optimal?</h3>
+<p><strong>Example 1: Rock-Paper-Scissors</strong></p>
+<p>Optimal policy: <span class="arithmatex">\( \pi(\text{rock}) = \pi(\text{paper}) = \pi(\text{scissors}) = 1/3 \)</span></p>
+<p>If you're deterministic, opponent can exploit you!</p>
+<p><strong>Example 2: Partially Observable Environments</strong></p>
+<p>If you can't see the full state, randomizing can be beneficial.</p>
+<p><strong>Example 3: Multi-Agent Settings</strong></p>
+<p>Don't want to be predictable to other agents.</p>
+<h3 id="value-methods-struggle-here">Value Methods Struggle Here</h3>
+<p>Value-based methods naturally give deterministic policies:
+[
+\pi(s) = \arg\max_a Q(s, a)
+]</p>
+<p>To get stochasticity, must add it artificially (ε-greedy, Boltzmann).</p>
+<p>Policy methods can naturally represent stochastic optimal policies!</p>
+<h2 id="actor-critic-best-of-both-worlds">Actor-Critic: Best of Both Worlds?</h2>
+<p>We'll cover this in detail later, but here's a preview:</p>
+<p><strong>Idea:</strong> Combine value and policy methods!</p>
+<ul>
+<li><strong>Actor (policy)</strong>: Decides which actions to take</li>
+<li><strong>Critic (value)</strong>: Evaluates how good those actions were</li>
+</ul>
+<pre class="mermaid"><code>graph LR
+    A[State s] --&gt; B[Actor:&lt;br/&gt;πθ(a|s)]
+    A --&gt; C[Critic:&lt;br/&gt;V(s) or Q(s,a)]
+    B --&gt; D[Action a]
+    C --&gt; E[TD Error]
+    E --&gt; B
+    E --&gt; C</code></pre>
+<p><strong>Benefits:</strong>
+- Lower variance than pure policy methods (critic helps)
+- Works with continuous actions (actor handles this)
+- More sample efficient than pure policy methods</p>
+<p><strong>Examples:</strong> A2C, A3C, SAC, TD3, PPO (with value baseline)</p>
+<h2 id="summary-which-approach-should-you-use">Summary: Which Approach Should You Use?</h2>
+<h3 id="use-value-based-methods-when">Use Value-Based Methods When:</h3>
+<p>✅ You have <strong>discrete action spaces</strong>
+✅ <strong>Sample efficiency</strong> is critical
+✅ You want <strong>off-policy</strong> learning
+✅ Deterministic policies are fine</p>
+<p><strong>Example tasks:</strong>
+- Atari games
+- Grid world navigation
+- Discrete robot control (waypoint selection)</p>
+<h3 id="use-policy-based-methods-when">Use Policy-Based Methods When:</h3>
+<p>✅ You have <strong>continuous action spaces</strong>
+✅ You need <strong>stochastic policies</strong>
+✅ <strong>Stability</strong> is more important than sample efficiency
+✅ High-dimensional action spaces</p>
+<p><strong>Example tasks:</strong>
+- Robot manipulation (continuous joint torques)
+- Locomotion (continuous motor commands)
+- Drone control
+- Autonomous driving</p>
+<h3 id="use-actor-critic-when">Use Actor-Critic When:</h3>
+<p>✅ You want a <strong>balance</strong> of both approaches
+✅ Continuous actions <strong>and</strong> sample efficiency
+✅ You want stability of policy methods with lower variance</p>
+<p><strong>Example tasks:</strong>
+- Most modern robotics applications!
+- Continuous control with sample constraints</p>
+<h2 id="the-big-picture">The Big Picture</h2>
+<pre class="mermaid"><code>graph TB
+    A[RL Methods] --&gt; B[Value-Based]
+    A --&gt; C[Policy-Based]
+    A --&gt; D[Actor-Critic]
+    B --&gt; B1[Q-Learning]
+    B --&gt; B2[DQN]
+    B --&gt; B3[SARSA]
+    C --&gt; C1[REINFORCE]
+    C --&gt; C2[PPO]
+    C --&gt; C3[TRPO]
+    D --&gt; D1[A2C/A3C]
+    D --&gt; D2[SAC]
+    D --&gt; D3[TD3]
+
+    style B fill:#e1f5ff
+    style C fill:#fff4e1
+    style D fill:#f0e1ff</code></pre>
+<p><strong>Historical note:</strong>
+- <strong>Classic RL</strong>: Started with value-based methods (tabular Q-learning)
+- <strong>Deep RL</strong>: DQN (2015) showed value methods could scale to complex tasks
+- <strong>Modern robotics</strong>: Policy methods (especially PPO) dominate due to continuous control
+- <strong>State-of-the-art</strong>: Actor-critic methods combining best of both</p>
+<h2 id="coming-up-next">Coming Up Next</h2>
+<p>Now that you understand the two main approaches, let's dive into specific algorithms:</p>
+<ol>
+<li><strong>Q-Learning</strong>: The classic value-based method</li>
+<li><strong>REINFORCE</strong>: The classic policy gradient method</li>
+</ol>
+<p>Understanding these foundations will help you grasp modern algorithms like DQN, PPO, SAC, and more!</p>
+<hr />
+<p><a class="md-button" href="../mdp/">← Back to MDP</a>
+<a class="md-button md-button--primary" href="../value_based/">Continue to Q-Learning →</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.indexes", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/mcq.js"></script>
+      
+    
+  </body>
+</html>
