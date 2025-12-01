@@ -37,6 +37,7 @@ plugins:
   - mkdocs-jupyter:
       include_source: True
       ignore_h1_titles: True
+      widgets: false
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -73,8 +74,29 @@ nav:
       - foundations/index.md
   - Deep Learning:
       - deep_learning/index.md
+      - Introduction to Git | Python 101 | Pytorch 101: deep_learning/0_Git_Python_Pytorch.md
+      - Introduction to Deep Learning: deep_learning/12_Introduction.md
+      - Model Setup: deep_learning/1_Code.md
+      - Model Skeleton: deep_learning/2_Code.md
+      - Lighter Model: deep_learning/3_Code.md
+      - Batch Normalization Integration: deep_learning/4_Code.md
+      - Regularization: deep_learning/5_Code.md
+      - Global Average Pooling: deep_learning/6_Code.md
+      - Increasing Model Capacity: deep_learning/7_Code.md
+      - Correcting MaxPooling Location: deep_learning/8_Code.md
+      - Image Augmentation: deep_learning/9_Code.md
+      - Learning Rate Scheduling: deep_learning/10_Code.md
+      - Summary: deep_learning/11_Summary.md
+      - Backward Propagation: deep_learning/Backward_Propagation.md
+
   - Reinforcement Learning:
       - reinforcement_learning/index.md
+      - Introduction to RL: reinforcement_learning/introduction.md
+      - Markov Decision Processes: reinforcement_learning/mdp.md
+      - Policy vs Value-Based: reinforcement_learning/policy_vs_value.md
+      - Q-Learning: reinforcement_learning/value_based.md
+      - Policy Gradients (REINFORCE): reinforcement_learning/policy_based.md
+      - Practical Tutorial: reinforcement_learning/practical_tutorial.md
   - Resources: resources.md
 
 
