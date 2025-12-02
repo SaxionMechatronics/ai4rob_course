@@ -846,6 +846,6 @@ The complete, runnable code is available in the accompanying Jupyter notebook:
 
 ---
 
-[← Back to Policy Gradients](policy_based.md){ .md-button }
+[← Back to Policy Gradients](5_policy_based.md){ .md-button }
 [Back to RL Module Home](index.md){ .md-button .md-button--primary }
 

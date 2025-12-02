@@ -32,12 +32,12 @@ graph LR
 
 ## Module Contents
 
-- [Introduction to RL](introduction.md) - Intuitive introduction with real-world examples
-- [Markov Decision Processes](mdp.md) - Mathematical framework for RL
-- [Policy vs Value-Based Methods](policy_vs_value.md) - Understanding different approaches
-- [Q-Learning](value_based.md) - Classic value-based algorithm
-- [Policy Gradients (REINFORCE)](policy_based.md) - Direct policy optimization
-- [Practical Tutorial](practical_tutorial.md) - Hands-on implementation from scratch
+- [Introduction to RL](1_introduction.md) - Intuitive introduction with real-world examples
+- [Markov Decision Processes](2_mdp.md) - Mathematical framework for RL
+- [Policy vs Value-Based Methods](3_policy_vs_value.md) - Understanding different approaches
+- [Q-Learning](4_value_based.md) - Classic value-based algorithm
+- [Policy Gradients (REINFORCE)](5_policy_based.md) - Direct policy optimization
+- [Practical Tutorial](6_practical_tutorial.md) - Hands-on implementation from scratch
 
 ## Prerequisites
 
@@ -47,5 +47,5 @@ graph LR
 
 ---
 
-[Start with Introduction to RL →](introduction.md){ .md-button .md-button--primary }
+[Start with Introduction to RL →](1_introduction.md){ .md-button .md-button--primary }
 

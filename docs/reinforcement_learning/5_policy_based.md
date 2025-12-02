@@ -579,6 +579,6 @@ Now let's see REINFORCE in action with a hands-on implementation!
 
 ---
 
-[← Back to Q-Learning](value_based.md){ .md-button }
-[Continue to Practical Tutorial →](practical_tutorial.md){ .md-button .md-button--primary }
+[← Back to Q-Learning](4_value_based.md){ .md-button }
+[Continue to Practical Tutorial →](6_practical_tutorial.md){ .md-button .md-button--primary }
 

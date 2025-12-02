@@ -476,6 +476,9 @@ Now that we have the formal framework, we can understand different approaches to
 
 ---
 
-[← Back to Introduction](introduction.md){ .md-button }
-[Continue to Policy vs Value-Based Methods →](policy_vs_value.md){ .md-button .md-button--primary }
+## Check your understanding
+[Quiz 2](2_quiz.md){ .md-button }
+
+[← Back to Introduction](1_introduction.md){ .md-button }
+[Continue to Policy vs Value-Based Methods →](3_policy_vs_value.md){ .md-button .md-button--primary }
 

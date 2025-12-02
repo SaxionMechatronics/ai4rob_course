@@ -537,6 +537,6 @@ Now let's move to the other side: **policy gradient methods** that directly lear
 
 ---
 
-[← Back to Policy vs Value-Based](policy_vs_value.md){ .md-button }
-[Continue to Policy Gradients (REINFORCE) →](policy_based.md){ .md-button .md-button--primary }
+[← Back to Policy vs Value-Based](3_policy_vs_value.md){ .md-button }
+[Continue to Policy Gradients (REINFORCE) →](5_policy_based.md){ .md-button .md-button--primary }
 

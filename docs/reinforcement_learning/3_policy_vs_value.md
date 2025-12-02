@@ -403,6 +403,9 @@ Understanding these foundations will help you grasp modern algorithms like DQN, 
 
 ---
 
-[← Back to MDP](mdp.md){ .md-button }
-[Continue to Q-Learning →](value_based.md){ .md-button .md-button--primary }
+## Check your understanding
+[Quiz 3](3_quiz.md){ .md-button }
+
+[← Back to MDP](2_mdp.md){ .md-button }
+[Continue to Q-Learning →](4_value_based.md){ .md-button .md-button--primary }
 

@@ -224,4 +224,7 @@ Ready to dive deeper? Let's start with the formal framework that makes all of th
 
 ---
 
-[Continue to Markov Decision Processes →](mdp.md){ .md-button .md-button--primary }
+## Check your understanding
+[Quiz 1](1_quiz.md){ .md-button }
+
+[Continue to Markov Decision Processes →](2_mdp.md){ .md-button .md-button--primary }

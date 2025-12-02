@@ -103,12 +103,15 @@ nav:
 
   - Reinforcement Learning:
       - reinforcement_learning/index.md
-      - Introduction to RL: reinforcement_learning/introduction.md
-      - Markov Decision Processes: reinforcement_learning/mdp.md
-      - Policy vs Value-Based: reinforcement_learning/policy_vs_value.md
-      - Q-Learning: reinforcement_learning/value_based.md
-      - Policy Gradients (REINFORCE): reinforcement_learning/policy_based.md
-      - Practical Tutorial: reinforcement_learning/practical_tutorial.md
+      - Introduction to RL: reinforcement_learning/1_introduction.md
+      - Quiz 1: reinforcement_learning/1_quiz.md
+      - Markov Decision Processes: reinforcement_learning/2_mdp.md
+      - Quiz 2: reinforcement_learning/2_quiz.md
+      - Policy vs Value-Based: reinforcement_learning/3_policy_vs_value.md
+      - Quiz 3: reinforcement_learning/3_quiz.md
+      - Q-Learning: reinforcement_learning/4_value_based.md
+      - Policy Gradients (REINFORCE): reinforcement_learning/5_policy_based.md
+      - Practical Tutorial: reinforcement_learning/6_practical_tutorial.md
   - Resources: resources.md
 
 
