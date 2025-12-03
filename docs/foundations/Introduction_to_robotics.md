@@ -1,7 +1,7 @@
 
 
 
-Before exploring how **artificial intelligence (AI)** can enhance robotics, it’s important to understand what robotics actually is. The definition isn’t as straightforward as it seems because robotics is a broad field.
+Before exploring how artificial intelligence (AI) can enhance robotics, it’s important to understand what robotics actually is. The definition isn’t as straightforward as it seems because robotics is a broad field.
 
 
 
@@ -12,7 +12,7 @@ Robotics is about designing, building, and using robots. It combines knowledge f
 ## Common Types of Robots
 
 When people hear the word “robot,” they often think of human-like machines or robotic arms, but the world of robotics is much bigger. There are lots of different types of robots, each built for specific jobs, and each with its own set of challenges. Robotics includes many types of robots, each designed for specific tasks and facing unique challenges. 
-**_NOTE:_ shouljd add maybe pictures of our lab**
+
 
 ### 1. Mobile Ground Robots
 These are robots that move around on wheels or legs and use sensors like GPS, cameras, and gyroscopes to figure out where they are and what’s around them. They’re often used for inspections or surveillance. For example, in the CHARISMA project, a four-legged robot was used to detect gas leaks on the street. These robots do well in places that don’t dynamically change much, like homes or warehouses. Once they’ve mapped the area, they can move around pretty easily. But things get tricky when the environment is unpredictable. In a forest or a busy street, the robot might run into unexpected obstacles, moving objects, or changes in lighting. For example , a human suddenly jumping in front of the robot.  These things can confuse the sensors or mess up the robot’s navigation. Most of these robots rely on a map they made earlier, and if something changes, they don’t always know how to react.

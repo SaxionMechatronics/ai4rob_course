@@ -40,9 +40,9 @@ In unsupervised learning the data doesn’t come with labels. The model has to f
 ### 3. Reinforcement Learning
 Finally, we have reinforcement learning. This one’s a bit different compared to the other two types of learning. In this type t. The model learns by interacting with its environment. It tries things out, gets feedback in the form of rewards or penalties, and uses that to improve its behavior over time. Think of it like training a dog, you give it treats when it does something right. After some point in time, the dog will start to listen as it assumes it will get a treat.  But here’s the catch: if the feedback isn’t clear, the model might learn the wrong thing. That’s why designing the reward system is super important. 
 
-## Summary (Revise)
+## Recap
 Artificial Intelligence has transformed robotics from rigid, line-by-line programming into systems that can learn, adapt, and improve over time. While most AI today is still narrow and task-specific, techniques like supervised, unsupervised, and reinforcement learning allow robots to handle more complex and dynamic environments than ever before. 
 
-However, AI is not magic—it depends heavily on the quality of data and the design of learning systems. The principle of **Garbage In, Garbage Out** reminds us that poor input leads to poor results. As research advances, the ultimate goal remains creating robots that can operate reliably in unpredictable situations without constant human intervention.
+However, AI is not magic—it depends heavily on the quality of data and the design of learning systems. The principle of Garbage In, Garbage Out reminds us that poor input leads to poor results. As research advances, the ultimate goal remains creating robots that can operate reliably in unpredictable situations without constant human intervention.
 
-Next, we will explore **how these AI techniques are applied in real-world robotics** and what challenges still need to be solved.
+Next, we will explore how these AI techniques are applied in real-world robotics and what challenges still need to be solved.   
