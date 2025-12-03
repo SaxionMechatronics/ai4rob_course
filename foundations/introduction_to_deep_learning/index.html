@@ -1,0 +1,2388 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A course on AI for robotics by SMART Mechatronics and Robotics Group, Saxion University of Applied Sciences">
+      
+      
+        <meta name="author" content="Stephan Jaspar, Rahul Moongayil Ramakrishnan, Kousheek Chakraborty">
+      
+      
+      
+        <link rel="prev" href="../why_start_with_deep_learning/">
+      
+      
+        <link rel="next" href="../../deep_learning/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Introduction to deep learning - AI for Robotics Course</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/mcq.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#what-is-a-neural-network" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI for Robotics Course" class="md-header__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI for Robotics Course
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction to deep learning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Introduction_to_robotics/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Foundations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deep_learning/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Deep Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reinforcement_learning/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reinforcement Learning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI for Robotics Course" class="md-nav__button md-logo" aria-label="AI for Robotics Course" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI for Robotics Course
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Introduction_to_robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction_to_ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to artificial intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Combine_ai_and_robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI helping robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Challenges_in_ai_for_robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Challenges in AI for robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to deep learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Introduction to deep learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why_start_with_deep_learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why start with deep learning?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to deep learning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to deep learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-activation-functions-are-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Activation Functions Are Needed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-activation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Activation Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Activation Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forward-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forward Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix Representation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../deep_learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/0_Git_Python_Pytorch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Git | Python 101 | Pytorch 101
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/12_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/1_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/1_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/2_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/2_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/3_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lighter Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/3_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/4_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Normalization Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/4_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/5_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/5_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/6_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Global Average Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/6_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/7_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Increasing Model Capacity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/7_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/8_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Correcting MaxPooling Location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/8_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/9_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Augmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/9_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 9
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/10_Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Rate Scheduling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/10_mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/11_Summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/mcq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deep_learning/Backward_Propagation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backward Propagation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../reinforcement_learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reinforcement Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/1_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to RL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/1_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/2_mdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markov Decision Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/2_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/3_policy_vs_value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy vs Value-Based
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/3_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/4_value_based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/5_policy_based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy Gradients (REINFORCE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reinforcement_learning/6_practical_tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practical Tutorial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-activation-functions-are-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Activation Functions Are Needed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-activation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Activation Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Activation Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forward-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forward Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix Representation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<!-- # What is a neural network?
+The neural nets are invented by researcher who are trying to replicate the human brain. In 1943, warren McCulloch and Walter Pitts published a paper which describes a mathematical model of how the human brain works. It leads to the first notion of artificial neural network. The model treated neurons binary meaning it either fires or not, which is eventually seen as fundament for (deep) neural nets. In 1953 the perceptron was created, which can be seen as the first artificial neural net.  A visual representation of the perceptron can be seen below. 
+
+![  Example of perceptron](images/perceptron.png)
+
+ It can be seen that the net only consists of one layer of inputs and one layer of outputs.  Let’s take go through this diagram we start at the input. These inputs will be multiplied with weights and propogate as output, which results in the following equation: 
+
+$z = w_1x_1 + w_2x_2 + w_3x_3 + w_4b$
+
+However be aware that the b stands for bias and always will be added to the summations. As the name suggest is the bias used to ensure that the network can linearly shift independently of the input. To fully propgagte through the network an activation function is required, because otherwise if you have multiple layers in a row this will just be a weighted summation and the network will explode. To solve this problem activation functions are introduced. The activation function determines what the output will be of the perceptron. The difference between the peceptron and neuron is that for the perceptron has only the step-function as output, while for neurons different activation fucntions can be chosen.  The formula for one neuron or percepton is therefore defined as:
+
+$y = \mathcal{f}( b + \sum^n_{i = 1} x_iw_i)$
+
+In this function $\mathcal{f}$ is defined is the activation function, $b$ is the bias, $n$ is the number of nodes, $x$ is the input feature, $w$ is the weight for the corresponding input feature. 
+In the case of neurons, he activation allows for non-linear function approximation. The most simple example is just a threshold (as already mentioned for the case of a perceptron), if for example the weighted sum if z is higher than a specific a number this neuron will fire true. There a lot of different activation functions, the most common one are depicted as graph below. 
+
+| Name | Shape | Name | Shape |
+|------------|-------| ---|--|
+| **Sigmoid** | ![Sigmoid](images/sigmoid_activation_clean.png) | **ReLU** | ![ReLu](images/relu_activation_clean.png)|
+**Tanh** | ![tanh](images/tanh_activation_clean.png) | **Step** | ![Step](images/step_activation_clean.png)|
+
+
+What type of boolean operations can the perceptron mimic? Hint is a truth/false table. 
+
+The perceptron is only limited towards linear classification. It can thus approximate an and and or function, but it can not estimate a non-linear function. The reason for this is that it only calculates a linear combination of inputs and applies a single non-linear transformation.  It means that the classification is done based upon a linear line, because the input (defined in equation) is a linear summation. Therefore, only one neuron will never be able to estimate non-linear functions. 
+
+Multiple layers of perceptron/neurons are required to estimate a non-linear function. A schematic of this can be seen below as well, this is considered a neural net.  -->
+
+<h1 id="what-is-a-neural-network">What is a Neural Network?</h1>
+<p>Neural networks were invented by researchers who aimed to replicate the human brain. In 1943, Warren McCulloch and Walter Pitts published a paper describing a mathematical model of how the brain works. This led to the first notion of an artificial neural network. Their model treated neurons as binary units, meaning they either fire or do not fire. This concept eventually became the foundation for modern (deep) neural networks.</p>
+<p>In 1953, the perceptron was created, which is considered the first artificial neural network. A visual representation of the perceptron can be seen below:</p>
+<p><img alt="Example of perceptron" src="../images/perceptron.png" /></p>
+<p>Works</p>
+<p>The perceptron consists of one layer of inputs and one layer of outputs. Let’s go through the diagram step by step:</p>
+<ol>
+<li>Start at the input layer.</li>
+<li>Each input is multiplied by a weight and then summed together.</li>
+<li>A bias term is added to the summation.</li>
+</ol>
+<p>This results in the following equation:</p>
+<div class="arithmatex">\[ z = w_1x_1 + w_2x_2 + w_3x_3 + w_4b \]</div>
+<p>Here:</p>
+<p><span class="arithmatex">\( b \)</span> stands for bias and is always added to the summation. The bias allows the network to shift linearly, independent of the input.</p>
+<hr />
+<h2 id="why-activation-functions-are-needed">Why Activation Functions Are Needed</h2>
+<p>To fully propagate through the network, an activation function is required. Without it, multiple layers would just perform weighted summations, and the network would fail to approximate complex functions. Activation functions solve this problem by introducing non-linearity. The activation function determines the output of the perceptron. The difference between a perceptron and a neuron is that:</p>
+<ul>
+<li>
+<p>A perceptron uses only the step function as its activation.</p>
+</li>
+<li>
+<p>Neurons can use different activation functions.</p>
+</li>
+</ul>
+<p>The formula for one neuron or perceptron is:</p>
+<div class="arithmatex">\[ y = \mathcal{f}\Big(b + \sum_{i=1}^n x_i w_i\Big) \]</div>
+<p>Where:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\( \mathcal{f} \)</span> is the activation function.</p>
+</li>
+<li>
+<p><span class="arithmatex">\( b \)</span> is the bias.</p>
+</li>
+<li>
+<p><span class="arithmatex">\( n \)</span> is the number of input nodes.</p>
+</li>
+<li>
+<p><span class="arithmatex">\( x_i \)</span> is an input feature.</p>
+</li>
+<li>
+<p><span class="arithmatex">\( w_i \)</span> is the weight for the corresponding input feature.</p>
+</li>
+</ul>
+<p>Activation functions allow non-linear function approximation. The simplest example is a threshold function: if the weighted sum <span class="arithmatex">\( z \)</span> is higher than a specific number, the neuron outputs true.</p>
+<hr />
+<h2 id="common-activation-functions">Common Activation Functions</h2>
+<p>There are many activation functions. The most common ones are shown below:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Shape</th>
+<th>Name</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sigmoid</td>
+<td><img alt="Sigmoid" src="../images/sigmoid_activation_clean.png" /></td>
+<td>ReLU</td>
+<td><img alt="ReLu" src="../images/relu_activation_clean.png" /></td>
+</tr>
+<tr>
+<td>Tanh</td>
+<td><img alt="Tanh" src="../images/tanh_activation_clean.png" /></td>
+<td>Step</td>
+<td><img alt="Step" src="../images/step_activation_clean.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>A perceptron is limited to only linear classification. However, it cannot estimate non-linear functions. The reason for this is that it only calculates a linear combination of inputs and applies a single non-linear transformation.  It means that the classification is done based upon a linear line, because the input (defined in equation) is a linear summation. Therefore, only one neuron will never be able to estimate non-linear functions. 
+This means classification is based on a linear decision boundary because the input equation is a linear summation. Therefore, a single neuron will never be able to estimate non-linear functions. To approximate non-linear functions, multiple layers of perceptrons (neurons) are required.
+``</p>
+<p><img alt="Neural net" src="../images/neuralNet.jpeg" /></p>
+<p>In this example, there is only one hidden layer, but you can expand the network with as many layers as you like. The hidden layer is simply another set of neurons. After training, these layers can be used for tasks such as classification or regression. Now let’s take a closer look at the diagram. The inputs and their weights are color-coded to make it easier to read. Before we can propagate through this diagram, it is important to understand how to write and refer to the different components. For example, if we want to talk about the weight that connects input neuron 1 to hidden layer neuron 1, we need a consistent notation.</p>
+<h3 id="notation">Notation</h3>
+<ul>
+<li>
+<p>Inputs are noted as <span class="arithmatex">\( x_j \)</span>, which means input number <span class="arithmatex">\( j \)</span>.<br />
+  It is important to note that <span class="arithmatex">\( x_0 \)</span> is clamped at 1 because it represents the bias term.</p>
+</li>
+<li>
+<p>Weights are noted as <span class="arithmatex">\( W_{ij}^{[l]} \)</span>, where:</p>
+</li>
+<li><span class="arithmatex">\( W \)</span> stands for weight.</li>
+<li>It connects neuron <span class="arithmatex">\( j \)</span> in layer <span class="arithmatex">\( l-1 \)</span> to neuron <span class="arithmatex">\( i \)</span> in layer <span class="arithmatex">\( l \)</span>.</li>
+<li>
+<p>The weight <span class="arithmatex">\( W_{i0}^{[l]} \)</span> is reserved for the bias in layer <span class="arithmatex">\( l \)</span>.</p>
+</li>
+<li>
+<p>The activation function for neuron <span class="arithmatex">\( j \)</span> in layer <span class="arithmatex">\( l \)</span> is noted as <span class="arithmatex">\( a_j^{[l]} \)</span>.</p>
+</li>
+<li>
+<p>The output of neuron <span class="arithmatex">\( j \)</span> in layer <span class="arithmatex">\( l \)</span> is noted as <span class="arithmatex">\( z_j^{[l]} \)</span>.<br />
+  Again, note that <span class="arithmatex">\( z_0 \)</span> is clamped at value 1 because of the bias.</p>
+</li>
+<li>
+<p>The final output of the network is noted as <span class="arithmatex">\( y_i \)</span>.</p>
+</li>
+</ul>
+<hr />
+<h3 id="forward-propagation">Forward Propagation</h3>
+<p>Now that the notation is clear, we can calculate the forward propagation through the network.</p>
+<p>For neuron 1 in the hidden layer:</p>
+<div class="arithmatex">\[
+z_1^{[1]} = a_1^{[1]}(W_{11}^{[1]}x_1 + W_{21}^{[1]}x_2 + W_{31}^{[1]}x_3 + W_{01}^{[1]}x_0)
+\]</div>
+<p>For neuron 2:</p>
+<div class="arithmatex">\[
+z_2^{[1]} = a_2^{[1]}(W_{12}^{[1]}x_1 + W_{22}^{[1]}x_2 + W_{32}^{[1]}x_3 + W_{02}^{[1]}x_0)
+\]</div>
+<p>For neuron 3:</p>
+<div class="arithmatex">\[
+z_3^{[1]} = a_3^{[1]}(W_{13}^{[1]}x_1 + W_{23}^{[1]}x_2 + W_{33}^{[1]}x_3 + W_{03}^{[1]}x_0)
+\]</div>
+<p>You might notice the similarity between these equations. A more efficient way to represent them is by using matrix notation, which allows faster computation and is easier for computers to process.</p>
+<h3 id="matrix-representation">Matrix Representation</h3>
+<p>The notation can also be expressed in vector form, which is advantageous because computers can perform matrix operations much faster than iterating through loops. 
+The calculation for <span class="arithmatex">\(Z^{[l]}\)</span> can be written as:</p>
+<div class="arithmatex">\[ Z^{l} = \begin{bmatrix} 
+z_1^{[l]} \\ 
+z_2^{[l]} \\
+z_3^{[l]} 
+\end{bmatrix} \]</div>
+<p>The <span class="arithmatex">\(Z^{[l]}\)</span> values can be found via:</p>
+<div class="arithmatex">\[ Z^{[l]} = \begin{bmatrix}
+W_{01} &amp; W_{11} &amp; W_{21} &amp; W_{31} \\
+W_{02} &amp; W_{12} &amp; W_{22} &amp; W_{32} \\ 
+W_{03} &amp; W_{13} &amp; W_{23} &amp; W_{33}
+\end{bmatrix}
+\begin{bmatrix}
+x_0 \\
+x_1 \\
+x_2 \\
+x_3
+\end{bmatrix}
+\]</div>
+<p>Each row in the weight matrix corresponds to the set of weights for one neuron. The advantage of writing it this way is that it allows for faster calculations. After this multiplication, the activation function should be applied to each neuron in the hidden layer. This process continues through the output layer.</p>
+<p>In summary, neural networks are inspired by the human brain and built from simple units called neurons or perceptrons. While a single perceptron can only handle linear classification, stacking multiple layers introduces non-linearity, enabling networks to solve complex problems. Using matrix-based notation and activation functions makes these models computationally efficient and scalable, forming the foundation of modern deep learning.</p>
+<!-- In this example there is only one hidden layer, but you can expand this with as many layers as you like. The hidden layer is nothing else as another neuron.  These can be used after training to perform classification for example or regression.  Now let’s have more detailed look at this diagram. The inputs and weights of the inputs are colored to ease the reading of the diagram. Before we can propogate through this diagram it is important to know how to write things and refer to them. In other words, if we are talking for example about the weight used to map from input neuron 1 to hidden layer neuron 1 we need a common method to write this down. Starting with the inputs, they are noted as $x_j$ 
+, which means input number $j$. It is important to note that $x_0$ is clamped at 1, because it is considered the bias term.  
+$W_{ij}^{[l]}$, where $W$ stands for weight,  it connects neuron $j$ in layer $l-1$ to neuron $i$ in layer $l$. The weight $W_{i0}^{[l]}$
+is reserved for the bias in layer $l$.  The activation layer is noted as $a^{[l]}_j$
+, which is the activation function for neuron $j$ in layer $l$, $z_{i}^{[l]}$
+is defined as the output of neuron $j$ in layer $l$. Here again it is important to note that $z_0$ is clamped at value 1, because of the bias, 
+$y_i$ is defined as the output for neuron $i$.
+
+Now that the notations are know we can calculate the forward propagation of this diagram. 
+
+Let’s calculate this throughput together. Starting with neuron $Z_1$
+$z_1^{[1]}=a_1^{[1]}(W^{[1]}_{11}x_1+W^{[1]}_{21}x_2+W^{[1]}_{31}x_3 + W^{[1]}_{01}x_0)$
+
+neuron two:
+
+$z_2^{[1]} = a_2^{[1]} (W_{11}^{[1]}x_1 +W_{21}^{[1]}x_2 + W_{31}^{[1]}x_3 )$
+
+Neuron three  
+
+$z_3^{[1]} = a_3^{[1]} (W^{[1]}_{11}x_1 +W^{[1]}_{21}x_2 + W^{[1]}_{31}x_3 )$
+
+You might have noticed there is similarity between these methods of writing down. A more efficient method can be used if we start using matrices. In this way we can do a more easier form of multiplication instead of writing these equations separately.  A nice addition of this is that the computer can quickly and easily perform these matrix calculations. The matrix notation to calculated Z is defined as follows
+
+$$ Z = \begin{bmatrix} 
+W_{01} & W_{11} & W_{21} & W_{31} \\ 
+W_{02} & W_{12} & W_{22} & W_{32} \\  
+W_{03} & W_{13} & W_{23} & W_{33} 
+\end{bmatrix}
+\begin{bmatrix}
+x_0 \\ 
+x_1 \\
+x_2 \\
+x_3
+\end{bmatrix} $$
+
+
+Each row in the weight matrix corresponding to set of weights for one neuron.  The advantage of writing it in this matter is that allows for faster calculations. 
+After which only the activation function should be calculated for each hidden layer. This calculation will go through the output layer. How would the output layer look in terms of matrix calculation ?
+
+
+% Now that you know what feedforward is you can have a look at the follwoing link. Her eyou can play around and estimate yourself with these neural nets. the A Neural Network Playground.  In the next section we will go more hands on and look how can implement these things ourselkvest -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.indexes", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/mcq.js"></script>
+      
+    
+  </body>
+</html>
