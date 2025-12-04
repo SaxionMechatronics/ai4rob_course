@@ -119,6 +119,7 @@ nav:
       - Q-Learning: reinforcement_learning/4_value_based.md
       - Policy Gradients (REINFORCE): reinforcement_learning/5_policy_based.md
       - Practical Tutorial: reinforcement_learning/6_practical_tutorial.md
+  - Conclusion: conclusion.md 
   - Resources: resources.md
 
 
