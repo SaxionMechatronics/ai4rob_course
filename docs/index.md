@@ -27,7 +27,6 @@ graph TD
     Covers fundamental concepts for AI in robotics.
     
     - Core robotics principles
-    - Mathematical foundations
     - Basic AI concepts for robotics
     
     [Get Started with Foundations :material-arrow-right:](foundations/index.md){ .md-button .md-button--primary }

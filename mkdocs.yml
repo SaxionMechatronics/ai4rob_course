@@ -72,7 +72,14 @@ extra_javascript:
 nav:
   - Home: index.md
   - Foundations:
-      - foundations/index.md
+      - Introduction to robotics: foundations/Introduction_to_robotics.md
+      - Introduction to artificial intelligence: foundations/introduction_to_ai.md
+      - AI helping robotics: foundations/Combine_ai_and_robotics.md
+      - Challenges in AI for robotics: foundations/Challenges_in_ai_for_robotics.md
+      - Introduction to deep learning:
+        - foundations/why_start_with_deep_learning.md
+        - foundations/introduction_to_deep_learning.md
+      # - Practical Tutorial: Foundations/practical_tutorial.md
   - Deep Learning:
       - deep_learning/index.md
       - Introduction to Git | Python 101 | Pytorch 101: deep_learning/0_Git_Python_Pytorch.md
@@ -114,6 +121,7 @@ nav:
       - Policy Gradients (REINFORCE): reinforcement_learning/5_policy_based.md
       - Quiz 5: reinforcement_learning/5_quiz.md
       - Practical Tutorial: reinforcement_learning/6_practical_tutorial.md
+  - Conclusion: conclusion.md 
   - Resources: resources.md
 
 
