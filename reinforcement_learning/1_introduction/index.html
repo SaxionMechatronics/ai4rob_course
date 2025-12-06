@@ -1560,6 +1560,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1735,10 +1739,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#boston-dynamics-spot" class="md-nav__link">
+  <a href="#boston-dynamics-spot-adaptive-locomotion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🐕 Boston Dynamics Spot
+        Boston Dynamics Spot: Adaptive Locomotion
       
     </span>
   </a>
@@ -1746,10 +1750,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#autonomous-drone-racing" class="md-nav__link">
+  <a href="#autonomous-drone-racing-high-speed-navigation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🚁 Autonomous Drone Racing
+        Autonomous Drone Racing: High-Speed Navigation
       
     </span>
   </a>
@@ -1757,10 +1761,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#anymal-eth-zurich" class="md-nav__link">
+  <a href="#anymal-quadruped-robot-traversing-rough-terrain" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🦙 ANYmal (ETH Zurich)
+        ANYmal: Quadruped Robot Traversing Rough Terrain
       
     </span>
   </a>
@@ -1768,10 +1772,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#robotic-manipulation" class="md-nav__link">
+  <a href="#robotic-manipulation-dexterous-in-hand-manipulation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🦾 Robotic Manipulation
+        Robotic Manipulation: Dexterous In-Hand Manipulation
       
     </span>
   </a>
@@ -1779,10 +1783,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#game-ai-alphago-and-beyond" class="md-nav__link">
+  <a href="#game-ai-alphago-and-strategic-decision-making" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🎮 Game AI: AlphaGo and Beyond
+        Game AI: AlphaGo and Strategic Decision-Making
       
     </span>
   </a>
@@ -2033,6 +2037,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../4_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../5_policy_based/" class="md-nav__link">
         
   
@@ -2041,6 +2073,34 @@
     
   
     Policy Gradients (REINFORCE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 5
   
 
     
@@ -2221,10 +2281,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#boston-dynamics-spot" class="md-nav__link">
+  <a href="#boston-dynamics-spot-adaptive-locomotion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🐕 Boston Dynamics Spot
+        Boston Dynamics Spot: Adaptive Locomotion
       
     </span>
   </a>
@@ -2232,10 +2292,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#autonomous-drone-racing" class="md-nav__link">
+  <a href="#autonomous-drone-racing-high-speed-navigation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🚁 Autonomous Drone Racing
+        Autonomous Drone Racing: High-Speed Navigation
       
     </span>
   </a>
@@ -2243,10 +2303,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#anymal-eth-zurich" class="md-nav__link">
+  <a href="#anymal-quadruped-robot-traversing-rough-terrain" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🦙 ANYmal (ETH Zurich)
+        ANYmal: Quadruped Robot Traversing Rough Terrain
       
     </span>
   </a>
@@ -2254,10 +2314,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#robotic-manipulation" class="md-nav__link">
+  <a href="#robotic-manipulation-dexterous-in-hand-manipulation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🦾 Robotic Manipulation
+        Robotic Manipulation: Dexterous In-Hand Manipulation
       
     </span>
   </a>
@@ -2265,10 +2325,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#game-ai-alphago-and-beyond" class="md-nav__link">
+  <a href="#game-ai-alphago-and-strategic-decision-making" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🎮 Game AI: AlphaGo and Beyond
+        Game AI: AlphaGo and Strategic Decision-Making
       
     </span>
   </a>
@@ -2382,121 +2442,88 @@
 - <strong>Optimize complex behaviors</strong> that are hard to engineer manually</p>
 <h2 id="real-world-examples-rl-in-action">Real-World Examples: RL in Action</h2>
 <p>Let's look at some impressive examples where RL has been preferred over traditional control methods:</p>
-<h3 id="boston-dynamics-spot">🐕 Boston Dynamics Spot</h3>
-<div class="admonition example">
-<p class="admonition-title">Spot's Adaptive Locomotion</p>
-
-Boston Dynamics uses RL to teach Spot to walk on challenging terrain. Traditional approaches would require:
-- Detailed terrain mapping and classification
-- Pre-programmed gaits for every surface type
-- Complex state machines for transitions
-- Extensive manual tuning
-
-**With RL:**
-- Spot learns to adapt its gait by trial and error in simulation
-- Discovers robust walking strategies that work on unseen terrains
-- Automatically learns recovery behaviors when it slips or trips
-- Transfers learned skills from simulation to the real robot
-
-**Why RL over traditional control?**
-- Too many terrain variations to program manually
-- Novel recovery strategies emerge that engineers didn't anticipate
-- Adaptability to completely new environments without reprogramming
-</div>
-
-<h3 id="autonomous-drone-racing">🚁 Autonomous Drone Racing</h3>
-<div class="admonition example">
-<p class="admonition-title">High-Speed Drone Navigation</p>
-
-Researchers have trained drones to race through obstacle courses at speeds exceeding 40 mph, beating human pilots!
-
-**Traditional approach challenges:**
+<h3 id="boston-dynamics-spot-adaptive-locomotion">Boston Dynamics Spot: Adaptive Locomotion</h3>
+<p>Boston Dynamics uses RL to teach Spot, their quadruped robot, to walk on challenging terrain. This application demonstrates RL's ability to handle environmental diversity that would overwhelm traditional control systems.</p>
+<p><strong>Traditional approach limitations:</strong>
+- Requires detailed terrain mapping and classification for every surface type
+- Needs pre-programmed gaits for each terrain variation (grass, gravel, ice, stairs, etc.)
+- Complex state machines to handle transitions between different walking modes
+- Extensive manual tuning and calibration for each new environment
+- Brittle to unexpected terrain features not accounted for in the design</p>
+<p><strong>RL approach advantages:</strong>
+- Learns to adapt its gait through trial and error in simulation
+- Discovers robust walking strategies that generalize to unseen terrains
+- Automatically learns recovery behaviors when it slips, trips, or encounters obstacles
+- Transfers learned skills from simulation to the real robot with minimal fine-tuning
+- Single policy handles diverse terrain without explicit terrain classification</p>
+<p><strong>Why RL was chosen:</strong> The sheer variety of terrain variations makes manual programming infeasible. RL discovers novel recovery strategies that engineers didn't anticipate, and the system can adapt to completely new environments without reprogramming.</p>
+<h3 id="autonomous-drone-racing-high-speed-navigation">Autonomous Drone Racing: High-Speed Navigation</h3>
+<p>Researchers have trained drones to race through complex obstacle courses at speeds exceeding 40 mph, achieving performance that beats human pilots. This showcases RL's ability to learn reactive, high-speed control policies.</p>
+<p><strong>Traditional approach challenges:</strong>
 - Requires perfect sensing and precise trajectory planning
-- Computational delays in processing and replanning
-- Difficult to handle aggressive maneuvers and aerodynamic effects
+- Computational delays in processing sensor data and replanning trajectories
+- Difficult to handle aggressive maneuvers and complex aerodynamic effects
 - Brittle to sensor noise and unexpected obstacles
-
-**RL advantages:**
-- Learns end-to-end control from camera images to motor commands
-- Develops reactive behaviors that don't require explicit planning
-- Discovers aggressive maneuvers through exploration
+- Conservative behaviors limit maximum achievable speed</p>
+<p><strong>RL approach advantages:</strong>
+- Learns end-to-end control directly from camera images to motor commands
+- Develops reactive behaviors that don't require explicit planning or trajectory optimization
+- Discovers aggressive maneuvers through exploration that push physical limits
 - Naturally handles partial observability and sensor uncertainty
-- Achieves super-human performance through extensive simulated practice
-
-**Key insight:** The RL-trained policy makes decisions in milliseconds based on pattern recognition rather than slow deliberative planning, similar to how expert human pilots develop intuition.
-</div>
-
-<h3 id="anymal-eth-zurich">🦙 ANYmal (ETH Zurich)</h3>
-<div class="admonition example">
-<p class="admonition-title">Quadruped Robot Traversing Rough Terrain</p>
-
-ETH Zurich's ANYmal is a four-legged robot that can climb stairs, traverse rubble, and recover from slips using RL.
-
-**Why not traditional control?**
-- Traditional model-based control requires:
-  - Accurate terrain geometry (not always available)
-  - Perfect knowledge of robot dynamics
-  - Conservative behaviors to ensure stability
-  - Separate controllers for different scenarios
-
-**RL approach benefits:**
-- Learns directly from proprioceptive sensors (joint positions, torques, IMU)
-- Doesn't need explicit terrain geometry
-- Discovers dynamic gaits that traditional methods might consider "unsafe"
-- Single learned policy handles walking, trotting, and recovery
-- Robust to model uncertainty and external disturbances
-
-**Result:** ANYmal can walk blindly (without vision) on very rough terrain by learning to predict terrain properties from how its legs interact with the ground.
-</div>
-
-<h3 id="robotic-manipulation">🦾 Robotic Manipulation</h3>
-<div class="admonition example">
-<p class="admonition-title">Dexterous In-Hand Manipulation</p>
-
-OpenAI trained a robotic hand to solve a Rubik's cube using RL, demonstrating human-level dexterity.
-
-**Traditional approach limitations:**
-- Extremely difficult to model contact dynamics accurately
+- Achieves super-human performance through extensive simulated practice</p>
+<p><strong>Key insight:</strong> The RL-trained policy makes decisions in milliseconds based on pattern recognition rather than slow deliberative planning, similar to how expert human pilots develop intuitive control. This reactive approach is essential for high-speed navigation where planning delays would be catastrophic.</p>
+<h3 id="anymal-quadruped-robot-traversing-rough-terrain">ANYmal: Quadruped Robot Traversing Rough Terrain</h3>
+<p>ETH Zurich's ANYmal is a four-legged robot that can climb stairs, traverse rubble, and recover from slips using RL. This example highlights RL's ability to work with minimal sensing and handle model uncertainty.</p>
+<p><strong>Traditional model-based control limitations:</strong>
+- Requires accurate terrain geometry (often unavailable in real-world scenarios)
+- Needs perfect knowledge of robot dynamics and contact models
+- Conservative behaviors to ensure stability, limiting agility
+- Separate controllers needed for different scenarios (walking, trotting, recovery)
+- Fails when assumptions about terrain or dynamics are violated</p>
+<p><strong>RL approach benefits:</strong>
+- Learns directly from proprioceptive sensors (joint positions, torques, IMU) without vision
+- Doesn't need explicit terrain geometry or mapping
+- Discovers dynamic gaits that traditional methods might consider "unsafe" but are actually more robust
+- Single learned policy handles walking, trotting, and recovery behaviors seamlessly
+- Robust to model uncertainty and external disturbances</p>
+<p><strong>Remarkable result:</strong> ANYmal can walk blindly (without vision) on very rough terrain by learning to predict terrain properties from how its legs interact with the ground. This proprioceptive sensing approach is more robust than vision-based methods in challenging lighting or visual conditions.</p>
+<h3 id="robotic-manipulation-dexterous-in-hand-manipulation">Robotic Manipulation: Dexterous In-Hand Manipulation</h3>
+<p>OpenAI trained a robotic hand to solve a Rubik's cube using RL, demonstrating human-level dexterity in complex manipulation tasks. This showcases RL's ability to handle high-dimensional control and contact dynamics.</p>
+<p><strong>Traditional approach limitations:</strong>
+- Extremely difficult to model contact dynamics accurately (friction, slip, deformation)
 - Hand-crafted control policies are brittle and task-specific
 - Requires precise sensing and perfect calibration
 - Fails when objects slip or unexpected perturbations occur
-
-**RL advantages:**
+- Cannot handle the complexity of multi-finger coordination</p>
+<p><strong>RL approach advantages:</strong>
 - Learns robust manipulation through millions of simulated attempts
-- Develops recovery strategies for when objects slip
-- Discovers creative fingering strategies
-- Handles visual ambiguity and partial observability
-- Shows emergent behaviors like flipping the cube in creative ways
-
-**Critical factor:** Domain randomization in simulation (varying physics parameters, visual appearance, etc.) allows the learned policy to be robust enough to transfer to the real world despite sim-to-real gap.
-</div>
-
-<h3 id="game-ai-alphago-and-beyond">🎮 Game AI: AlphaGo and Beyond</h3>
-<div class="admonition example">
-<p class="admonition-title">Mastering Complex Strategic Games</p>
-
-While not robotics, AlphaGo's achievement in mastering Go demonstrates RL's capability to solve problems previously thought to require human intuition.
-
-**Why RL?**
+- Develops recovery strategies for when objects slip or move unexpectedly
+- Discovers creative fingering strategies that humans might not consider
+- Handles visual ambiguity and partial observability naturally
+- Shows emergent behaviors like flipping the cube in creative ways</p>
+<p><strong>Critical success factor:</strong> Domain randomization in simulation (varying physics parameters, visual appearance, friction coefficients, etc.) allows the learned policy to be robust enough to transfer to the real world despite the sim-to-real gap. This technique is essential for successful RL deployment in robotics.</p>
+<h3 id="game-ai-alphago-and-strategic-decision-making">Game AI: AlphaGo and Strategic Decision-Making</h3>
+<p>While not directly a robotics application, AlphaGo's achievement in mastering Go demonstrates RL's capability to solve problems previously thought to require human intuition. The principles apply directly to complex robotic decision-making.</p>
+<p><strong>Why RL was essential:</strong>
 - Search space is too large for brute-force approaches (more positions than atoms in the universe!)
 - Human expert knowledge is incomplete and biased
 - Requires long-term strategic thinking and pattern recognition
-
-**What this means for robotics:**
-- RL can solve problems where the optimal solution isn't known
+- Optimal strategies were unknown and had to be discovered</p>
+<p><strong>What this means for robotics:</strong>
+- RL can solve problems where the optimal solution isn't known a priori
 - Can discover strategies that exceed human expertise
 - Learns hierarchical representations and abstract concepts
-- Demonstrates that RL scales to extremely complex decision-making
-</div>
-
+- Demonstrates that RL scales to extremely complex decision-making problems
+- Shows that RL can develop intuition-like behaviors through experience</p>
+<p><strong>Robotics connection:</strong> Many robotic tasks require similar strategic thinking—balancing short-term actions with long-term goals, recognizing patterns in complex sensor data, and making decisions under uncertainty. AlphaGo's success validates RL as a framework for these challenges.</p>
 <h2 id="when-should-you-use-rl-for-robotics">When Should You Use RL for Robotics?</h2>
 <p>RL is particularly powerful when:</p>
-<p>✅ <strong>The optimal behavior is unknown</strong> - You know what you want to achieve, but not exactly how</p>
-<p>✅ <strong>The environment is complex or stochastic</strong> - Too many variables to model accurately</p>
-<p>✅ <strong>You can simulate</strong> - RL needs lots of experience; simulation makes this feasible</p>
-<p>✅ <strong>Adaptability is crucial</strong> - The robot needs to handle varied, unpredictable situations</p>
-<p>✅ <strong>Trial-and-error is safe</strong> - At least in simulation, the robot can make mistakes</p>
-<p>❌ <strong>Avoid RL when:</strong>
+<p><strong>The optimal behavior is unknown</strong> - You know what you want to achieve, but not exactly how</p>
+<p><strong>The environment is complex or stochastic</strong> - Too many variables to model accurately</p>
+<p><strong>You can simulate</strong> - RL needs lots of experience; simulation makes this feasible</p>
+<p><strong>Adaptability is crucial</strong> - The robot needs to handle varied, unpredictable situations</p>
+<p><strong>Trial-and-error is safe</strong> - At least in simulation, the robot can make mistakes</p>
+<p><strong>Avoid RL when:</strong>
 - You have a well-understood problem with a known solution
 - Safety is critical and you cannot guarantee safe exploration
 - You cannot simulate effectively and real-world data is scarce
@@ -2542,20 +2569,15 @@ While not robotics, AlphaGo's achievement in mastering Go demonstrates RL's capa
 <h2 id="the-three-key-questions">The Three Key Questions</h2>
 <p>Every RL problem can be understood through three questions:</p>
 <ol>
-<li><strong>What can the agent observe?</strong> (Observations/State)</li>
 <li>
-<p>Camera images? Joint angles? GPS coordinates?</p>
+<p><strong>What can the agent observe?</strong> (Observations/State) - Camera images? Joint angles? GPS coordinates?</p>
 </li>
 <li>
-<p><strong>What can the agent do?</strong> (Actions)</p>
+<p><strong>What can the agent do?</strong> (Actions) - Motor commands? High-level waypoints? Discrete choices?</p>
 </li>
 <li>
-<p>Motor commands? High-level waypoints? Discrete choices?</p>
+<p><strong>What does the agent want to achieve?</strong> (Rewards) - Reach a goal? Move quickly? Use less energy? Stay balanced?</p>
 </li>
-<li>
-<p><strong>What does the agent want to achieve?</strong> (Rewards)</p>
-</li>
-<li>Reach a goal? Move quickly? Use less energy? Stay balanced?</li>
 </ol>
 <p>Designing these three components well is often the key to successful RL applications!</p>
 <h2 id="coming-up-next">Coming Up Next</h2>

@@ -16,7 +16,7 @@
         <link rel="prev" href="../3_quiz/">
       
       
-        <link rel="next" href="../5_policy_based/">
+        <link rel="next" href="../4_quiz/">
       
       
         
@@ -1560,6 +1560,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -2256,10 +2260,49 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#check-your-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check your understanding
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2280,6 +2323,34 @@
     
   
     Policy Gradients (REINFORCE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 5
   
 
     
@@ -2813,6 +2884,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#check-your-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check your understanding
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2908,9 +2990,9 @@ Q(s, a) \leftarrow Q(s, a) + \alpha \left[r + \gamma \max_{a'} Q(s', a') - Q(s, 
 <a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>        <span class="n">s</span> <span class="err">←</span> <span class="n">s</span><span class="s1">&#39;</span>
 </code></pre></div>
 <h3 id="key-properties">Key Properties</h3>
-<p>✅ <strong>Off-policy</strong>: Learns optimal policy while following exploratory policy (ε-greedy)</p>
-<p>✅ <strong>Model-free</strong>: Doesn't need to know transition probabilities <span class="arithmatex">\( P(s'|s, a) \)</span></p>
-<p>✅ <strong>Converges to optimal</strong>: Under certain conditions (visiting all state-action pairs infinitely often, appropriate learning rate schedule)</p>
+<p><strong>Off-policy</strong>: Learns optimal policy while following exploratory policy (ε-greedy)</p>
+<p><strong>Model-free</strong>: Doesn't need to know transition probabilities <span class="arithmatex">\( P(s'|s, a) \)</span></p>
+<p><strong>Converges to optimal</strong>: Under certain conditions (visiting all state-action pairs infinitely often, appropriate learning rate schedule)</p>
 <h2 id="exploration-the-greedy-policy">Exploration: The ε-Greedy Policy</h2>
 <p>Q-Learning needs to <strong>explore</strong> to discover good actions, but also <strong>exploit</strong> what it has learned.</p>
 <p><strong>ε-greedy policy:</strong></p>
@@ -3191,31 +3273,31 @@ Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \sum_{a'} \pi(a'|s') Q(s', a') -
 \]</div>
 <p><strong>Benefits:</strong> Lower variance than SARSA, still considers exploration policy.</p>
 <h2 id="limitations-of-q-learning">Limitations of Q-Learning</h2>
-<p>❌ <strong>Limited to discrete actions</strong>
+<p><strong>Limited to discrete actions</strong>
 - Need to compute <span class="arithmatex">\( \arg\max_a Q(s, a) \)</span>
 - Difficult or impossible with continuous actions</p>
-<p>❌ <strong>Overestimation bias</strong>
+<p><strong>Overestimation bias</strong>
 - Always taking max can lead to overly optimistic estimates
 - Mitigated by Double Q-Learning</p>
-<p>❌ <strong>Sample inefficiency</strong>
+<p><strong>Sample inefficiency</strong>
 - Each update only affects one (s, a) pair (in tabular case)
 - Needs many samples to converge</p>
-<p>❌ <strong>Instability with function approximation</strong>
+<p><strong>Instability with function approximation</strong>
 - Neural network Q-functions can diverge
 - Requires experience replay, target networks, careful tuning</p>
-<p>❌ <strong>No explicit exploration strategy</strong>
+<p><strong>No explicit exploration strategy</strong>
 - Must add ε-greedy or other heuristics
 - Not principled like entropy regularization in policy methods</p>
 <h2 id="when-to-use-q-learning">When to Use Q-Learning</h2>
 <h3 id="perfect-for">Perfect for:</h3>
-<p>✅ Discrete action spaces (games, navigation with discrete moves)</p>
-<p>✅ Offline learning from logged data</p>
-<p>✅ Simple environments where tabular methods suffice</p>
-<p>✅ When you want off-policy learning</p>
+<p>Discrete action spaces (games, navigation with discrete moves)</p>
+<p>Offline learning from logged data</p>
+<p>Simple environments where tabular methods suffice</p>
+<p>When you want off-policy learning</p>
 <h3 id="avoid-for">Avoid for:</h3>
-<p>❌ Continuous action spaces (use policy gradient methods or actor-critic)</p>
-<p>❌ Extremely large state spaces without good function approximation</p>
-<p>❌ Real-time learning with strict sample budgets (consider policy gradients)</p>
+<p>Continuous action spaces (use policy gradient methods or actor-critic)</p>
+<p>Extremely large state spaces without good function approximation</p>
+<p>Real-time learning with strict sample budgets (consider policy gradients)</p>
 <h2 id="summary">Summary</h2>
 <p><strong>Q-Learning in a nutshell:</strong></p>
 <ol>
@@ -3233,6 +3315,8 @@ Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]
 <p><strong>Modern extensions:</strong> DQN, Double DQN, Dueling DQN, Rainbow DQN</p>
 <p>Now let's move to the other side: <strong>policy gradient methods</strong> that directly learn the policy!</p>
 <hr />
+<h2 id="check-your-understanding">Check your understanding</h2>
+<p><a class="md-button" href="../4_quiz/">Quiz 4</a></p>
 <p><a class="md-button" href="../3_policy_vs_value/">← Back to Policy vs Value-Based</a>
 <a class="md-button md-button--primary" href="../5_policy_based/">Continue to Policy Gradients (REINFORCE) →</a></p>
 

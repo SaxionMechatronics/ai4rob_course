@@ -1560,6 +1560,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1855,7 +1859,7 @@
   <a href="#advantages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advantages ✅
+        Advantages
       
     </span>
   </a>
@@ -1866,7 +1870,7 @@
   <a href="#disadvantages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Disadvantages ❌
+        Disadvantages
       
     </span>
   </a>
@@ -1938,7 +1942,7 @@
   <a href="#advantages_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advantages ✅
+        Advantages
       
     </span>
   </a>
@@ -1949,7 +1953,7 @@
   <a href="#disadvantages_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Disadvantages ❌
+        Disadvantages
       
     </span>
   </a>
@@ -2305,6 +2309,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../4_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../5_policy_based/" class="md-nav__link">
         
   
@@ -2313,6 +2345,34 @@
     
   
     Policy Gradients (REINFORCE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 5
   
 
     
@@ -2501,7 +2561,7 @@
   <a href="#advantages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advantages ✅
+        Advantages
       
     </span>
   </a>
@@ -2512,7 +2572,7 @@
   <a href="#disadvantages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Disadvantages ❌
+        Disadvantages
       
     </span>
   </a>
@@ -2584,7 +2644,7 @@
   <a href="#advantages_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advantages ✅
+        Advantages
       
     </span>
   </a>
@@ -2595,7 +2655,7 @@
   <a href="#disadvantages_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Disadvantages ❌
+        Disadvantages
       
     </span>
   </a>
@@ -2915,10 +2975,10 @@
 <p><strong>Simple interpretation:</strong> In each state, choose the action with the highest Q-value!</p>
 <h3 id="the-learning-process">The Learning Process</h3>
 <pre class="mermaid"><code>graph LR
-    A[Experience&lt;br/&gt;s, a, r, s'] --&gt; B[Update Q-values]
-    B --&gt; C[Q-table or&lt;br/&gt;Q-network]
-    C --&gt; D[Policy: π(s) = argmax Q(s,a)]
-    D --&gt; E[Take action]
+    A["Experience&lt;br/&gt;s, a, r, s'"] --&gt; B["Update Q-values"]
+    B --&gt; C["Q-table or&lt;br/&gt;Q-network"]
+    C --&gt; D["Policy: argmax Q(s,a)"]
+    D --&gt; E["Take action"]
     E --&gt; A</code></pre>
 <h3 id="examples-of-value-based-methods">Examples of Value-Based Methods</h3>
 <ul>
@@ -2927,7 +2987,7 @@
 <li><strong>DQN (Deep Q-Network)</strong>: Use neural networks to approximate Q-values</li>
 <li><strong>Double DQN, Dueling DQN</strong>: Improvements on DQN</li>
 </ul>
-<h3 id="advantages">Advantages ✅</h3>
+<h3 id="advantages">Advantages</h3>
 <ol>
 <li><strong>Sample efficient</strong>: Each experience can update many action values</li>
 <li><strong>Off-policy learning</strong>: Can learn from any experience (even random actions!)</li>
@@ -2935,7 +2995,7 @@
 <li><strong>Easy to understand</strong>: "Pick the action with highest value" is intuitive</li>
 <li><strong>Stable in discrete action spaces</strong>: Clear max operation over actions</li>
 </ol>
-<h3 id="disadvantages">Disadvantages ❌</h3>
+<h3 id="disadvantages">Disadvantages</h3>
 <ol>
 <li><strong>Limited to discrete actions</strong>: Computing <span class="arithmatex">\( \arg\max_a Q(s,a) \)</span> is hard when actions are continuous</li>
 <li><strong>No stochasticity</strong>: Derived policy is deterministic (can be addressed with exploration strategies)</li>
@@ -2943,10 +3003,10 @@
 <li><strong>Maximization bias</strong>: Taking max can overestimate values</li>
 </ol>
 <h3 id="when-to-use-value-based-methods">When to Use Value-Based Methods?</h3>
-<p>✅ <strong>Discrete action spaces</strong> (e.g., game controls, discrete robot commands)</p>
-<p>✅ <strong>Off-policy learning is valuable</strong> (want to learn from demonstrations or replay buffers)</p>
-<p>✅ <strong>Deterministic policies are acceptable</strong></p>
-<p>❌ <strong>Continuous action spaces</strong> (robotics with motor torques, joint angles)</p>
+<p><strong>Discrete action spaces</strong> (e.g., game controls, discrete robot commands)</p>
+<p><strong>Off-policy learning is valuable</strong> (want to learn from demonstrations or replay buffers)</p>
+<p><strong>Deterministic policies are acceptable</strong></p>
+<p><strong>Continuous action spaces</strong> (robotics with motor torques, joint angles)</p>
 <h2 id="policy-based-methods-learn-the-policy-directly">Policy-Based Methods: Learn the Policy Directly</h2>
 <h3 id="core-idea_1">Core Idea</h3>
 <p><strong>"Why bother with value functions? Just learn the policy itself!"</strong></p>
@@ -2958,9 +3018,9 @@ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[G(\tau)] = \mathbb{E}_{\tau \sim \
 <p>This is a <strong>direct optimization</strong> of what we care about!</p>
 <h3 id="the-learning-process_1">The Learning Process</h3>
 <pre class="mermaid"><code>graph LR
-    A[Collect trajectories&lt;br/&gt;using πθ] --&gt; B[Compute returns]
-    B --&gt; C[Compute gradients&lt;br/&gt;∇θ J(θ)]
-    C --&gt; D[Update policy&lt;br/&gt;θ ← θ + α∇θJ(θ)]
+    A["Collect trajectories&lt;br/&gt;using policy"] --&gt; B["Compute returns"]
+    B --&gt; C["Compute gradients"]
+    C --&gt; D["Update policy"]
     D --&gt; A</code></pre>
 <h3 id="examples-of-policy-based-methods">Examples of Policy-Based Methods</h3>
 <ul>
@@ -2969,7 +3029,7 @@ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[G(\tau)] = \mathbb{E}_{\tau \sim \
 <li><strong>PPO (Proximal Policy Optimization)</strong>: More practical version of TRPO</li>
 <li><strong>A3C (Asynchronous Advantage Actor-Critic)</strong>: Parallel policy learning</li>
 </ul>
-<h3 id="advantages_1">Advantages ✅</h3>
+<h3 id="advantages_1">Advantages</h3>
 <ol>
 <li><strong>Natural for continuous actions</strong>: Can directly output continuous values</li>
 <li><strong>Can learn stochastic policies</strong>: Sometimes optimal policy is stochastic!</li>
@@ -2977,7 +3037,7 @@ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[G(\tau)] = \mathbb{E}_{\tau \sim \
 <li><strong>Effective in high-dimensional action spaces</strong>: No need to evaluate all actions</li>
 <li><strong>Can learn from limited observability</strong>: Works naturally in POMDPs</li>
 </ol>
-<h3 id="disadvantages_1">Disadvantages ❌</h3>
+<h3 id="disadvantages_1">Disadvantages</h3>
 <ol>
 <li><strong>Sample inefficient</strong>: Need many trajectories to estimate gradients</li>
 <li><strong>High variance</strong>: Gradient estimates can be noisy</li>
@@ -2986,11 +3046,11 @@ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[G(\tau)] = \mathbb{E}_{\tau \sim \
 <li><strong>Slower to train</strong>: Needs more environment interactions</li>
 </ol>
 <h3 id="when-to-use-policy-based-methods">When to Use Policy-Based Methods?</h3>
-<p>✅ <strong>Continuous action spaces</strong> (robotic control, motor commands)</p>
-<p>✅ <strong>High-dimensional action spaces</strong></p>
-<p>✅ <strong>Stochastic policies needed</strong> (e.g., rock-paper-scissors, partially observable environments)</p>
-<p>✅ <strong>Stability is important</strong></p>
-<p>❌ <strong>Sample efficiency is critical</strong> (real-world robot learning with limited trials)</p>
+<p><strong>Continuous action spaces</strong> (robotic control, motor commands)</p>
+<p><strong>High-dimensional action spaces</strong></p>
+<p><strong>Stochastic policies needed</strong> (e.g., rock-paper-scissors, partially observable environments)</p>
+<p><strong>Stability is important</strong></p>
+<p><strong>Sample efficiency is critical</strong> (real-world robot learning with limited trials)</p>
 <h2 id="side-by-side-comparison">Side-by-Side Comparison</h2>
 <table>
 <thead>
@@ -3159,10 +3219,10 @@ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[G(\tau)] = \mathbb{E}_{\tau \sim \
 <li><strong>Critic (value)</strong>: Evaluates how good those actions were</li>
 </ul>
 <pre class="mermaid"><code>graph LR
-    A[State s] --&gt; B[Actor:&lt;br/&gt;πθ(a|s)]
-    A --&gt; C[Critic:&lt;br/&gt;V(s) or Q(s,a)]
-    B --&gt; D[Action a]
-    C --&gt; E[TD Error]
+    A["State s"] --&gt; B["Actor:&lt;br/&gt;Policy"]
+    A --&gt; C["Critic:&lt;br/&gt;Value function"]
+    B --&gt; D["Action a"]
+    C --&gt; E["TD Error"]
     E --&gt; B
     E --&gt; C</code></pre>
 <p><strong>Benefits:</strong>
@@ -3172,49 +3232,45 @@ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[G(\tau)] = \mathbb{E}_{\tau \sim \
 <p><strong>Examples:</strong> A2C, A3C, SAC, TD3, PPO (with value baseline)</p>
 <h2 id="summary-which-approach-should-you-use">Summary: Which Approach Should You Use?</h2>
 <h3 id="use-value-based-methods-when">Use Value-Based Methods When:</h3>
-<p>✅ You have <strong>discrete action spaces</strong>
-✅ <strong>Sample efficiency</strong> is critical
-✅ You want <strong>off-policy</strong> learning
-✅ Deterministic policies are fine</p>
+<p>You have <strong>discrete action spaces</strong>
+<strong>Sample efficiency</strong> is critical
+You want <strong>off-policy</strong> learning
+Deterministic policies are fine</p>
 <p><strong>Example tasks:</strong>
 - Atari games
 - Grid world navigation
 - Discrete robot control (waypoint selection)</p>
 <h3 id="use-policy-based-methods-when">Use Policy-Based Methods When:</h3>
-<p>✅ You have <strong>continuous action spaces</strong>
-✅ You need <strong>stochastic policies</strong>
-✅ <strong>Stability</strong> is more important than sample efficiency
-✅ High-dimensional action spaces</p>
+<p>You have <strong>continuous action spaces</strong>
+You need <strong>stochastic policies</strong>
+<strong>Stability</strong> is more important than sample efficiency
+High-dimensional action spaces</p>
 <p><strong>Example tasks:</strong>
 - Robot manipulation (continuous joint torques)
 - Locomotion (continuous motor commands)
 - Drone control
 - Autonomous driving</p>
 <h3 id="use-actor-critic-when">Use Actor-Critic When:</h3>
-<p>✅ You want a <strong>balance</strong> of both approaches
-✅ Continuous actions <strong>and</strong> sample efficiency
-✅ You want stability of policy methods with lower variance</p>
+<p>You want a <strong>balance</strong> of both approaches
+Continuous actions <strong>and</strong> sample efficiency
+You want stability of policy methods with lower variance</p>
 <p><strong>Example tasks:</strong>
 - Most modern robotics applications!
 - Continuous control with sample constraints</p>
 <h2 id="the-big-picture">The Big Picture</h2>
 <pre class="mermaid"><code>graph TB
-    A[RL Methods] --&gt; B[Value-Based]
-    A --&gt; C[Policy-Based]
-    A --&gt; D[Actor-Critic]
-    B --&gt; B1[Q-Learning]
-    B --&gt; B2[DQN]
-    B --&gt; B3[SARSA]
-    C --&gt; C1[REINFORCE]
-    C --&gt; C2[PPO]
-    C --&gt; C3[TRPO]
-    D --&gt; D1[A2C/A3C]
-    D --&gt; D2[SAC]
-    D --&gt; D3[TD3]
-
-    style B fill:#e1f5ff
-    style C fill:#fff4e1
-    style D fill:#f0e1ff</code></pre>
+    A["RL Methods"] --&gt; B["Value-Based"]
+    A --&gt; C["Policy-Based"]
+    A --&gt; D["Actor-Critic"]
+    B --&gt; B1["Q-Learning"]
+    B --&gt; B2["DQN"]
+    B --&gt; B3["SARSA"]
+    C --&gt; C1["REINFORCE"]
+    C --&gt; C2["PPO"]
+    C --&gt; C3["TRPO"]
+    D --&gt; D1["A2C/A3C"]
+    D --&gt; D2["SAC"]
+    D --&gt; D3["TD3"]</code></pre>
 <p><strong>Historical note:</strong>
 - <strong>Classic RL</strong>: Started with value-based methods (tabular Q-learning)
 - <strong>Deep RL</strong>: DQN (2015) showed value methods could scale to complex tasks

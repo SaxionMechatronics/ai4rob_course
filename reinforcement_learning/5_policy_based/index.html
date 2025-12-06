@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../4_value_based/">
+        <link rel="prev" href="../4_quiz/">
       
       
-        <link rel="next" href="../6_practical_tutorial/">
+        <link rel="next" href="../5_quiz/">
       
       
         
@@ -1560,6 +1560,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1800,6 +1804,34 @@
     
   
     Q-Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 4
   
 
     
@@ -2339,10 +2371,49 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#check-your-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check your understanding
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz 5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2923,6 +2994,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#check-your-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check your understanding
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3248,17 +3330,17 @@ G_t - V(s_t) = A_t
 <a id="__codelineno-10-53" name="__codelineno-10-53" href="#__codelineno-10-53"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">value_optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 </code></pre></div>
 <h2 id="advantages-of-policy-gradients">Advantages of Policy Gradients</h2>
-<p>✅ <strong>Continuous actions</strong>: Naturally handles continuous action spaces</p>
-<p>✅ <strong>Stochastic policies</strong>: Can learn optimal stochastic policies</p>
-<p>✅ <strong>Convergence</strong>: Better convergence properties than value-based methods</p>
-<p>✅ <strong>High-dimensional actions</strong>: Doesn't need argmax over action space</p>
-<p>✅ <strong>Stable</strong>: Generally more stable than Q-learning with function approximation</p>
+<p><strong>Continuous actions</strong>: Naturally handles continuous action spaces</p>
+<p><strong>Stochastic policies</strong>: Can learn optimal stochastic policies</p>
+<p><strong>Convergence</strong>: Better convergence properties than value-based methods</p>
+<p><strong>High-dimensional actions</strong>: Doesn't need argmax over action space</p>
+<p><strong>Stable</strong>: Generally more stable than Q-learning with function approximation</p>
 <h2 id="disadvantages-of-policy-gradients">Disadvantages of Policy Gradients</h2>
-<p>❌ <strong>Sample inefficient</strong>: Requires many episodes to estimate gradients accurately</p>
-<p>❌ <strong>High variance</strong>: Gradient estimates can be very noisy</p>
-<p>❌ <strong>On-policy</strong>: Must collect new data after each policy update (expensive!)</p>
-<p>❌ <strong>Local optima</strong>: Gradient ascent can get stuck in local maxima</p>
-<p>❌ <strong>Slow convergence</strong>: Can take many iterations to learn</p>
+<p><strong>Sample inefficient</strong>: Requires many episodes to estimate gradients accurately</p>
+<p><strong>High variance</strong>: Gradient estimates can be very noisy</p>
+<p><strong>On-policy</strong>: Must collect new data after each policy update (expensive!)</p>
+<p><strong>Local optima</strong>: Gradient ascent can get stuck in local maxima</p>
+<p><strong>Slow convergence</strong>: Can take many iterations to learn</p>
 <h2 id="variance-reduction-techniques">Variance Reduction Techniques</h2>
 <p>Beyond baselines, several techniques reduce gradient variance:</p>
 <h3 id="1-reward-to-go">1. Reward-to-Go</h3>
@@ -3398,6 +3480,8 @@ L(\theta) = \mathbb{E} \left[ \min(r_t(\theta) A_t, \text{clip}(r_t(\theta), 1-\
 <p><strong>Modern extensions:</strong> PPO, TRPO, A3C (address sample efficiency and variance)</p>
 <p>Now let's see REINFORCE in action with a hands-on implementation!</p>
 <hr />
+<h2 id="check-your-understanding">Check your understanding</h2>
+<p><a class="md-button" href="../5_quiz/">Quiz 5</a></p>
 <p><a class="md-button" href="../4_value_based/">← Back to Q-Learning</a>
 <a class="md-button md-button--primary" href="../6_practical_tutorial/">Continue to Practical Tutorial →</a></p>
 
