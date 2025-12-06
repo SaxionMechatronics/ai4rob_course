@@ -12,7 +12,7 @@ An MDP is defined by a tuple: \( \mathcal{M} = (\mathcal{S}, \mathcal{A}, \mathc
 
 Let's break down each component:
 
-### 1. State Space \( \mathcal{S} \)
+### 1. State Space
 
 **Definition:** The set of all possible states the environment can be in.
 
@@ -30,7 +30,7 @@ A state is a complete description of the environment at a particular time. It co
 - **Discrete**: Finite number of states (e.g., grid world positions)
 - **Continuous**: Infinite states (e.g., robot joint angles can be any real number in a range)
 
-### 2. Action Space \( \mathcal{A} \)
+### 2. Action Space
 
 **Definition:** The set of all possible actions the agent can take.
 
@@ -45,7 +45,7 @@ A state is a complete description of the environment at a particular time. It co
 - **Discrete**: Finite set of actions (e.g., {up, down, left, right})
 - **Continuous**: Actions are real-valued vectors (e.g., motor torques in \(\mathbb{R}^n\))
 
-### 3. Transition Dynamics \( \mathcal{P} \)
+### 3. Transition Dynamics
 
 **Definition:** The probability of transitioning to state \( s' \) when taking action \( a \) in state \( s \).
 
@@ -74,7 +74,7 @@ Possible outcomes:
 
 In robotics, the transition dynamics are typically unknown (we don't have a perfect model of physics) which is why RL is valuable!
 
-### 4. Reward Function \( \mathcal{R} \)
+### 4. Reward Function
 
 **Definition:** The immediate reward received after taking action \( a \) in state \( s \) and transitioning to \( s' \).
 
@@ -96,16 +96,16 @@ Reward is the feedback signal that tells the agent how good its action was. It's
 
 Good reward design:
 ```
-✅ Reach goal: +100
-✅ Each timestep alive: -1
-✅ Collision: -50
+Reach goal: +100
+Each timestep alive: -1
+Collision: -50
 Result: Fast, safe navigation
 ```
 
 Poor reward design:
 ```
-❌ Only goal reward: +100
-❌ Nothing else
+Only goal reward: +100
+Nothing else
 Result: Might take forever or behave dangerously
 ```
 
@@ -116,7 +116,7 @@ Result: Might take forever or behave dangerously
     - Balance multiple objectives
     - Ensure rewards are achievable through exploration
 
-### 5. Discount Factor \( \gamma \)
+### 5. Discount Factor
 
 **Definition:** A number between 0 and 1 that determines how much the agent values future rewards versus immediate rewards.
 
@@ -283,7 +283,7 @@ For episodic tasks, we often reset to a starting state after each episode. This 
 
 Value functions are crucial for many RL algorithms. They answer: "How good is it to be in a state (or take an action)?"
 
-### State-Value Function \( V^\pi(s) \)
+### State-Value Function
 
 **Definition:** Expected return when starting in state \( s \) and following policy \( \pi \).
 
@@ -305,7 +305,7 @@ V^π(two steps away) ≈ -1 + 0.9×8 = 6.2
 V^π(far away) ≈ -5       (many costly steps to goal)
 ```
 
-### Action-Value Function \( Q^\pi(s, a) \)
+### Action-Value Function
 
 **Definition:** Expected return when starting in state \( s \), taking action \( a \), then following policy \( \pi \).
 
@@ -347,7 +347,7 @@ V^*(s) = \max_\pi V^\pi(s)
 Q^*(s, a) = \max_\pi Q^\pi(s, a)
 \]
 
-### Extracting Optimal Policy from \( Q^* \)
+### Extracting Optimal Policy from Q
 
 If we know \( Q^*(s, a) \), the optimal policy is:
 
@@ -363,7 +363,7 @@ This is why Q-learning is so powerful—if we learn \( Q^* \), we automatically 
 
 Value functions satisfy recursive relationships called **Bellman equations**. These are fundamental to RL algorithms!
 
-### Bellman Expectation Equation (for \( V^\pi \))
+### Bellman Expectation Equation (for V)
 
 \[
 V^\pi(s) = \sum_{a} \pi(a|s) \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma V^\pi(s')]
@@ -373,19 +373,19 @@ V^\pi(s) = \sum_{a} \pi(a|s) \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma V
 - Expected immediate reward
 - Plus discounted value of next state
 
-### Bellman Expectation Equation (for \( Q^\pi \))
+### Bellman Expectation Equation (for Q)
 
 \[
 Q^\pi(s,a) = \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma \sum_{a'} \pi(a'|s') Q^\pi(s',a')]
 \]
 
-### Bellman Optimality Equation (for \( V^* \))
+### Bellman Optimality Equation (for V)
 
 \[
 V^*(s) = \max_a \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma V^*(s')]
 \]
 
-### Bellman Optimality Equation (for \( Q^* \))
+### Bellman Optimality Equation (for Q)
 
 \[
 Q^*(s,a) = \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma \max_{a'} Q^*(s',a')]
@@ -436,15 +436,6 @@ The key is to **balance** exploration and exploitation!
 
 ## Putting It All Together: The RL Loop
 
-```mermaid
-graph LR
-    A[Agent] -->|Action at| B[Environment]
-    B -->|State st+1| A
-    B -->|Reward rt+1| A
-    A -.->|Policy π| A
-    A -.->|Update| A
-```
-
 **The interaction cycle:**
 
 1. Agent observes state \( s_t \)
@@ -456,21 +447,21 @@ graph LR
 
 ## Summary: Key Takeaways
 
-✅ **MDP**: Formal framework for sequential decision-making
+**MDP**: Formal framework for sequential decision-making
 
-✅ **Five components**: States, actions, transitions, rewards, discount factor
+**Five components**: States, actions, transitions, rewards, discount factor
 
-✅ **State vs. Observation**: Full information vs. what agent perceives
+**State vs. Observation**: Full information vs. what agent perceives
 
-✅ **Policy**: Agent's strategy for choosing actions
+**Policy**: Agent's strategy for choosing actions
 
-✅ **Value functions**: Predict expected future reward
+**Value functions**: Predict expected future reward
 
-✅ **Bellman equations**: Recursive relationships that enable learning
+**Bellman equations**: Recursive relationships that enable learning
 
-✅ **Goal**: Find optimal policy \( \pi^* \) that maximizes expected return
+**Goal**: Find optimal policy \( \pi^* \) that maximizes expected return
 
-✅ **Challenge**: Learn through interaction without knowing dynamics
+**Challenge**: Learn through interaction without knowing dynamics
 
 Now that we have the formal framework, we can understand different approaches to solving MDPs!
 

@@ -29,10 +29,10 @@ Value-based methods learn a value function (typically \( Q(s, a) \)) that estima
 
 ```mermaid
 graph LR
-    A[Experience<br/>s, a, r, s'] --> B[Update Q-values]
-    B --> C[Q-table or<br/>Q-network]
-    C --> D[Policy: π(s) = argmax Q(s,a)]
-    D --> E[Take action]
+    A["Experience<br/>s, a, r, s'"] --> B["Update Q-values"]
+    B --> C["Q-table or<br/>Q-network"]
+    C --> D["Policy: argmax Q(s,a)"]
+    D --> E["Take action"]
     E --> A
 ```
 
@@ -43,7 +43,7 @@ graph LR
 - **DQN (Deep Q-Network)**: Use neural networks to approximate Q-values
 - **Double DQN, Dueling DQN**: Improvements on DQN
 
-### Advantages ✅
+### Advantages
 
 1. **Sample efficient**: Each experience can update many action values
 2. **Off-policy learning**: Can learn from any experience (even random actions!)
@@ -51,7 +51,7 @@ graph LR
 4. **Easy to understand**: "Pick the action with highest value" is intuitive
 5. **Stable in discrete action spaces**: Clear max operation over actions
 
-### Disadvantages ❌
+### Disadvantages
 
 1. **Limited to discrete actions**: Computing \( \arg\max_a Q(s,a) \) is hard when actions are continuous
 2. **No stochasticity**: Derived policy is deterministic (can be addressed with exploration strategies)
@@ -60,13 +60,13 @@ graph LR
 
 ### When to Use Value-Based Methods?
 
-✅ **Discrete action spaces** (e.g., game controls, discrete robot commands)
+**Discrete action spaces** (e.g., game controls, discrete robot commands)
 
-✅ **Off-policy learning is valuable** (want to learn from demonstrations or replay buffers)
+**Off-policy learning is valuable** (want to learn from demonstrations or replay buffers)
 
-✅ **Deterministic policies are acceptable**
+**Deterministic policies are acceptable**
 
-❌ **Continuous action spaces** (robotics with motor torques, joint angles)
+**Continuous action spaces** (robotics with motor torques, joint angles)
 
 ## Policy-Based Methods: Learn the Policy Directly
 
@@ -88,9 +88,9 @@ This is a **direct optimization** of what we care about!
 
 ```mermaid
 graph LR
-    A[Collect trajectories<br/>using πθ] --> B[Compute returns]
-    B --> C[Compute gradients<br/>∇θ J(θ)]
-    C --> D[Update policy<br/>θ ← θ + α∇θJ(θ)]
+    A["Collect trajectories<br/>using policy"] --> B["Compute returns"]
+    B --> C["Compute gradients"]
+    C --> D["Update policy"]
     D --> A
 ```
 
@@ -101,7 +101,7 @@ graph LR
 - **PPO (Proximal Policy Optimization)**: More practical version of TRPO
 - **A3C (Asynchronous Advantage Actor-Critic)**: Parallel policy learning
 
-### Advantages ✅
+### Advantages
 
 1. **Natural for continuous actions**: Can directly output continuous values
 2. **Can learn stochastic policies**: Sometimes optimal policy is stochastic!
@@ -109,7 +109,7 @@ graph LR
 4. **Effective in high-dimensional action spaces**: No need to evaluate all actions
 5. **Can learn from limited observability**: Works naturally in POMDPs
 
-### Disadvantages ❌
+### Disadvantages
 
 1. **Sample inefficient**: Need many trajectories to estimate gradients
 2. **High variance**: Gradient estimates can be noisy
@@ -119,15 +119,15 @@ graph LR
 
 ### When to Use Policy-Based Methods?
 
-✅ **Continuous action spaces** (robotic control, motor commands)
+**Continuous action spaces** (robotic control, motor commands)
 
-✅ **High-dimensional action spaces**
+**High-dimensional action spaces**
 
-✅ **Stochastic policies needed** (e.g., rock-paper-scissors, partially observable environments)
+**Stochastic policies needed** (e.g., rock-paper-scissors, partially observable environments)
 
-✅ **Stability is important**
+**Stability is important**
 
-❌ **Sample efficiency is critical** (real-world robot learning with limited trials)
+**Sample efficiency is critical** (real-world robot learning with limited trials)
 
 ## Side-by-Side Comparison
 
@@ -312,10 +312,10 @@ We'll cover this in detail later, but here's a preview:
 
 ```mermaid
 graph LR
-    A[State s] --> B[Actor:<br/>πθ(a|s)]
-    A --> C[Critic:<br/>V(s) or Q(s,a)]
-    B --> D[Action a]
-    C --> E[TD Error]
+    A["State s"] --> B["Actor:<br/>Policy"]
+    A --> C["Critic:<br/>Value function"]
+    B --> D["Action a"]
+    C --> E["TD Error"]
     E --> B
     E --> C
 ```
@@ -331,10 +331,10 @@ graph LR
 
 ### Use Value-Based Methods When:
 
-✅ You have **discrete action spaces**
-✅ **Sample efficiency** is critical
-✅ You want **off-policy** learning
-✅ Deterministic policies are fine
+You have **discrete action spaces**
+**Sample efficiency** is critical
+You want **off-policy** learning
+Deterministic policies are fine
 
 **Example tasks:**
 - Atari games
@@ -343,10 +343,10 @@ graph LR
 
 ### Use Policy-Based Methods When:
 
-✅ You have **continuous action spaces**
-✅ You need **stochastic policies**
-✅ **Stability** is more important than sample efficiency
-✅ High-dimensional action spaces
+You have **continuous action spaces**
+You need **stochastic policies**
+**Stability** is more important than sample efficiency
+High-dimensional action spaces
 
 **Example tasks:**
 - Robot manipulation (continuous joint torques)
@@ -356,9 +356,9 @@ graph LR
 
 ### Use Actor-Critic When:
 
-✅ You want a **balance** of both approaches
-✅ Continuous actions **and** sample efficiency
-✅ You want stability of policy methods with lower variance
+You want a **balance** of both approaches
+Continuous actions **and** sample efficiency
+You want stability of policy methods with lower variance
 
 **Example tasks:**
 - Most modern robotics applications!
@@ -368,22 +368,18 @@ graph LR
 
 ```mermaid
 graph TB
-    A[RL Methods] --> B[Value-Based]
-    A --> C[Policy-Based]
-    A --> D[Actor-Critic]
-    B --> B1[Q-Learning]
-    B --> B2[DQN]
-    B --> B3[SARSA]
-    C --> C1[REINFORCE]
-    C --> C2[PPO]
-    C --> C3[TRPO]
-    D --> D1[A2C/A3C]
-    D --> D2[SAC]
-    D --> D3[TD3]
-    
-    style B fill:#e1f5ff
-    style C fill:#fff4e1
-    style D fill:#f0e1ff
+    A["RL Methods"] --> B["Value-Based"]
+    A --> C["Policy-Based"]
+    A --> D["Actor-Critic"]
+    B --> B1["Q-Learning"]
+    B --> B2["DQN"]
+    B --> B3["SARSA"]
+    C --> C1["REINFORCE"]
+    C --> C2["PPO"]
+    C --> C3["TRPO"]
+    D --> D1["A2C/A3C"]
+    D --> D2["SAC"]
+    D --> D3["TD3"]
 ```
 
 **Historical note:**
