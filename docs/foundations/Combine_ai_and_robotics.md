@@ -10,7 +10,7 @@ The last example is the self-driving car, without AI it is extremely difficult t
 
 ## How to deal with AI
 The use of machine learning is helping robotics break through its current limitations, especially when it comes to capturing tasks or understanding systems that are hard to model with traditional methods. As mentioned earlier, machine learning shines at spotting patterns in data that are often too complex or subtle for humans to estimate accurately.     
-But it’s important to see AI not as a replacement, but as an extension of existing techniques. Training AI models can be time consuming and resource intensive, so combining them with well established methods is often the smartest approach. Plus, sticking with known techniques gives engineers and researchers more control over the system. It’s easier to understand what’s happening and have an idea of what the limitations of the system are. 
+But it’s important to see AI not as a replacement, but as an extension of existing techniques. Training AI models can be time consuming and resource intensive, so combining them with well established methods is often the smartest approach. Plus, sticking with known techniques gives engineers and researchers more control over the system. It’s easier to understand what’s happening and to have an idea of what the limitations of the system are. 
 
 [← Back to introduction to AI ](introduction_to_ai.md){ .md-button .md-button--primary }
 [Continue to challenges in AI for robotics →](Challenges_in_ai_for_robotics.md){ .md-button .md-button--primary }
