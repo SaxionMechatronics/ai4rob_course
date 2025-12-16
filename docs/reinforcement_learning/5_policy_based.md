@@ -401,27 +401,27 @@ class REINFORCEWithBaseline:
 
 ## Advantages of Policy Gradients
 
-✅ **Continuous actions**: Naturally handles continuous action spaces
+**Continuous actions**: Naturally handles continuous action spaces
 
-✅ **Stochastic policies**: Can learn optimal stochastic policies
+**Stochastic policies**: Can learn optimal stochastic policies
 
-✅ **Convergence**: Better convergence properties than value-based methods
+**Convergence**: Better convergence properties than value-based methods
 
-✅ **High-dimensional actions**: Doesn't need argmax over action space
+**High-dimensional actions**: Doesn't need argmax over action space
 
-✅ **Stable**: Generally more stable than Q-learning with function approximation
+**Stable**: Generally more stable than Q-learning with function approximation
 
 ## Disadvantages of Policy Gradients
 
-❌ **Sample inefficient**: Requires many episodes to estimate gradients accurately
+**Sample inefficient**: Requires many episodes to estimate gradients accurately
 
-❌ **High variance**: Gradient estimates can be very noisy
+**High variance**: Gradient estimates can be very noisy
 
-❌ **On-policy**: Must collect new data after each policy update (expensive!)
+**On-policy**: Must collect new data after each policy update (expensive!)
 
-❌ **Local optima**: Gradient ascent can get stuck in local maxima
+**Local optima**: Gradient ascent can get stuck in local maxima
 
-❌ **Slow convergence**: Can take many iterations to learn
+**Slow convergence**: Can take many iterations to learn
 
 ## Variance Reduction Techniques
 
@@ -578,6 +578,9 @@ Train with different random seeds, report mean and std of performance.
 Now let's see REINFORCE in action with a hands-on implementation!
 
 ---
+
+## Check your understanding
+[Quiz 5](5_quiz.md){ .md-button }
 
 [← Back to Q-Learning](4_value_based.md){ .md-button }
 [Continue to Practical Tutorial →](6_practical_tutorial.md){ .md-button .md-button--primary }

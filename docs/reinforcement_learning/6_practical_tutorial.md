@@ -801,17 +801,12 @@ class ContinuousPolicyNetwork(nn.Module):
 
 In this tutorial, you've:
 
-✅ Implemented REINFORCE from scratch with detailed explanations
-
-✅ Learned how to train and evaluate RL agents
-
-✅ Compared your implementation with state-of-the-art PPO
-
-✅ Understood the tradeoffs between different algorithms
-
-✅ Learned debugging techniques and hyperparameter tuning
-
-✅ Explored extensions like baselines and continuous actions
+- Implemented REINFORCE from scratch with detailed explanations
+- Learned how to train and evaluate RL agents
+- Compared your implementation with state-of-the-art PPO
+- Understood the tradeoffs between different algorithms
+- Learned debugging techniques and hyperparameter tuning
+- Explored extensions like baselines and continuous actions
 
 ### Key Takeaways
 
@@ -821,28 +816,45 @@ In this tutorial, you've:
 4. **Start simple**: Get basic version working before adding complexity
 5. **Evaluation is critical**: Don't just look at training curves
 
-### Next Steps
+The complete, runnable code is available in the accompanying Jupyter notebooks:
 
-1. **Try harder environments**: LunarLander, MuJoCo tasks
-2. **Implement Actor-Critic**: A2C or A3C
-3. **Add GAE**: Generalized Advantage Estimation
-4. **Try PPO from scratch**: Implement the clipping objective
-5. **Real robotics**: Sim-to-real transfer with domain randomization
+### Unit 1: Train Your First Deep Reinforcement Learning Agent
 
-## Complete Code
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SaxionMechatronics/ai4rob_course/blob/main/docs/notebooks/reinforcement_learning/unit1_introduction.ipynb)
 
-The complete, runnable code is available in the accompanying Jupyter notebook:
+**What you'll learn:** This notebook introduces you to training your first deep RL agent using Stable-Baselines3. You'll learn how to:
+- Set up Gymnasium environments (LunarLander-v2)
+- Use PPO (Proximal Policy Optimization) from a high-level library
+- Train and evaluate a policy gradient agent
+- Understand the practical workflow of RL training
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/)
+This is perfect for getting started with RL without implementing algorithms from scratch.
 
-*Link to notebook will be added here*
+### Unit 2: Q-Learning from Scratch
 
-## References
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SaxionMechatronics/ai4rob_course/blob/main/docs/notebooks/reinforcement_learning/unit2_q_learning.ipynb)
 
-- **REINFORCE**: Williams, R. J. (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning.
-- **PPO**: Schulman, J., et al. (2017). Proximal Policy Optimization Algorithms.
-- **Stable-Baselines3**: [https://stable-baselines3.readthedocs.io/](https://stable-baselines3.readthedocs.io/)
-- **Gymnasium**: [https://gymnasium.farama.org/](https://gymnasium.farama.org/)
+**What you'll learn:** This notebook guides you through implementing Q-Learning from scratch. You'll:
+- Build a Q-table and implement the Q-Learning update rule
+- Implement epsilon-greedy exploration strategies
+- Train Q-Learning agents on discrete environments (FrozenLake-v1 and Taxi-v3)
+- Understand how tabular Q-Learning works in practice
+- Learn to evaluate and debug RL agents
+
+This hands-on experience will solidify your understanding of value-based methods.
+
+### Unit 3: Policy Gradient (REINFORCE) from Scratch
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SaxionMechatronics/ai4rob_course/blob/main/docs/notebooks/reinforcement_learning/unit3_policy_gradient.ipynb)
+
+**What you'll learn:** This notebook teaches you to implement REINFORCE from scratch using PyTorch. You'll:
+- Build a policy network using neural networks
+- Implement the REINFORCE algorithm step-by-step
+- Compute discounted returns and policy gradients
+- Train policy gradient agents on CartPole-v1 and PixelCopter
+- Understand the practical challenges of policy gradient methods (variance, sample efficiency)
+
+This implementation will give you deep insight into how policy-based methods work under the hood.
 
 ---
 

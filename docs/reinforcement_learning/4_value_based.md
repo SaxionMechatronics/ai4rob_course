@@ -108,11 +108,11 @@ For each episode:
 
 ### Key Properties
 
-✅ **Off-policy**: Learns optimal policy while following exploratory policy (ε-greedy)
+**Off-policy**: Learns optimal policy while following exploratory policy (ε-greedy)
 
-✅ **Model-free**: Doesn't need to know transition probabilities \( P(s'|s, a) \)
+**Model-free**: Doesn't need to know transition probabilities \( P(s'|s, a) \)
 
-✅ **Converges to optimal**: Under certain conditions (visiting all state-action pairs infinitely often, appropriate learning rate schedule)
+**Converges to optimal**: Under certain conditions (visiting all state-action pairs infinitely often, appropriate learning rate schedule)
 
 ## Exploration: The ε-Greedy Policy
 
@@ -473,23 +473,23 @@ Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \sum_{a'} \pi(a'|s') Q(s', a') -
 
 ## Limitations of Q-Learning
 
-❌ **Limited to discrete actions**
+**Limited to discrete actions**
 - Need to compute \( \arg\max_a Q(s, a) \)
 - Difficult or impossible with continuous actions
 
-❌ **Overestimation bias**
+**Overestimation bias**
 - Always taking max can lead to overly optimistic estimates
 - Mitigated by Double Q-Learning
 
-❌ **Sample inefficiency**
+**Sample inefficiency**
 - Each update only affects one (s, a) pair (in tabular case)
 - Needs many samples to converge
 
-❌ **Instability with function approximation**
+**Instability with function approximation**
 - Neural network Q-functions can diverge
 - Requires experience replay, target networks, careful tuning
 
-❌ **No explicit exploration strategy**
+**No explicit exploration strategy**
 - Must add ε-greedy or other heuristics
 - Not principled like entropy regularization in policy methods
 
@@ -497,21 +497,21 @@ Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \sum_{a'} \pi(a'|s') Q(s', a') -
 
 ### Perfect for:
 
-✅ Discrete action spaces (games, navigation with discrete moves)
+Discrete action spaces (games, navigation with discrete moves)
 
-✅ Offline learning from logged data
+Offline learning from logged data
 
-✅ Simple environments where tabular methods suffice
+Simple environments where tabular methods suffice
 
-✅ When you want off-policy learning
+When you want off-policy learning
 
 ### Avoid for:
 
-❌ Continuous action spaces (use policy gradient methods or actor-critic)
+Continuous action spaces (use policy gradient methods or actor-critic)
 
-❌ Extremely large state spaces without good function approximation
+Extremely large state spaces without good function approximation
 
-❌ Real-time learning with strict sample budgets (consider policy gradients)
+Real-time learning with strict sample budgets (consider policy gradients)
 
 ## Summary
 
@@ -536,6 +536,9 @@ Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]
 Now let's move to the other side: **policy gradient methods** that directly learn the policy!
 
 ---
+
+## Check your understanding
+[Quiz 4](4_quiz.md){ .md-button }
 
 [← Back to Policy vs Value-Based](3_policy_vs_value.md){ .md-button }
 [Continue to Policy Gradients (REINFORCE) →](5_policy_based.md){ .md-button .md-button--primary }

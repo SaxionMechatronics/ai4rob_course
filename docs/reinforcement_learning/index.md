@@ -22,11 +22,11 @@ This module focuses on reinforcement learning techniques for robotic control, de
 
 ```mermaid
 graph LR
-    A[Introduction] --> B[MDP]
-    B --> C[Policy vs Value]
-    C --> D[Q-Learning]
-    C --> E[REINFORCE]
-    D --> F[Practical Tutorial]
+    A["Introduction"] --> B["MDP"]
+    B --> C["Policy vs Value"]
+    C --> D["Q-Learning"]
+    C --> E["REINFORCE"]
+    D --> F["Practical Tutorial"]
     E --> F
 ```
 

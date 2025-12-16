@@ -118,7 +118,9 @@ nav:
       - Policy vs Value-Based: reinforcement_learning/3_policy_vs_value.md
       - Quiz 3: reinforcement_learning/3_quiz.md
       - Q-Learning: reinforcement_learning/4_value_based.md
+      - Quiz 4: reinforcement_learning/4_quiz.md
       - Policy Gradients (REINFORCE): reinforcement_learning/5_policy_based.md
+      - Quiz 5: reinforcement_learning/5_quiz.md
       - Practical Tutorial: reinforcement_learning/6_practical_tutorial.md
   - Conclusion: conclusion.md 
   - Resources: resources.md
