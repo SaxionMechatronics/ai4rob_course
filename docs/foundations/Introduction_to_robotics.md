@@ -7,7 +7,7 @@ Before exploring how artificial intelligence (AI) can enhance robotics, it’s i
 
 ## What Is Robotics?
 
-Robotics is about designing, building, and using robots. It combines knowledge from mechanical, electrical and software engineering. It is a multidisciplenary fields, which makes it also difficult to explicitly define what a robot is. There’s no universally agreed definition of a robot. In general, it’s a machine that can do tasks on its own or with just a little help from people. So, something like a drill doesn’t count as a robot, because you still have to use it yourself. It’s just a tool. But a robot vacuum cleaner, like a Roomba, is considered a robot, because it can clean your floor without you doing anything.
+Robotics is about designing, building, and using robots. It combines knowledge from mechanical, electrical and software engineering. It is a multidisciplenary field, which makes it also difficult to explicitly define what a robot is. There’s no universally agreed definition of a robot. In general, it’s a machine that can do tasks on its own or with just a little help from people. So, something like a drill doesn’t count as a robot, because you still have to use it yourself. It’s just a tool. But a robot vacuum cleaner, like a Roomba, is considered a robot, because it can clean your floor without you doing anything.
 
 ## Common Types of Robots
 
@@ -15,7 +15,7 @@ When people hear the word “robot,” they often think of human-like machines o
 
 
 ### 1. Mobile Ground Robots
-These are robots that move around on wheels or legs and use sensors like GPS, cameras, and gyroscopes to figure out where they are and what’s around them. They’re often used for inspections or surveillance. For example, in the CHARISMA project, a four-legged robot was used to detect gas leaks on the street. These robots do well in places that don’t dynamically change much, like homes or warehouses. Once they’ve mapped the area, they can move around pretty easily. But things get tricky when the environment is unpredictable. In a forest or a busy street, the robot might run into unexpected obstacles, moving objects, or changes in lighting. For example , a human suddenly jumping in front of the robot.  These things can confuse the sensors or mess up the robot’s navigation. Most of these robots rely on a map they made earlier, and if something changes, they don’t always know how to react.
+These are robots that move around on wheels or legs and use sensors like GPS, cameras, and gyroscopes to figure out where they are and what’s around them. They’re often used for inspections or surveillance. For example, in the CHARISMA project, a four-legged robot was used to detect gas leaks on the street. These robots do well in places that don’t dynamically change much, like homes or warehouses. Once they’ve mapped the area, they can move around pretty easily. But things get tricky when the environment is unpredictable. In a forest or a busy street, the robot might run into unexpected obstacles, moving objects, or changes in lighting. For example, a human suddenly jumping in front of the robot.  These things can confuse the sensors or mess up the robot’s navigation. Most of these robots rely on a map they made earlier, and if something changes, they don’t always know how to react.
 
 
 
@@ -27,7 +27,7 @@ Underwater robots have their own set of challenges. They work below the surface,
 
 
 ### 4. Manipulators
-Manipulators are robots that don’t move around but are built to handle objects. Think of robotic arms in factories. These are pretty advanced and are used a lot in manufacturing, where everything is controlled and predictable. For example, in a car factory, the same parts are put together in the same way over and over again. That’s perfect for a robot. But if you throw in some randomness, like a bin full of mixed-up objects, things get a lot more complicated. The robot has to figure out what the object is, how big it is, what angle it’s sitting at, and how to pick it up without dropping it. These are things humans do without thinking, but for robots, it’s a real challenge.
+Manipulators are robots that don’t move around but are built to handle objects. Think of robotic arms in factories. It is good to know that there is a distinction baetween robots and cobots. Cobots are used to collaborate with humans and are designed to reduce the risk of clamping, but also have torque/force detection. This detection ensures thats cobot stops moving when the force/torque reaches a threshold. These are pretty advanced and are used a lot in manufacturing, where everything is controlled and predictable. For example, in a car factory, the same parts are put together in the same way over and over again. That’s perfect for a robot. But if you throw in some randomness, like a bin full of mixed-up objects, things get a lot more complicated. The robot has to figure out what the object is, how big it is, what angle it’s sitting at, and how to pick it up without dropping it. These are things humans do without thinking, but for robots, it’s a real challenge. It is important 
 
 
 
@@ -40,6 +40,8 @@ Humanoid robots are designed to look and move like people. They’ve been around
 
 If you look at all these types of robots, you’ll notice they all run into the same kind of problem. They’re great when things are predictable, but they struggle when something unexpected happens. Whether it’s a new obstacle, a change in the environment, or a different kind of task, robots often don’t know what to do. They’re not great at adapting.
 
-And that’s the big challenge in robotics right now. How do we build robots that can deal with new, unfamiliar situations without needing someone to reprogram them every time? That leads to something which is simple impossible, because for each task it should be reprogrammed. This is not a feasible solution as there are infinitely many tasks that exists.
+And that’s the big challenge in robotics right now. How do we build robots that can deal with new, unfamiliar situations without needing someone to reprogram them every time? That leads to something which is simply impossible, because for each task it should be reprogrammed. This is not a feasible solution as there are infinitely many tasks that exists.
 
 This is where artificial intelligence might be able to help. But before we get into that, it’s important to understand what AI actually is, and how it connects to things like machine learning, deep learning, and reinforcement learning. These terms get thrown around a lot, and it’s easy to mix them up. So before we talk about how AI could make a difference in robotics, let’s first break down what these ideas really mean.
+
+[Continue to  introduction to artificial intelligence →](introduction_to_ai.md){ .md-button .md-button--primary }

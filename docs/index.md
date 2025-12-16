@@ -11,10 +11,9 @@ This course covers AI concepts applied to robotics. It's organized into three mo
 ```mermaid
 graph TD
     A[AI for Robotics Course] --> B[Foundations]
-    A --> C[Deep Learning]
-    A --> D[Reinforcement Learning]
+    B --> C[Deep Learning]
+    C --> D[Reinforcement Learning]
     D --> H[Practical Applications]
-    B --> H
     C --> H
 ```
 
@@ -58,7 +57,7 @@ graph TD
 
 ## Course Features
 
-Each module includes:
+Each module includes (except foundations):
 
 | Feature | Description |
 |---------|-------------|

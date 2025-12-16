@@ -72,6 +72,7 @@ extra_javascript:
 nav:
   - Home: index.md
   - Foundations:
+      - foundations/index.md
       - Introduction to robotics: foundations/Introduction_to_robotics.md
       - Introduction to artificial intelligence: foundations/introduction_to_ai.md
       - AI helping robotics: foundations/Combine_ai_and_robotics.md

@@ -171,6 +171,9 @@ Each row in the weight matrix corresponds to the set of weights for one neuron. 
 
 In summary, neural networks are inspired by the human brain and built from simple units called neurons or perceptrons. While a single perceptron can only handle linear classification, stacking multiple layers introduces non-linearity, enabling networks to solve complex problems. Using matrix-based notation and activation functions makes these models computationally efficient and scalable, forming the foundation of modern deep learning.
 
+[← Back to Why start with deep learning](why_start_with_deep_learning.md){ .md-button }
+[Back to RL Module Home](index.md){ .md-button .md-button--primary }
+
 
 <!-- In this example there is only one hidden layer, but you can expand this with as many layers as you like. The hidden layer is nothing else as another neuron.  These can be used after training to perform classification for example or regression.  Now let’s have more detailed look at this diagram. The inputs and weights of the inputs are colored to ease the reading of the diagram. Before we can propogate through this diagram it is important to know how to write things and refer to them. In other words, if we are talking for example about the weight used to map from input neuron 1 to hidden layer neuron 1 we need a common method to write this down. Starting with the inputs, they are noted as $x_j$ 
 , which means input number $j$. It is important to note that $x_0$ is clamped at 1, because it is considered the bias term.  
