@@ -240,7 +240,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../Introduction_to_robotics/" class="md-tabs__link">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -410,6 +410,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -438,8 +442,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -453,8 +458,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
@@ -466,6 +477,8 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -677,10 +690,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
         
           
-          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="">
             
   
   
@@ -698,8 +711,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2131,11 +2144,13 @@
 <p>Now that we understand the general concept of robotics and AI, the question arises: how can they help each other? As mentioned before, traditional robotics has often been limited by its dependence on controlled environments. Robots typically perform well when everything behaves as expected. However, as soon as unexpected changes happen, robots tend to fail. The systems do not know what to do in those situations. This is where AI can help. As mentioned before AI can be used to teach robotics systems without programming, it only requires data. AI therefore extends the operations range of the robots.  </p>
 <h2 id="examples">Examples</h2>
 <p>An example of this is how industrial manipulators are typically controlled. For instance, ABB robots are operated using a teach pendant and programmed with a language called RAPID. To simplify this process, manufacturers have introduced tools like wizard programming, which guide users through tasks. However, even these tools require a certain level of programming knowledge. In an ideal scenario, one could simply demonstrate a task, and the robotic system would learn to perform it. This approach would allow for intuitive training of robots and is related to the concept of one-shot learning, where a system learns from just a single example. </p>
-<p>Another well-known example of AI-enhanced robotics is Spot, the robot dog developed by Boston Dynamics. Spot was previously controlled using Model Predictive Control (MPC). As the name suggests, MPC uses a model to predict the robot’s future movements and selects the most optimal control input based on those predictions.  However, as soon  Spot was walks on a slippery surface the robot fails. It will falls down in an error stage. This issue has been resolved by extending the model predictive controller with reinforcement learning. </p>
-<p>The last example is the self-driving car, as mentioned earlier. Without AI, it is extremely difficult to build a reliable autonomous vehicle due to the infinite number of possible scenarios. AI helps by learning to recognize and respond to external factor, such as pedestrians, traffic signs, and other vehicles, without needing explicit programming for every situation. It specifically helps with understanding the surroundings and making real-time decisions.</p>
+<p>Another well-known example of AI-enhanced robotics is Spot, the robot dog developed by Boston Dynamics. Spot was previously controlled using Model Predictive Control (MPC). As the name suggests, MPC uses a model to predict the robot’s future movements and selects the most optimal control input based on those predictions.  However, as soon  Spot  walks on a slippery surface the robot fails. It will falls down in an error stage. This issue has been resolved by extending the model predictive controller with reinforcement learning. </p>
+<p>The last example is the self-driving car, without AI it is extremely difficult to build a reliable autonomous vehicle due to the infinite number of possible scenarios. AI helps by learning to recognize and respond to external factors such as pedestrians, traffic signs, and other vehicles, without needing explicit programming for every situation. It specifically helps with understanding the surroundings and making real-time decisions.</p>
 <h2 id="how-to-deal-with-ai">How to deal with AI</h2>
 <p>The use of machine learning is helping robotics break through its current limitations, especially when it comes to capturing tasks or understanding systems that are hard to model with traditional methods. As mentioned earlier, machine learning shines at spotting patterns in data that are often too complex or subtle for humans to estimate accurately.   <br />
-But it’s important to see AI not as a replacement, but as an extension of existing techniques. Training AI models can be time consuming and resource intensive, so combining them with well established methods is often the smartest approach. Plus, sticking with known techniques gives engineers and researchers more control over the system. It’s easier to understand what’s happening and have an idea of what the limitations of the system are. </p>
+But it’s important to see AI not as a replacement, but as an extension of existing techniques. Training AI models can be time consuming and resource intensive, so combining them with well established methods is often the smartest approach. Plus, sticking with known techniques gives engineers and researchers more control over the system. It’s easier to understand what’s happening and to have an idea of what the limitations of the system are. </p>
+<p><a class="md-button md-button--primary" href="../introduction_to_ai/">← Back to introduction to AI </a>
+<a class="md-button md-button--primary" href="../Challenges_in_ai_for_robotics/">Continue to challenges in AI for robotics →</a></p>
 
 
 

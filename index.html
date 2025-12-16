@@ -14,7 +14,7 @@
       
       
       
-        <link rel="next" href="foundations/Introduction_to_robotics/">
+        <link rel="next" href="foundations/">
       
       
         
@@ -238,7 +238,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="foundations/Introduction_to_robotics/" class="md-tabs__link">
+        <a href="foundations/" class="md-tabs__link">
           
   
   
@@ -538,6 +538,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -563,8 +567,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="foundations/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -578,8 +583,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
@@ -591,6 +602,8 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -730,10 +743,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
         
           
-          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
             
   
   
@@ -751,8 +764,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2245,10 +2258,9 @@
 <p>This course covers AI concepts applied to robotics. It's organized into three modules: foundations, deep learning, and reinforcement learning.</p>
 <pre class="mermaid"><code>graph TD
     A[AI for Robotics Course] --&gt; B[Foundations]
-    A --&gt; C[Deep Learning]
-    A --&gt; D[Reinforcement Learning]
+    B --&gt; C[Deep Learning]
+    C --&gt; D[Reinforcement Learning]
     D --&gt; H[Practical Applications]
-    B --&gt; H
     C --&gt; H</code></pre>
 <h2 id="course-modules">Course Modules</h2>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Foundations</label><label for="__tabbed_1_2">Deep Learning</label><label for="__tabbed_1_3">Reinforcement Learning</label></div>
@@ -2286,7 +2298,7 @@
 </div>
 </div>
 <h2 id="course-features">Course Features</h2>
-<p>Each module includes:</p>
+<p>Each module includes (except foundations):</p>
 <table>
 <thead>
 <tr>

@@ -240,7 +240,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../Introduction_to_robotics/" class="md-tabs__link">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -410,6 +410,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -438,8 +442,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -453,8 +458,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
@@ -466,6 +477,8 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -610,10 +623,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="">
             
   
   
@@ -631,8 +644,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2378,6 +2391,8 @@ x_3
 \]</div>
 <p>Each row in the weight matrix corresponds to the set of weights for one neuron. The advantage of writing it this way is that it allows for faster calculations. After this multiplication, the activation function should be applied to each neuron in the hidden layer. This process continues through the output layer.</p>
 <p>In summary, neural networks are inspired by the human brain and built from simple units called neurons or perceptrons. While a single perceptron can only handle linear classification, stacking multiple layers introduces non-linearity, enabling networks to solve complex problems. Using matrix-based notation and activation functions makes these models computationally efficient and scalable, forming the foundation of modern deep learning.</p>
+<p><a class="md-button" href="../why_start_with_deep_learning/">← Back to Why start with deep learning</a>
+<a class="md-button md-button--primary" href="../">Back to RL Module Home</a></p>
 <!-- In this example there is only one hidden layer, but you can expand this with as many layers as you like. The hidden layer is nothing else as another neuron.  These can be used after training to perform classification for example or regression.  Now let’s have more detailed look at this diagram. The inputs and weights of the inputs are colored to ease the reading of the diagram. Before we can propogate through this diagram it is important to know how to write things and refer to them. In other words, if we are talking for example about the weight used to map from input neuron 1 to hidden layer neuron 1 we need a common method to write this down. Starting with the inputs, they are noted as $x_j$ 
 , which means input number $j$. It is important to note that $x_0$ is clamped at 1, because it is considered the bias term.  
 $W_{ij}^{[l]}$, where $W$ stands for weight,  it connects neuron $j$ in layer $l-1$ to neuron $i$ in layer $l$. The weight $W_{i0}^{[l]}$
