@@ -27,7 +27,7 @@ The perceptron is only limited towards linear classification. It can thus approx
 Multiple layers of perceptron/neurons are required to estimate a non-linear function. A schematic of this can be seen below as well, this is considered a neural net.  -->
 
 
-# What is a Neural Network?
+# Introducution to deep learning
 
 Neural networks were invented by researchers who aimed to replicate the human brain. In 1943, Warren McCulloch and Walter Pitts published a paper describing a mathematical model of how the brain works. This led to the first notion of an artificial neural network. Their model treated neurons as binary units, meaning they either fire or do not fire. This concept eventually became the foundation for modern (deep) neural networks.
 
@@ -35,33 +35,39 @@ In 1953, the perceptron was created, which is considered the first artificial ne
 
 ![Example of perceptron](images/perceptron.png)
 
- Works
+The perceptron consists of one layer of inputs and one layer of outputs.
 
-The perceptron consists of one layer of inputs and one layer of outputs. Let’s go through the diagram step by step:
 
-1. Start at the input layer.
-2. Each input is multiplied by a weight and then summed together.
-3. A bias term is added to the summation.
+
+Let’s go through the diagram step by step:
+
+1. Start at the input layer. 
+2. Each input is multiplied by a weight and then summed together. These weights help the neural but establishing what inputs features are more important. A larger weight result in that the input has more influence on the output.  
+3. A bias term is added to the summation, which helps to shift the activation function. 
+4. The activation function, which decides whether the neuron will fire/active.
+5. The output of the activation function is also the output of the neural net. 
 
 This results in the following equation:
 
-$$ z = w_1x_1 + w_2x_2 + w_3x_3 + w_4b $$
+$$ 
+z = w_1x_1 + w_2x_2 + w_3x_3 + b
+$$
+
+$$
+y = a(z)
+$$
 
 Here:
 
-\( b \) stands for bias and is always added to the summation. The bias allows the network to shift linearly, independent of the input.
+\( z \) is the summation of the weighted input, \( w \) is the weight, \(x\) is the input,  \( b \) is the bias, \(a\) is the activation function and \(y\) is the output.
 
 ---
 
 ## Why Activation Functions Are Needed
 
-To fully propagate through the network, an activation function is required. Without it, multiple layers would just perform weighted summations, and the network would fail to approximate complex functions. Activation functions solve this problem by introducing non-linearity. The activation function determines the output of the perceptron. The difference between a perceptron and a neuron is that:
+To fully propagate through the network, an activation function is required. Without it, multiple layers would just perform weighted summations, and the network would fail to approximate complex functions. The neural net would remain just linear, when there would not be any non-linear activation functions added. Activation functions solve this problem by introducing non-linearity. The activation function determines the output of the perceptron. A neuron is a more general version of the perceptron. The perceptron only uses a step function, while a neuron can make use of differnt activation functions.
 
-- A perceptron uses only the step function as its activation.
-
-- Neurons can use different activation functions.
-
-The formula for one neuron or perceptron is:
+The formula for one neuron is:
 
 $$ y = \mathcal{f}\Big(b + \sum_{i=1}^n x_i w_i\Big) $$
 
@@ -90,18 +96,18 @@ There are many activation functions. The most common ones are shown below:
 | Sigmoid  | ![Sigmoid](images/sigmoid_activation_clean.png) | ReLU    | ![ReLu](images/relu_activation_clean.png) |
 | Tanh     | ![Tanh](images/tanh_activation_clean.png) | Step    | ![Step](images/step_activation_clean.png) |
 
-A perceptron is limited to only linear classification. However, it cannot estimate non-linear functions. The reason for this is that it only calculates a linear combination of inputs and applies a single non-linear transformation.  It means that the classification is done based upon a linear line, because the input (defined in equation) is a linear summation. Therefore, only one neuron will never be able to estimate non-linear functions. 
+A perceptron is limited to only linear classification. However, it cannot estimate non-linear functions. The reason for this is that it only calculates a linear combination of inputs and applies a single non-linear transformation.  It means that the classification is done based upon a linear line, because the input (defined in equation) is a linear summation. 
 This means classification is based on a linear decision boundary because the input equation is a linear summation. Therefore, a single neuron will never be able to estimate non-linear functions. To approximate non-linear functions, multiple layers of perceptrons (neurons) are required.
-``
+
 
 ![Neural net](images/neuralNet.jpeg)
 
 
-In this example, there is only one hidden layer, but you can expand the network with as many layers as you like. The hidden layer is simply another set of neurons. After training, these layers can be used for tasks such as classification or regression. Now let’s take a closer look at the diagram. The inputs and their weights are color-coded to make it easier to read. Before we can propagate through this diagram, it is important to understand how to write and refer to the different components. For example, if we want to talk about the weight that connects input neuron 1 to hidden layer neuron 1, we need a consistent notation.
+In this example, there has been one extra layer added. This is also known as the hidden layer. These layers are called hidden layer, because they are not directly visible to the user when applying the neural net. You can expand the network with as many layers as you like. The hidden layer is simply another set of neurons. After training, these layers can be used for tasks such as classification or regression. Now let’s take a closer look at the diagram. The inputs and their weights are color-coded to make it easier to read. Before we can propagate through this diagram, it is important to understand how to write and refer to the different components. For example, if we want to talk about the weight that connects input neuron 1 to hidden layer neuron 1, we need a consistent notation.
 
 ### Notation
 - Inputs are noted as \( x_j \), which means input number \( j \).  
-  It is important to note that \( x_0 \) is clamped at 1 because it represents the bias term.
+  It is important to note that \( x_0 \) is typically 1 because it is multiplied with the bias term \( w_0 \).
   
 - Weights are noted as \( W_{ij}^{[l]} \), where:
   - \( W \) stands for weight.
