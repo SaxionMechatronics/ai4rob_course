@@ -2,9 +2,9 @@
 
 ## From Intuition to Formalism
 
-In the introduction, we talked about agents learning through interaction with an environment. Now let's make this precise using the mathematical framework of **Markov Decision Processes (MDPs)**.
+In the introduction, we talked about agents learning through interaction with an environment. To reason rigorously about this process, we'll use the mathematical framework of **Markov Decision Processes (MDPs)**. 
 
-MDPs provide a formal way to model sequential decision-making problems. Don't worry—we'll build up the concepts step by step!
+Why MDPs? MDPs are popular because they provide a simple yet powerful formalism for modeling sequential decision-making where outcomes can be uncertain and depend only on the current state and action (i.e., they satisfy the *Markov property*). This makes them especially suitable for robotics and control tasks, where the agent's current situation encapsulates everything needed to predict future dynamics.
 
 ## The Key Components
 
@@ -14,36 +14,28 @@ Let's break down each component:
 
 ### 1. State Space
 
-**Definition:** The set of all possible states the environment can be in.
+**Definition:** \mathcal{S} is the set of all possible states the environment can be in.
 
 **What is a state?**
-A state is a complete description of the environment at a particular time. It contains all the information needed to predict what happens next (given an action).
+A state is a complete description of the system at a particular time. It contains all the information needed to predict what happens next (given an action).
 
 **Examples:**
 
-- **Robot navigation**: Position (x, y, θ), velocity, battery level
+- **Robot navigation**: Position (x, y), velocity, battery level
 - **Inverted pendulum**: Pole angle, angular velocity, cart position, cart velocity
 - **Robotic arm**: Joint angles \([θ_1, θ_2, ..., θ_n]\) and joint velocities
 - **Drone**: 3D position, orientation (roll, pitch, yaw), velocities, angular rates
 
-**Continuous vs. Discrete:**
-- **Discrete**: Finite number of states (e.g., grid world positions)
-- **Continuous**: Infinite states (e.g., robot joint angles can be any real number in a range)
-
 ### 2. Action Space
 
-**Definition:** The set of all possible actions the agent can take.
+**Definition:** \mathcal{A} is the set of all possible actions the agent can take.
 
 **Examples:**
 
-- **Mobile robot**: Forward, backward, turn left, turn right (discrete)
-- **Robotic arm**: Joint torques \([\tau_1, \tau_2, ..., \tau_n]\) (continuous)
-- **Drone**: Throttle commands for each motor (continuous)
-- **Quadruped**: Target foot positions or joint angle trajectories (continuous)
-
-**Discrete vs. Continuous:**
-- **Discrete**: Finite set of actions (e.g., {up, down, left, right})
-- **Continuous**: Actions are real-valued vectors (e.g., motor torques in \(\mathbb{R}^n\))
+- **Mobile robot**: Forward, backward, turn left, turn right
+- **Robotic arm**: Joint torques \([\tau_1, \tau_2, ..., \tau_n]\)
+- **Drone**: Throttle commands for each motor
+- **Quadruped**: Target foot positions or joint angle trajectories
 
 ### 3. Transition Dynamics
 
@@ -53,11 +45,12 @@ Mathematically: \( \mathcal{P}(s' | s, a) = P(S_{t+1} = s' | S_t = s, A_t = a) \
 
 **What does this mean?**
 The transition function describes the "physics" or "rules" of the environment. It tells us:
+
 - If I'm in state \( s \) and take action \( a \), what state \( s' \) will I end up in?
 
 **Important properties:**
 
-- **Stochastic**: The next state might be random (e.g., slipping on ice, sensor noise)
+- **Stochastic**: The next state might be stochastic (e.g., slipping on ice, sensor noise)
 - **Deterministic**: Special case where \( \mathcal{P}(s' | s, a) = 1 \) for one \( s' \) and 0 for all others
 - **Markov Property**: The next state depends only on the current state and action, not on the history
 
@@ -78,7 +71,7 @@ In robotics, the transition dynamics are typically unknown (we don't have a perf
 
 **Definition:** The immediate reward received after taking action \( a \) in state \( s \) and transitioning to \( s' \).
 
-Mathematically: \( \mathcal{R}(s, a, s') \) or often simplified as \( \mathcal{R}(s, a) \) or \( \mathcal{R}(s) \)
+Mathematically: \( \mathcal{R}(s, a, s') \) which means that the reward is a function of the current state, the action taken, and the next state.
 
 **What is reward?**
 Reward is the feedback signal that tells the agent how good its action was. It's how we communicate our objective to the agent.
@@ -92,7 +85,6 @@ Reward is the feedback signal that tells the agent how good its action was. It's
 - **Energy efficiency**: Negative reward proportional to torque magnitude
 - **Smooth motion**: Penalty for large accelerations or jerky movements
 
-**Reward Engineering is Critical:**
 
 Good reward design:
 ```
@@ -111,6 +103,7 @@ Result: Might take forever or behave dangerously
 
 !!! warning "Reward Shaping Challenges"
     Designing rewards is one of the hardest parts of RL! You need to:
+
     - Specify what you want, not how to achieve it
     - Avoid unintended behaviors (reward hacking)
     - Balance multiple objectives
@@ -161,6 +154,7 @@ What the agent actually **perceives**. Often incomplete or noisy!
 **Example - Quadrotor Navigation:**
 
 **Full State** (if we could see everything):
+
 - Position (x, y, z)
 - Velocity (vx, vy, vz)
 - Orientation (roll, pitch, yaw)
@@ -170,6 +164,7 @@ What the agent actually **perceives**. Often incomplete or noisy!
 - Battery voltage
 
 **Agent's Observation** (what it actually gets):
+
 - Noisy IMU readings (accelerations, angular rates)
 - Noisy GPS (with delay and dropouts)
 - Monocular camera image (no direct depth)
@@ -182,10 +177,12 @@ The observation is **partial** and **noisy**—we don't know the true state!
 When the agent only gets observations \( o \) instead of full state \( s \), we technically have a **POMDP** (Partially Observable MDP).
 
 POMDP formalism: \( (\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \Omega, \mathcal{O}, \gamma) \)
+
 - \( \Omega \): Observation space
 - \( \mathcal{O}(o | s, a) \): Observation function
 
 **Practical approaches to POMDPs:**
+
 1. **State estimation**: Use filters (Kalman filter, particle filter) to estimate state from observations
 2. **History/Memory**: Use recurrent networks (LSTM, GRU) to remember past observations
 3. **Treat observations as state**: Often works if observations contain enough information (violates Markov property but can still work!)
@@ -199,6 +196,7 @@ G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + ... = \sum_{k=0}^{\infty} \g
 \]
 
 Where:
+
 - \( G_t \) is the return starting from time \( t \)
 - \( R_{t+k} \) is the reward at time \( t+k \)
 - \( \gamma \) discounts future rewards
@@ -206,6 +204,7 @@ Where:
 **Example:**
 
 Imagine a robot navigating a maze:
+
 - Each timestep: -1 (encourages fast solutions)
 - Reaching goal: +100
 - Discount factor: γ = 0.9
@@ -223,8 +222,6 @@ G = -1 + 0.9(-1) + 0.9²(100)
   = -1 - 0.9 + 81
   = 79.1 (Better!)
 ```
-
-The discount factor ensures faster solutions are preferred!
 
 ## Policies: The Agent's Strategy
 
@@ -250,11 +247,6 @@ Given state \( s \), the policy outputs a probability distribution over actions.
 
 **Example**: "If robot is at (1,1), move right with 70% probability, forward with 30%"
 
-**Why stochastic?**
-- Exploration: Randomness helps discover new strategies
-- Optimal in partially observable settings: Sometimes mixing strategies is better than committing to one
-- Natural gradient-based optimization: Easier to optimize smooth probability distributions
-
 ## Trajectories and Episodes
 
 A **trajectory** (or **episode** or **rollout**) is a sequence of states, actions, and rewards:
@@ -266,6 +258,7 @@ A **trajectory** (or **episode** or **rollout**) is a sequence of states, action
 ### Episodic Tasks
 
 Tasks with a natural endpoint:
+
 - **Robot reaching a goal**: Episode ends at goal or timeout
 - **Game playing**: Episode ends when game is won/lost
 - **Manipulation task**: Episode ends when object is grasped or dropped
@@ -273,6 +266,7 @@ Tasks with a natural endpoint:
 ### Continuing Tasks
 
 Tasks that go on forever:
+
 - **Server load balancing**: Never truly "ends"
 - **Temperature control**: Continuous operation
 - **Portfolio management**: Ongoing decision making
@@ -370,6 +364,7 @@ V^\pi(s) = \sum_{a} \pi(a|s) \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma V
 \]
 
 **Intuition:** The value of state \( s \) equals:
+
 - Expected immediate reward
 - Plus discounted value of next state
 
@@ -392,6 +387,7 @@ Q^*(s,a) = \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma \max_{a'} Q^*(s',a'
 \]
 
 **Why are these important?**
+
 - They provide a way to compute value functions iteratively
 - They form the basis of many RL algorithms (Q-learning, value iteration, policy iteration)
 - They show that optimal values satisfy a self-consistency condition
@@ -409,16 +405,18 @@ Now we can state the RL problem formally:
     \pi^* = \arg\max_\pi \mathbb{E}_{\tau \sim \pi}\left[\sum_{t=0}^{\infty} \gamma^t R_t\right]
     \]
     
-    **Challenge:** We must learn through interaction, without knowing \( \mathcal{P} \) or \( \mathcal{R} \) in advance!
+    **Challenge:** We must learn through interaction, without knowing \( \mathcal{P} \) in advance!
 
 ## Exploration vs. Exploitation
 
 A fundamental challenge in RL:
 
 **Exploitation:** Choose actions that have given high rewards in the past
+
 **Exploration:** Try new actions to discover potentially better strategies
 
 **Example - Restaurant choice:**
+
 - **Exploit**: Go to your favorite restaurant (known good reward)
 - **Explore**: Try a new restaurant (might be better, might be worse)
 
@@ -428,6 +426,7 @@ If you only explore, you never benefit from what you've learned.
 The key is to **balance** exploration and exploitation!
 
 **Common strategies:**
+
 - **ε-greedy**: With probability ε, choose random action; otherwise choose best known action
 - **Boltzmann exploration**: Sample actions proportional to their estimated value (using softmax)
 - **Optimistic initialization**: Start with high value estimates to encourage trying everything

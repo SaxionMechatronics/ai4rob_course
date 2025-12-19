@@ -32,10 +32,10 @@ question: What does the Markov property state?
 type: single
 question: What is the key difference between the state-value function V and the action-value function Q?
 ---
-- [ ] V is for deterministic policies, Q is for stochastic policies  
+- [ ] V is the expected return when following a deterministic policy, while Q is the expected return when following a stochastic policy that samples actions probabilistically  
 - [x] V is the expected return from a state following a policy, while Q is the expected return from a state after taking a specific action then following the policy  
-- [ ] V is for continuous states, Q is for discrete states  
-- [ ] There is no difference; they are the same function  
+- [ ] V is the expected return computed over continuous state spaces, while Q is the expected return computed over discrete state spaces and finite action sets  
+- [ ] There is no meaningful difference between them; they both represent the expected return from a state and can be used interchangeably in all RL algorithms  
 ```
 
 ---
@@ -60,9 +60,9 @@ question: Why is a discount factor less than 1 necessary for infinite-horizon pr
 type: single
 question: What is the main difference between a state and an observation in robotics?
 ---
-- [ ] States are discrete, observations are continuous  
+- [ ] States are discrete variables that can only take on finite values, while observations are continuous variables that the robot's sensors measure in real-time  
 - [x] States contain complete information about the environment, while observations are partial and noisy measurements that the agent actually perceives  
-- [ ] States are what the agent controls, observations are what the environment controls  
-- [ ] There is no difference; they are the same thing  
+- [ ] States are the variables that the agent can directly control through its actions, while observations are the variables that the environment determines independently  
+- [ ] There is no meaningful difference between states and observations; they both refer to the same information and can be used interchangeably in all contexts  
 ```
 

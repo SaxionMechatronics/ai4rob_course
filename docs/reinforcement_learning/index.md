@@ -2,20 +2,15 @@
 
 ## Overview
 
-This module focuses on reinforcement learning techniques for robotic control, decision-making, and autonomous behavior. Learn how robots can learn from interaction with their environment.
+This module focuses on reinforcement learning (RL) techniques for robotic control, decision-making, and autonomous behavior. Learn how robots can learn from interaction with their environment.
 
 ## Topics Covered
 
 - **Introduction to RL**: Intuitive explanation of RL concepts with real-world examples from Boston Dynamics, drone racing, and more.
-
 - **Markov Decision Processes (MDPs)**: Mathematical framework: states, actions, rewards, transitions, and the Bellman equations.
-
 - **Policy vs Value-Based Methods**: Understanding the fundamental difference between learning values vs learning policies directly.
-
 - **Q-Learning**: The classic value-based algorithm with detailed implementation and convergence properties.
-
 - **Policy Gradients**: Direct policy optimization using gradient ascent on expected returns.
-
 - **Practical Implementation**: Build REINFORCE from scratch and compare with PPO from Stable-Baselines3.
 
 ## Learning Path
@@ -42,8 +37,7 @@ graph LR
 ## Prerequisites
 
 - Foundations module completed
-- Deep Learning basics
-- Probability theory
+- Deep Learning module completed
 
 ---
 

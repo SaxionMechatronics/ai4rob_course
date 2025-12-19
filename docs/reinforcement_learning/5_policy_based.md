@@ -17,6 +17,7 @@ Instead of learning Q-values, we directly parameterize the policy with parameter
 \]
 
 **Examples:**
+
 - **Neural network**: Input state, output action probabilities
 - **Linear model**: \( \pi_\theta(a|s) = \text{softmax}(\theta^T \phi(s)) \)
 - **Gaussian policy**: \( \pi_\theta(a|s) = \mathcal{N}(\mu_\theta(s), \sigma_\theta(s)) \)
@@ -56,18 +57,20 @@ The **policy gradient theorem** gives us a practical way to compute the gradient
 Where \( G_t = \sum_{k=t}^{T} \gamma^{k-t} r_k \) is the return from time \( t \).
 
 **What this means:**
+
 - Sample trajectories using current policy \( \pi_\theta \)
 - For each action taken, compute its log-probability gradient
 - Weight by the return obtained from that point onward
 - Average over many trajectories
 
 **Intuitive interpretation:**
+
 - If action \( a_t \) led to high return \( G_t \): increase \( \pi_\theta(a_t | s_t) \)
 - If action \( a_t \) led to low return \( G_t \): decrease \( \pi_\theta(a_t | s_t) \)
 
 ## REINFORCE: The Monte Carlo Policy Gradient Algorithm
 
-**REINFORCE** (Williams, 1992) is the classic policy gradient algorithm. It's beautifully simple!
+**REINFORCE** is the classic policy gradient algorithm. It's beautifully simple!
 
 ### The Algorithm
 
@@ -109,6 +112,7 @@ Why do we use \( \nabla_\theta \log \pi_\theta(a|s) \) instead of \( \nabla_\the
 **Practical reason:** It's easier to compute!
 
 For a softmax policy:
+
 \[
 \pi_\theta(a|s) = \frac{e^{\theta^T \phi(s, a)}}{\sum_{a'} e^{\theta^T \phi(s, a')}}
 \]
@@ -153,7 +157,7 @@ We can subtract a **baseline** \( b(s_t) \) from the return without changing the
 
 ### Choosing a Baseline
 
-**Best baseline:** The state-value function \( V(s_t) \)!
+**Best baseline:** The state-value function \( V(s_t) \)
 
 \[
 G_t - V(s_t) = A_t
@@ -448,6 +452,7 @@ A_t^{\text{GAE}} = \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l}
 Where \( \delta_t = r_t + \gamma V(s_{t+1}) - V(s_t) \) is the TD error.
 
 **Parameter \( \lambda \):** Controls bias-variance tradeoff
+
 - \( \lambda = 0 \): Low variance, high bias (like TD)
 - \( \lambda = 1 \): High variance, low bias (like Monte Carlo)
 
@@ -472,6 +477,7 @@ REINFORCE is the foundation, but modern methods add improvements:
 **Key idea:** Limit how much the policy can change in one update.
 
 **Clipped objective:**
+
 \[
 L(\theta) = \mathbb{E} \left[ \min(r_t(\theta) A_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t) \right]
 \]
@@ -485,6 +491,7 @@ Where \( r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t|
 **Key idea:** Constrain policy updates to stay within a "trust region."
 
 **Constraint:**
+
 \[
 \mathbb{E}[D_{KL}(\pi_{\theta_{\text{old}}} || \pi_\theta)] \leq \delta
 \]
@@ -498,6 +505,7 @@ Ensures new policy isn't too different from old policy.
 **Key idea:** Use value function as baseline, update after every step (not full episodes).
 
 **Benefits:**
+
 - Lower variance (value function baseline)
 - More sample efficient (use bootstrapping like TD)
 - Can train in parallel (A3C)
@@ -518,6 +526,7 @@ We'll cover actor-critic methods in detail in the next section!
 | **Off-policy** | Yes | No (by default) |
 
 **When to use REINFORCE over Q-Learning:**
+
 - Continuous action spaces (robot control)
 - Stochastic policies needed
 - Stability more important than sample efficiency
@@ -565,6 +574,7 @@ Train with different random seeds, report mean and std of performance.
 4. **Update policy**: Gradient ascent weighted by advantages
 
 **Key equation:**
+
 \[
 \theta \leftarrow \theta + \alpha \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t | s_t) (G_t - b(s_t))
 \]

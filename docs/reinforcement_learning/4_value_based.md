@@ -55,10 +55,11 @@ Q(s, a) \leftarrow Q(s, a) + \alpha \left[r + \gamma \max_{a'} Q(s', a') - Q(s, 
 \]
 
 Where:
+
 - \( \alpha \) is the **learning rate** (step size)
 - \( r \) is the **immediate reward**
 - \( \gamma \) is the **discount factor**
-- The term in brackets is called the **temporal difference (TD) error**
+- The term in brackets is known as the **temporal difference (TD) error**, which can be interpreted as the difference between the new target estimate and the current estimate of the Q-value.
 
 ### Understanding the Update
 
@@ -70,7 +71,7 @@ Let's break down the TD error:
 
 - **TD target**: Our new estimate of \( Q(s, a) \) based on the reward we just received and the best action in the next state
 - **Current estimate**: What we currently think \( Q(s, a) \) is
-- **TD error**: How wrong our current estimate was
+- **TD error**: How wrong our current estimate was \(\delta\)
 
 We move our estimate in the direction of the TD target:
 
@@ -142,6 +143,7 @@ epsilon = max(epsilon_min, epsilon_start * epsilon_decay ** episode)
 Let's walk through Q-Learning on a simple 3×3 grid world.
 
 **Setup:**
+
 - Start: Bottom-left (0, 0)
 - Goal: Top-right (2, 2), reward = +10
 - Each step: reward = -1 (encourages finding shortest path)
@@ -162,18 +164,22 @@ State | Up   | Down | Left | Right
 ### Episode 1: Random Exploration
 
 **Step 1:** State (0,0), choose random action: Right
+
 - Take action, observe: s' = (1,0), r = -1
-- Update:
-  \[
-  Q((0,0), \text{right}) = 0 + 0.1[-1 + 0.9 \times 0 - 0] = -0.1
-  \]
+- Update Q-value:
+
+\[
+Q((0,0), \text{right}) = 0 + 0.1[-1 + 0.9 \times 0 - 0] = -0.1
+\]
 
 **Step 2:** State (1,0), choose random action: Up
+
 - Take action, observe: s' = (1,1), r = -1
-- Update:
-  \[
-  Q((1,0), \text{up}) = 0 + 0.1[-1 + 0.9 \times 0 - 0] = -0.1
-  \]
+- Update Q-value:
+
+\[
+Q((1,0), \text{up}) = 0 + 0.1[-1 + 0.9 \times 0 - 0] = -0.1
+\]
 
 **Continue until reaching goal...**
 
@@ -192,6 +198,7 @@ Optimal policy at (1,1): Up or Right (both lead to goal in 1 step)
 ```
 
 The agent has learned that:
+
 - Actions toward the goal have high Q-values
 - Actions away from the goal have low Q-values
 - The optimal path is visible from the Q-values
@@ -203,11 +210,13 @@ The agent has learned that:
 Store Q-values in a table: one entry for each (state, action) pair.
 
 **Pros:**
+
 - Simple to implement
 - Guaranteed convergence (under conditions)
 - Easy to inspect and debug
 
 **Cons:**
+
 - Only works for discrete, small state/action spaces
 - Doesn't generalize: must visit every (s, a) pair
 - Memory explodes with large spaces
@@ -244,7 +253,7 @@ Where \( \theta \) are the parameters (weights) of the neural network.
 
 ## Deep Q-Networks (DQN): A Brief Overview
 
-DQN (DeepMind, 2015) made Q-Learning work with neural networks by introducing two key innovations:
+DQN made Q-Learning work with neural networks by introducing two key innovations:
 
 ### 1. Experience Replay
 
@@ -253,6 +262,7 @@ Store experiences \( (s, a, r, s') \) in a **replay buffer**.
 Sample random mini-batches from the buffer for training.
 
 **Why it helps:**
+
 - Breaks correlation between consecutive samples
 - Reuses data multiple times (sample efficient)
 - Stabilizes training
@@ -276,6 +286,7 @@ for (s, a, r, s') in batch:
 ### 2. Target Network
 
 Maintain two networks:
+
 - **Online network** \( Q_\theta \): Updated every step
 - **Target network** \( Q_{\theta^-} \): Updated periodically (e.g., every 1000 steps)
 
@@ -286,6 +297,7 @@ Use target network for computing TD target:
 \]
 
 **Why it helps:**
+
 - Prevents the target from moving too quickly
 - Reduces harmful correlations
 - Stabilizes training
@@ -474,22 +486,27 @@ Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \sum_{a'} \pi(a'|s') Q(s', a') -
 ## Limitations of Q-Learning
 
 **Limited to discrete actions**
+
 - Need to compute \( \arg\max_a Q(s, a) \)
 - Difficult or impossible with continuous actions
 
 **Overestimation bias**
+
 - Always taking max can lead to overly optimistic estimates
 - Mitigated by Double Q-Learning
 
 **Sample inefficiency**
+
 - Each update only affects one (s, a) pair (in tabular case)
 - Needs many samples to converge
 
 **Instability with function approximation**
+
 - Neural network Q-functions can diverge
 - Requires experience replay, target networks, careful tuning
 
 **No explicit exploration strategy**
+
 - Must add ε-greedy or other heuristics
 - Not principled like entropy regularization in policy methods
 
@@ -523,6 +540,7 @@ Real-time learning with strict sample budgets (consider policy gradients)
 4. **Explore**: Use ε-greedy to discover better strategies
 
 **Key equation:**
+
 \[
 Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]
 \]
