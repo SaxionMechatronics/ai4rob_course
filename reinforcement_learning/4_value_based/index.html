@@ -2959,11 +2959,13 @@ Q^*(s, a) = \mathbb{E}_{s' \sim P(s'|s,a)}\left[R(s, a, s') + \gamma \max_{a'} Q
 <div class="arithmatex">\[
 Q(s, a) \leftarrow Q(s, a) + \alpha \left[r + \gamma \max_{a'} Q(s', a') - Q(s, a)\right]
 \]</div>
-<p>Where:
-- <span class="arithmatex">\( \alpha \)</span> is the <strong>learning rate</strong> (step size)
-- <span class="arithmatex">\( r \)</span> is the <strong>immediate reward</strong>
-- <span class="arithmatex">\( \gamma \)</span> is the <strong>discount factor</strong>
-- The term in brackets is called the <strong>temporal difference (TD) error</strong></p>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\( \alpha \)</span> is the <strong>learning rate</strong> (step size)</li>
+<li><span class="arithmatex">\( r \)</span> is the <strong>immediate reward</strong></li>
+<li><span class="arithmatex">\( \gamma \)</span> is the <strong>discount factor</strong></li>
+<li>The term in brackets is known as the <strong>temporal difference (TD) error</strong>, which can be interpreted as the difference between the new target estimate and the current estimate of the Q-value.</li>
+</ul>
 <h3 id="understanding-the-update">Understanding the Update</h3>
 <p>Let's break down the TD error:</p>
 <div class="arithmatex">\[
@@ -2972,7 +2974,7 @@ Q(s, a) \leftarrow Q(s, a) + \alpha \left[r + \gamma \max_{a'} Q(s', a') - Q(s, 
 <ul>
 <li><strong>TD target</strong>: Our new estimate of <span class="arithmatex">\( Q(s, a) \)</span> based on the reward we just received and the best action in the next state</li>
 <li><strong>Current estimate</strong>: What we currently think <span class="arithmatex">\( Q(s, a) \)</span> is</li>
-<li><strong>TD error</strong>: How wrong our current estimate was</li>
+<li><strong>TD error</strong>: How wrong our current estimate was <span class="arithmatex">\(\delta\)</span></li>
 </ul>
 <p>We move our estimate in the direction of the TD target:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>New estimate = Old estimate + learning_rate × TD_error
@@ -3024,13 +3026,15 @@ Q(s, a) \leftarrow Q(s, a) + \alpha \left[r + \gamma \max_{a'} Q(s', a') - Q(s, 
 </code></pre></div>
 <h2 id="worked-example-grid-world">Worked Example: Grid World</h2>
 <p>Let's walk through Q-Learning on a simple 3×3 grid world.</p>
-<p><strong>Setup:</strong>
-- Start: Bottom-left (0, 0)
-- Goal: Top-right (2, 2), reward = +10
-- Each step: reward = -1 (encourages finding shortest path)
-- Actions: {up, down, left, right}
-- Discount factor: γ = 0.9
-- Learning rate: α = 0.1</p>
+<p><strong>Setup:</strong></p>
+<ul>
+<li>Start: Bottom-left (0, 0)</li>
+<li>Goal: Top-right (2, 2), reward = +10</li>
+<li>Each step: reward = -1 (encourages finding shortest path)</li>
+<li>Actions: {up, down, left, right}</li>
+<li>Discount factor: γ = 0.9</li>
+<li>Learning rate: α = 0.1</li>
+</ul>
 <p><strong>Initial Q-table:</strong> All zeros</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>State | Up   | Down | Left | Right
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>------|------|------|------|------
@@ -3039,18 +3043,22 @@ Q(s, a) \leftarrow Q(s, a) + \alpha \left[r + \gamma \max_{a'} Q(s', a') - Q(s, 
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>...
 </code></pre></div>
 <h3 id="episode-1-random-exploration">Episode 1: Random Exploration</h3>
-<p><strong>Step 1:</strong> State (0,0), choose random action: Right
-- Take action, observe: s' = (1,0), r = -1
-- Update:
-  [
-  Q((0,0), \text{right}) = 0 + 0.1[-1 + 0.9 \times 0 - 0] = -0.1
-  ]</p>
-<p><strong>Step 2:</strong> State (1,0), choose random action: Up
-- Take action, observe: s' = (1,1), r = -1
-- Update:
-  [
-  Q((1,0), \text{up}) = 0 + 0.1[-1 + 0.9 \times 0 - 0] = -0.1
-  ]</p>
+<p><strong>Step 1:</strong> State (0,0), choose random action: Right</p>
+<ul>
+<li>Take action, observe: s' = (1,0), r = -1</li>
+<li>Update Q-value:</li>
+</ul>
+<div class="arithmatex">\[
+Q((0,0), \text{right}) = 0 + 0.1[-1 + 0.9 \times 0 - 0] = -0.1
+\]</div>
+<p><strong>Step 2:</strong> State (1,0), choose random action: Up</p>
+<ul>
+<li>Take action, observe: s' = (1,1), r = -1</li>
+<li>Update Q-value:</li>
+</ul>
+<div class="arithmatex">\[
+Q((1,0), \text{up}) = 0 + 0.1[-1 + 0.9 \times 0 - 0] = -0.1
+\]</div>
 <p><strong>Continue until reaching goal...</strong></p>
 <h3 id="after-many-episodes">After Many Episodes</h3>
 <p>The Q-table converges to show the value of each action:</p>
@@ -3062,21 +3070,27 @@ Q(s, a) \leftarrow Q(s, a) + \alpha \left[r + \gamma \max_{a'} Q(s', a') - Q(s, 
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
 <a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Optimal policy at (1,1): Up or Right (both lead to goal in 1 step)
 </code></pre></div>
-<p>The agent has learned that:
-- Actions toward the goal have high Q-values
-- Actions away from the goal have low Q-values
-- The optimal path is visible from the Q-values</p>
+<p>The agent has learned that:</p>
+<ul>
+<li>Actions toward the goal have high Q-values</li>
+<li>Actions away from the goal have low Q-values</li>
+<li>The optimal path is visible from the Q-values</li>
+</ul>
 <h2 id="tabular-vs-function-approximation">Tabular vs Function Approximation</h2>
 <h3 id="tabular-q-learning">Tabular Q-Learning</h3>
 <p>Store Q-values in a table: one entry for each (state, action) pair.</p>
-<p><strong>Pros:</strong>
-- Simple to implement
-- Guaranteed convergence (under conditions)
-- Easy to inspect and debug</p>
-<p><strong>Cons:</strong>
-- Only works for discrete, small state/action spaces
-- Doesn't generalize: must visit every (s, a) pair
-- Memory explodes with large spaces</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Simple to implement</li>
+<li>Guaranteed convergence (under conditions)</li>
+<li>Easy to inspect and debug</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Only works for discrete, small state/action spaces</li>
+<li>Doesn't generalize: must visit every (s, a) pair</li>
+<li>Memory explodes with large spaces</li>
+</ul>
 <p><strong>When to use:</strong> Simple grid worlds, small discrete problems</p>
 <h3 id="function-approximation-deep-q-networks">Function Approximation (Deep Q-Networks)</h3>
 <p>Approximate Q-function with a parameterized function (e.g., neural network):</p>
@@ -3098,14 +3112,16 @@ Q(s, a) \approx Q_\theta(s, a)
 - Loss of convergence guarantees</p>
 <p><strong>When to use:</strong> Complex state spaces (images, continuous sensors)</p>
 <h2 id="deep-q-networks-dqn-a-brief-overview">Deep Q-Networks (DQN): A Brief Overview</h2>
-<p>DQN (DeepMind, 2015) made Q-Learning work with neural networks by introducing two key innovations:</p>
+<p>DQN made Q-Learning work with neural networks by introducing two key innovations:</p>
 <h3 id="1-experience-replay">1. Experience Replay</h3>
 <p>Store experiences <span class="arithmatex">\( (s, a, r, s') \)</span> in a <strong>replay buffer</strong>.</p>
 <p>Sample random mini-batches from the buffer for training.</p>
-<p><strong>Why it helps:</strong>
-- Breaks correlation between consecutive samples
-- Reuses data multiple times (sample efficient)
-- Stabilizes training</p>
+<p><strong>Why it helps:</strong></p>
+<ul>
+<li>Breaks correlation between consecutive samples</li>
+<li>Reuses data multiple times (sample efficient)</li>
+<li>Stabilizes training</li>
+</ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Experience replay</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">replay_buffer</span> <span class="o">=</span> <span class="p">[]</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
@@ -3121,17 +3137,21 @@ Q(s, a) \approx Q_\theta(s, a)
 <a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="n">Update</span> <span class="n">Q</span><span class="o">-</span><span class="n">network</span> <span class="n">using</span> <span class="n">this</span> <span class="n">loss</span>
 </code></pre></div>
 <h3 id="2-target-network">2. Target Network</h3>
-<p>Maintain two networks:
-- <strong>Online network</strong> <span class="arithmatex">\( Q_\theta \)</span>: Updated every step
-- <strong>Target network</strong> <span class="arithmatex">\( Q_{\theta^-} \)</span>: Updated periodically (e.g., every 1000 steps)</p>
+<p>Maintain two networks:</p>
+<ul>
+<li><strong>Online network</strong> <span class="arithmatex">\( Q_\theta \)</span>: Updated every step</li>
+<li><strong>Target network</strong> <span class="arithmatex">\( Q_{\theta^-} \)</span>: Updated periodically (e.g., every 1000 steps)</li>
+</ul>
 <p>Use target network for computing TD target:</p>
 <div class="arithmatex">\[
 \text{TD target} = r + \gamma \max_{a'} Q_{\theta^-}(s', a')
 \]</div>
-<p><strong>Why it helps:</strong>
-- Prevents the target from moving too quickly
-- Reduces harmful correlations
-- Stabilizes training</p>
+<p><strong>Why it helps:</strong></p>
+<ul>
+<li>Prevents the target from moving too quickly</li>
+<li>Reduces harmful correlations</li>
+<li>Stabilizes training</li>
+</ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Target network update (every C steps)</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">if</span> <span class="n">step</span> <span class="o">%</span> <span class="n">C</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="n">target_network</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">online_network</span><span class="o">.</span><span class="n">weights</span>
@@ -3286,21 +3306,31 @@ Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \sum_{a'} \pi(a'|s') Q(s', a') -
 \]</div>
 <p><strong>Benefits:</strong> Lower variance than SARSA, still considers exploration policy.</p>
 <h2 id="limitations-of-q-learning">Limitations of Q-Learning</h2>
-<p><strong>Limited to discrete actions</strong>
-- Need to compute <span class="arithmatex">\( \arg\max_a Q(s, a) \)</span>
-- Difficult or impossible with continuous actions</p>
-<p><strong>Overestimation bias</strong>
-- Always taking max can lead to overly optimistic estimates
-- Mitigated by Double Q-Learning</p>
-<p><strong>Sample inefficiency</strong>
-- Each update only affects one (s, a) pair (in tabular case)
-- Needs many samples to converge</p>
-<p><strong>Instability with function approximation</strong>
-- Neural network Q-functions can diverge
-- Requires experience replay, target networks, careful tuning</p>
-<p><strong>No explicit exploration strategy</strong>
-- Must add ε-greedy or other heuristics
-- Not principled like entropy regularization in policy methods</p>
+<p><strong>Limited to discrete actions</strong></p>
+<ul>
+<li>Need to compute <span class="arithmatex">\( \arg\max_a Q(s, a) \)</span></li>
+<li>Difficult or impossible with continuous actions</li>
+</ul>
+<p><strong>Overestimation bias</strong></p>
+<ul>
+<li>Always taking max can lead to overly optimistic estimates</li>
+<li>Mitigated by Double Q-Learning</li>
+</ul>
+<p><strong>Sample inefficiency</strong></p>
+<ul>
+<li>Each update only affects one (s, a) pair (in tabular case)</li>
+<li>Needs many samples to converge</li>
+</ul>
+<p><strong>Instability with function approximation</strong></p>
+<ul>
+<li>Neural network Q-functions can diverge</li>
+<li>Requires experience replay, target networks, careful tuning</li>
+</ul>
+<p><strong>No explicit exploration strategy</strong></p>
+<ul>
+<li>Must add ε-greedy or other heuristics</li>
+<li>Not principled like entropy regularization in policy methods</li>
+</ul>
 <h2 id="when-to-use-q-learning">When to Use Q-Learning</h2>
 <h3 id="perfect-for">Perfect for:</h3>
 <p>Discrete action spaces (games, navigation with discrete moves)</p>
@@ -3319,10 +3349,10 @@ Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \sum_{a'} \pi(a'|s') Q(s', a') -
 <li><strong>Act greedily</strong>: Choose action with highest Q-value</li>
 <li><strong>Explore</strong>: Use ε-greedy to discover better strategies</li>
 </ol>
-<p><strong>Key equation:</strong>
-[
+<p><strong>Key equation:</strong></p>
+<div class="arithmatex">\[
 Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]
-]</p>
+\]</div>
 <p><strong>Strengths:</strong> Simple, off-policy, proven convergence (tabular case)</p>
 <p><strong>Weaknesses:</strong> Discrete actions only, can be sample inefficient, requires careful exploration</p>
 <p><strong>Modern extensions:</strong> DQN, Double DQN, Dueling DQN, Rainbow DQN</p>

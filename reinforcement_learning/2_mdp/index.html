@@ -2949,46 +2949,42 @@
 
 <h1 id="markov-decision-processes-mdps">Markov Decision Processes (MDPs)</h1>
 <h2 id="from-intuition-to-formalism">From Intuition to Formalism</h2>
-<p>In the introduction, we talked about agents learning through interaction with an environment. Now let's make this precise using the mathematical framework of <strong>Markov Decision Processes (MDPs)</strong>.</p>
-<p>MDPs provide a formal way to model sequential decision-making problems. Don't worry—we'll build up the concepts step by step!</p>
+<p>In the introduction, we talked about agents learning through interaction with an environment. To reason rigorously about this process, we'll use the mathematical framework of <strong>Markov Decision Processes (MDPs)</strong>. </p>
+<p>Why MDPs? MDPs are popular because they provide a simple yet powerful formalism for modeling sequential decision-making where outcomes can be uncertain and depend only on the current state and action (i.e., they satisfy the <em>Markov property</em>). This makes them especially suitable for robotics and control tasks, where the agent's current situation encapsulates everything needed to predict future dynamics.</p>
 <h2 id="the-key-components">The Key Components</h2>
 <p>An MDP is defined by a tuple: <span class="arithmatex">\( \mathcal{M} = (\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma) \)</span></p>
 <p>Let's break down each component:</p>
 <h3 id="1-state-space">1. State Space</h3>
-<p><strong>Definition:</strong> The set of all possible states the environment can be in.</p>
+<p><strong>Definition:</strong> \mathcal{S} is the set of all possible states the environment can be in.</p>
 <p><strong>What is a state?</strong>
-A state is a complete description of the environment at a particular time. It contains all the information needed to predict what happens next (given an action).</p>
+A state is a complete description of the system at a particular time. It contains all the information needed to predict what happens next (given an action).</p>
 <p><strong>Examples:</strong></p>
 <ul>
-<li><strong>Robot navigation</strong>: Position (x, y, θ), velocity, battery level</li>
+<li><strong>Robot navigation</strong>: Position (x, y), velocity, battery level</li>
 <li><strong>Inverted pendulum</strong>: Pole angle, angular velocity, cart position, cart velocity</li>
 <li><strong>Robotic arm</strong>: Joint angles <span class="arithmatex">\([θ_1, θ_2, ..., θ_n]\)</span> and joint velocities</li>
 <li><strong>Drone</strong>: 3D position, orientation (roll, pitch, yaw), velocities, angular rates</li>
 </ul>
-<p><strong>Continuous vs. Discrete:</strong>
-- <strong>Discrete</strong>: Finite number of states (e.g., grid world positions)
-- <strong>Continuous</strong>: Infinite states (e.g., robot joint angles can be any real number in a range)</p>
 <h3 id="2-action-space">2. Action Space</h3>
-<p><strong>Definition:</strong> The set of all possible actions the agent can take.</p>
+<p><strong>Definition:</strong> \mathcal{A} is the set of all possible actions the agent can take.</p>
 <p><strong>Examples:</strong></p>
 <ul>
-<li><strong>Mobile robot</strong>: Forward, backward, turn left, turn right (discrete)</li>
-<li><strong>Robotic arm</strong>: Joint torques <span class="arithmatex">\([\tau_1, \tau_2, ..., \tau_n]\)</span> (continuous)</li>
-<li><strong>Drone</strong>: Throttle commands for each motor (continuous)</li>
-<li><strong>Quadruped</strong>: Target foot positions or joint angle trajectories (continuous)</li>
+<li><strong>Mobile robot</strong>: Forward, backward, turn left, turn right</li>
+<li><strong>Robotic arm</strong>: Joint torques <span class="arithmatex">\([\tau_1, \tau_2, ..., \tau_n]\)</span></li>
+<li><strong>Drone</strong>: Throttle commands for each motor</li>
+<li><strong>Quadruped</strong>: Target foot positions or joint angle trajectories</li>
 </ul>
-<p><strong>Discrete vs. Continuous:</strong>
-- <strong>Discrete</strong>: Finite set of actions (e.g., {up, down, left, right})
-- <strong>Continuous</strong>: Actions are real-valued vectors (e.g., motor torques in <span class="arithmatex">\(\mathbb{R}^n\)</span>)</p>
 <h3 id="3-transition-dynamics">3. Transition Dynamics</h3>
 <p><strong>Definition:</strong> The probability of transitioning to state <span class="arithmatex">\( s' \)</span> when taking action <span class="arithmatex">\( a \)</span> in state <span class="arithmatex">\( s \)</span>.</p>
 <p>Mathematically: <span class="arithmatex">\( \mathcal{P}(s' | s, a) = P(S_{t+1} = s' | S_t = s, A_t = a) \)</span></p>
 <p><strong>What does this mean?</strong>
-The transition function describes the "physics" or "rules" of the environment. It tells us:
-- If I'm in state <span class="arithmatex">\( s \)</span> and take action <span class="arithmatex">\( a \)</span>, what state <span class="arithmatex">\( s' \)</span> will I end up in?</p>
+The transition function describes the "physics" or "rules" of the environment. It tells us:</p>
+<ul>
+<li>If I'm in state <span class="arithmatex">\( s \)</span> and take action <span class="arithmatex">\( a \)</span>, what state <span class="arithmatex">\( s' \)</span> will I end up in?</li>
+</ul>
 <p><strong>Important properties:</strong></p>
 <ul>
-<li><strong>Stochastic</strong>: The next state might be random (e.g., slipping on ice, sensor noise)</li>
+<li><strong>Stochastic</strong>: The next state might be stochastic (e.g., slipping on ice, sensor noise)</li>
 <li><strong>Deterministic</strong>: Special case where <span class="arithmatex">\( \mathcal{P}(s' | s, a) = 1 \)</span> for one <span class="arithmatex">\( s' \)</span> and 0 for all others</li>
 <li><strong>Markov Property</strong>: The next state depends only on the current state and action, not on the history</li>
 </ul>
@@ -3003,7 +2999,7 @@ The transition function describes the "physics" or "rules" of the environment. I
 <p>In robotics, the transition dynamics are typically unknown (we don't have a perfect model of physics) which is why RL is valuable!</p>
 <h3 id="4-reward-function">4. Reward Function</h3>
 <p><strong>Definition:</strong> The immediate reward received after taking action <span class="arithmatex">\( a \)</span> in state <span class="arithmatex">\( s \)</span> and transitioning to <span class="arithmatex">\( s' \)</span>.</p>
-<p>Mathematically: <span class="arithmatex">\( \mathcal{R}(s, a, s') \)</span> or often simplified as <span class="arithmatex">\( \mathcal{R}(s, a) \)</span> or <span class="arithmatex">\( \mathcal{R}(s) \)</span></p>
+<p>Mathematically: <span class="arithmatex">\( \mathcal{R}(s, a, s') \)</span> which means that the reward is a function of the current state, the action taken, and the next state.</p>
 <p><strong>What is reward?</strong>
 Reward is the feedback signal that tells the agent how good its action was. It's how we communicate our objective to the agent.</p>
 <p><strong>Key principle:</strong> We don't tell the agent <em>how</em> to achieve the goal, only <em>what</em> the goal is through rewards!</p>
@@ -3014,7 +3010,6 @@ Reward is the feedback signal that tells the agent how good its action was. It's
 <li><strong>Energy efficiency</strong>: Negative reward proportional to torque magnitude</li>
 <li><strong>Smooth motion</strong>: Penalty for large accelerations or jerky movements</li>
 </ul>
-<p><strong>Reward Engineering is Critical:</strong></p>
 <p>Good reward design:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Reach goal: +100
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Each timestep alive: -1
@@ -3028,11 +3023,13 @@ Reward is the feedback signal that tells the agent how good its action was. It's
 </code></pre></div></p>
 <div class="admonition warning">
 <p class="admonition-title">Reward Shaping Challenges</p>
-<p>Designing rewards is one of the hardest parts of RL! You need to:
-- Specify what you want, not how to achieve it
-- Avoid unintended behaviors (reward hacking)
-- Balance multiple objectives
-- Ensure rewards are achievable through exploration</p>
+<p>Designing rewards is one of the hardest parts of RL! You need to:</p>
+<ul>
+<li>Specify what you want, not how to achieve it</li>
+<li>Avoid unintended behaviors (reward hacking)</li>
+<li>Balance multiple objectives</li>
+<li>Ensure rewards are achievable through exploration</li>
+</ul>
 </div>
 <h3 id="5-discount-factor">5. Discount Factor</h3>
 <p><strong>Definition:</strong> A number between 0 and 1 that determines how much the agent values future rewards versus immediate rewards.</p>
@@ -3067,43 +3064,55 @@ Reward is the feedback signal that tells the agent how good its action was. It's
 <h3 id="observation-partially-observable">Observation (Partially Observable)</h3>
 <p>What the agent actually <strong>perceives</strong>. Often incomplete or noisy!</p>
 <p><strong>Example - Quadrotor Navigation:</strong></p>
-<p><strong>Full State</strong> (if we could see everything):
-- Position (x, y, z)
-- Velocity (vx, vy, vz)
-- Orientation (roll, pitch, yaw)
-- Angular rates (ωx, ωy, ωz)
-- Wind speed and direction
-- Rotor speeds
-- Battery voltage</p>
-<p><strong>Agent's Observation</strong> (what it actually gets):
-- Noisy IMU readings (accelerations, angular rates)
-- Noisy GPS (with delay and dropouts)
-- Monocular camera image (no direct depth)
-- Battery voltage</p>
+<p><strong>Full State</strong> (if we could see everything):</p>
+<ul>
+<li>Position (x, y, z)</li>
+<li>Velocity (vx, vy, vz)</li>
+<li>Orientation (roll, pitch, yaw)</li>
+<li>Angular rates (ωx, ωy, ωz)</li>
+<li>Wind speed and direction</li>
+<li>Rotor speeds</li>
+<li>Battery voltage</li>
+</ul>
+<p><strong>Agent's Observation</strong> (what it actually gets):</p>
+<ul>
+<li>Noisy IMU readings (accelerations, angular rates)</li>
+<li>Noisy GPS (with delay and dropouts)</li>
+<li>Monocular camera image (no direct depth)</li>
+<li>Battery voltage</li>
+</ul>
 <p>The observation is <strong>partial</strong> and <strong>noisy</strong>—we don't know the true state!</p>
 <h3 id="pomdps-partially-observable-mdps">POMDPs: Partially Observable MDPs</h3>
 <p>When the agent only gets observations <span class="arithmatex">\( o \)</span> instead of full state <span class="arithmatex">\( s \)</span>, we technically have a <strong>POMDP</strong> (Partially Observable MDP).</p>
-<p>POMDP formalism: <span class="arithmatex">\( (\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \Omega, \mathcal{O}, \gamma) \)</span>
-- <span class="arithmatex">\( \Omega \)</span>: Observation space
-- <span class="arithmatex">\( \mathcal{O}(o | s, a) \)</span>: Observation function</p>
-<p><strong>Practical approaches to POMDPs:</strong>
-1. <strong>State estimation</strong>: Use filters (Kalman filter, particle filter) to estimate state from observations
-2. <strong>History/Memory</strong>: Use recurrent networks (LSTM, GRU) to remember past observations
-3. <strong>Treat observations as state</strong>: Often works if observations contain enough information (violates Markov property but can still work!)</p>
+<p>POMDP formalism: <span class="arithmatex">\( (\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \Omega, \mathcal{O}, \gamma) \)</span></p>
+<ul>
+<li><span class="arithmatex">\( \Omega \)</span>: Observation space</li>
+<li><span class="arithmatex">\( \mathcal{O}(o | s, a) \)</span>: Observation function</li>
+</ul>
+<p><strong>Practical approaches to POMDPs:</strong></p>
+<ol>
+<li><strong>State estimation</strong>: Use filters (Kalman filter, particle filter) to estimate state from observations</li>
+<li><strong>History/Memory</strong>: Use recurrent networks (LSTM, GRU) to remember past observations</li>
+<li><strong>Treat observations as state</strong>: Often works if observations contain enough information (violates Markov property but can still work!)</li>
+</ol>
 <h2 id="the-agents-goal-return">The Agent's Goal: Return</h2>
 <p>The agent's objective is to maximize the <strong>expected cumulative discounted reward</strong>, called the <strong>return</strong>:</p>
 <div class="arithmatex">\[
 G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + ... = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
 \]</div>
-<p>Where:
-- <span class="arithmatex">\( G_t \)</span> is the return starting from time <span class="arithmatex">\( t \)</span>
-- <span class="arithmatex">\( R_{t+k} \)</span> is the reward at time <span class="arithmatex">\( t+k \)</span>
-- <span class="arithmatex">\( \gamma \)</span> discounts future rewards</p>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\( G_t \)</span> is the return starting from time <span class="arithmatex">\( t \)</span></li>
+<li><span class="arithmatex">\( R_{t+k} \)</span> is the reward at time <span class="arithmatex">\( t+k \)</span></li>
+<li><span class="arithmatex">\( \gamma \)</span> discounts future rewards</li>
+</ul>
 <p><strong>Example:</strong></p>
-<p>Imagine a robot navigating a maze:
-- Each timestep: -1 (encourages fast solutions)
-- Reaching goal: +100
-- Discount factor: γ = 0.9</p>
+<p>Imagine a robot navigating a maze:</p>
+<ul>
+<li>Each timestep: -1 (encourages fast solutions)</li>
+<li>Reaching goal: +100</li>
+<li>Discount factor: γ = 0.9</li>
+</ul>
 <p>Path 1 (slow, 5 steps):
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>G = -1 + 0.9(-1) + 0.9²(-1) + 0.9³(-1) + 0.9⁴(100)
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  = -1 - 0.9 - 0.81 - 0.729 + 65.61
@@ -3114,7 +3123,6 @@ G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + ... = \sum_{k=0}^{\infty} \g
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  = -1 - 0.9 + 81
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  = 79.1 (Better!)
 </code></pre></div></p>
-<p>The discount factor ensures faster solutions are preferred!</p>
 <h2 id="policies-the-agents-strategy">Policies: The Agent's Strategy</h2>
 <p>A <strong>policy</strong> <span class="arithmatex">\( \pi \)</span> defines the agent's behavior—it's a mapping from states to actions.</p>
 <h3 id="deterministic-policy">Deterministic Policy</h3>
@@ -3129,25 +3137,25 @@ a = \pi(s)
 \]</div>
 <p>Given state <span class="arithmatex">\( s \)</span>, the policy outputs a probability distribution over actions.</p>
 <p><strong>Example</strong>: "If robot is at (1,1), move right with 70% probability, forward with 30%"</p>
-<p><strong>Why stochastic?</strong>
-- Exploration: Randomness helps discover new strategies
-- Optimal in partially observable settings: Sometimes mixing strategies is better than committing to one
-- Natural gradient-based optimization: Easier to optimize smooth probability distributions</p>
 <h2 id="trajectories-and-episodes">Trajectories and Episodes</h2>
 <p>A <strong>trajectory</strong> (or <strong>episode</strong> or <strong>rollout</strong>) is a sequence of states, actions, and rewards:</p>
 <div class="arithmatex">\[
 \tau = (s_0, a_0, r_1, s_1, a_1, r_2, s_2, a_2, r_3, ...)
 \]</div>
 <h3 id="episodic-tasks">Episodic Tasks</h3>
-<p>Tasks with a natural endpoint:
-- <strong>Robot reaching a goal</strong>: Episode ends at goal or timeout
-- <strong>Game playing</strong>: Episode ends when game is won/lost
-- <strong>Manipulation task</strong>: Episode ends when object is grasped or dropped</p>
+<p>Tasks with a natural endpoint:</p>
+<ul>
+<li><strong>Robot reaching a goal</strong>: Episode ends at goal or timeout</li>
+<li><strong>Game playing</strong>: Episode ends when game is won/lost</li>
+<li><strong>Manipulation task</strong>: Episode ends when object is grasped or dropped</li>
+</ul>
 <h3 id="continuing-tasks">Continuing Tasks</h3>
-<p>Tasks that go on forever:
-- <strong>Server load balancing</strong>: Never truly "ends"
-- <strong>Temperature control</strong>: Continuous operation
-- <strong>Portfolio management</strong>: Ongoing decision making</p>
+<p>Tasks that go on forever:</p>
+<ul>
+<li><strong>Server load balancing</strong>: Never truly "ends"</li>
+<li><strong>Temperature control</strong>: Continuous operation</li>
+<li><strong>Portfolio management</strong>: Ongoing decision making</li>
+</ul>
 <p>For episodic tasks, we often reset to a starting state after each episode. This allows the agent to try many times and learn from each attempt.</p>
 <h2 id="value-functions-predicting-the-future">Value Functions: Predicting the Future</h2>
 <p>Value functions are crucial for many RL algorithms. They answer: "How good is it to be in a state (or take an action)?"</p>
@@ -3207,9 +3215,11 @@ Q^*(s, a) = \max_\pi Q^\pi(s, a)
 <div class="arithmatex">\[
 V^\pi(s) = \sum_{a} \pi(a|s) \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma V^\pi(s')]
 \]</div>
-<p><strong>Intuition:</strong> The value of state <span class="arithmatex">\( s \)</span> equals:
-- Expected immediate reward
-- Plus discounted value of next state</p>
+<p><strong>Intuition:</strong> The value of state <span class="arithmatex">\( s \)</span> equals:</p>
+<ul>
+<li>Expected immediate reward</li>
+<li>Plus discounted value of next state</li>
+</ul>
 <h3 id="bellman-expectation-equation-for-q">Bellman Expectation Equation (for Q)</h3>
 <div class="arithmatex">\[
 Q^\pi(s,a) = \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma \sum_{a'} \pi(a'|s') Q^\pi(s',a')]
@@ -3222,10 +3232,12 @@ V^*(s) = \max_a \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma V^*(s')]
 <div class="arithmatex">\[
 Q^*(s,a) = \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma \max_{a'} Q^*(s',a')]
 \]</div>
-<p><strong>Why are these important?</strong>
-- They provide a way to compute value functions iteratively
-- They form the basis of many RL algorithms (Q-learning, value iteration, policy iteration)
-- They show that optimal values satisfy a self-consistency condition</p>
+<p><strong>Why are these important?</strong></p>
+<ul>
+<li>They provide a way to compute value functions iteratively</li>
+<li>They form the basis of many RL algorithms (Q-learning, value iteration, policy iteration)</li>
+<li>They show that optimal values satisfy a self-consistency condition</li>
+</ul>
 <h2 id="the-rl-problem-what-are-we-trying-to-solve">The RL Problem: What are we trying to solve?</h2>
 <p>Now we can state the RL problem formally:</p>
 <div class="admonition note">
@@ -3235,24 +3247,28 @@ Q^*(s,a) = \sum_{s'} \mathcal{P}(s'|s,a) [R(s,a,s') + \gamma \max_{a'} Q^*(s',a'
 <div class="arithmatex">\[
 \pi^* = \arg\max_\pi \mathbb{E}_{\tau \sim \pi}\left[\sum_{t=0}^{\infty} \gamma^t R_t\right]
 \]</div>
-<p><strong>Challenge:</strong> We must learn through interaction, without knowing <span class="arithmatex">\( \mathcal{P} \)</span> or <span class="arithmatex">\( \mathcal{R} \)</span> in advance!</p>
+<p><strong>Challenge:</strong> We must learn through interaction, without knowing <span class="arithmatex">\( \mathcal{P} \)</span> in advance!</p>
 </div>
 <h2 id="exploration-vs-exploitation">Exploration vs. Exploitation</h2>
 <p>A fundamental challenge in RL:</p>
-<p><strong>Exploitation:</strong> Choose actions that have given high rewards in the past
-<strong>Exploration:</strong> Try new actions to discover potentially better strategies</p>
-<p><strong>Example - Restaurant choice:</strong>
-- <strong>Exploit</strong>: Go to your favorite restaurant (known good reward)
-- <strong>Explore</strong>: Try a new restaurant (might be better, might be worse)</p>
+<p><strong>Exploitation:</strong> Choose actions that have given high rewards in the past</p>
+<p><strong>Exploration:</strong> Try new actions to discover potentially better strategies</p>
+<p><strong>Example - Restaurant choice:</strong></p>
+<ul>
+<li><strong>Exploit</strong>: Go to your favorite restaurant (known good reward)</li>
+<li><strong>Explore</strong>: Try a new restaurant (might be better, might be worse)</li>
+</ul>
 <p>If you only exploit, you might miss out on better options.
 If you only explore, you never benefit from what you've learned.</p>
 <p>The key is to <strong>balance</strong> exploration and exploitation!</p>
-<p><strong>Common strategies:</strong>
-- <strong>ε-greedy</strong>: With probability ε, choose random action; otherwise choose best known action
-- <strong>Boltzmann exploration</strong>: Sample actions proportional to their estimated value (using softmax)
-- <strong>Optimistic initialization</strong>: Start with high value estimates to encourage trying everything
-- <strong>Upper Confidence Bound (UCB)</strong>: Favor actions you're uncertain about
-- <strong>Entropy regularization</strong>: Add bonus for policy randomness</p>
+<p><strong>Common strategies:</strong></p>
+<ul>
+<li><strong>ε-greedy</strong>: With probability ε, choose random action; otherwise choose best known action</li>
+<li><strong>Boltzmann exploration</strong>: Sample actions proportional to their estimated value (using softmax)</li>
+<li><strong>Optimistic initialization</strong>: Start with high value estimates to encourage trying everything</li>
+<li><strong>Upper Confidence Bound (UCB)</strong>: Favor actions you're uncertain about</li>
+<li><strong>Entropy regularization</strong>: Add bonus for policy randomness</li>
+</ul>
 <h2 id="putting-it-all-together-the-rl-loop">Putting It All Together: The RL Loop</h2>
 <p><strong>The interaction cycle:</strong></p>
 <ol>

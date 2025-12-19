@@ -1795,17 +1795,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#game-ai-alphago-and-strategic-decision-making" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Game AI: AlphaGo and Strategic Decision-Making
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2337,17 +2326,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#game-ai-alphago-and-strategic-decision-making" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Game AI: AlphaGo and Strategic Decision-Making
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2437,146 +2415,142 @@
 <li>The agent learns from experience which actions lead to better outcomes</li>
 <li>Over time, the agent discovers strategies (called <strong>policies</strong>) that maximize its total reward</li>
 </ul>
-<p>Think of it like learning to ride a bike:
-- You try different balancing strategies (actions)
-- Staying upright feels good, falling hurts (rewards/penalties)
-- You don't need someone to tell you the exact muscle movements
-- Through practice, you develop an intuition for how to balance</p>
+<p>Think of it like learning to ride a bike:</p>
+<ul>
+<li>You try different balancing strategies (actions)</li>
+<li>Staying upright feels good, falling hurts (rewards/penalties)</li>
+<li>You don't need someone to tell you the exact muscle movements</li>
+<li>Through practice, you develop an intuition for how to balance</li>
+</ul>
 <h3 id="why-is-rl-important-for-robotics">Why is RL Important for Robotics?</h3>
-<p>Traditional robot control often requires:
-- Expert knowledge to program every behavior
-- Extensive modeling of the environment physics
-- Manual tuning of parameters for different scenarios
-- Difficulty adapting to new or unexpected situations</p>
-<p>RL enables robots to:
-- <strong>Learn from experience</strong> rather than explicit programming
-- <strong>Discover novel solutions</strong> that humans might not think of
-- <strong>Adapt to changing environments</strong> and unexpected situations
-- <strong>Optimize complex behaviors</strong> that are hard to engineer manually</p>
+<p>Traditional robot control often requires:</p>
+<ul>
+<li>Expert knowledge to program every behavior</li>
+<li>Extensive modeling of the environment physics</li>
+<li>Manual tuning of parameters for different scenarios</li>
+<li>Difficulty adapting to new or unexpected situations</li>
+</ul>
+<p>RL enables robots to:</p>
+<ul>
+<li><strong>Learn from experience</strong> rather than explicit programming</li>
+<li><strong>Discover novel solutions</strong> that humans might not think of</li>
+<li><strong>Adapt to changing environments</strong> and unexpected situations</li>
+<li><strong>Optimize complex behaviors</strong> that are hard to engineer manually</li>
+</ul>
 <h2 id="real-world-examples-rl-in-action">Real-World Examples: RL in Action</h2>
 <p>Let's look at some impressive examples where RL has been preferred over traditional control methods:</p>
 <h3 id="boston-dynamics-spot-adaptive-locomotion">Boston Dynamics Spot: Adaptive Locomotion</h3>
 <p>Boston Dynamics uses RL to teach Spot, their quadruped robot, to walk on challenging terrain. This application demonstrates RL's ability to handle environmental diversity that would overwhelm traditional control systems.</p>
-<p><strong>Traditional approach limitations:</strong>
-- Requires detailed terrain mapping and classification for every surface type
-- Needs pre-programmed gaits for each terrain variation (grass, gravel, ice, stairs, etc.)
-- Complex state machines to handle transitions between different walking modes
-- Extensive manual tuning and calibration for each new environment
-- Brittle to unexpected terrain features not accounted for in the design</p>
-<p><strong>RL approach advantages:</strong>
-- Learns to adapt its gait through trial and error in simulation
-- Discovers robust walking strategies that generalize to unseen terrains
-- Automatically learns recovery behaviors when it slips, trips, or encounters obstacles
-- Transfers learned skills from simulation to the real robot with minimal fine-tuning
-- Single policy handles diverse terrain without explicit terrain classification</p>
+<p><strong>Traditional approach limitations:</strong></p>
+<ul>
+<li>Requires detailed terrain mapping and classification for every surface type</li>
+<li>Needs pre-programmed gaits for each terrain variation (grass, gravel, ice, stairs, etc.)</li>
+<li>Complex state machines to handle transitions between different walking modes</li>
+<li>Extensive manual tuning and calibration for each new environment</li>
+<li>Brittle to unexpected terrain features not accounted for in the design</li>
+</ul>
+<p><strong>RL approach advantages:</strong></p>
+<ul>
+<li>Learns to adapt its gait through trial and error in simulation</li>
+<li>Discovers robust walking strategies that generalize to unseen terrains</li>
+<li>Automatically learns recovery behaviors when it slips, trips, or encounters obstacles</li>
+<li>Transfers learned skills from simulation to the real robot with minimal fine-tuning</li>
+<li>Single policy handles diverse terrain without explicit terrain classification</li>
+</ul>
 <p><strong>Why RL was chosen:</strong> The sheer variety of terrain variations makes manual programming infeasible. RL discovers novel recovery strategies that engineers didn't anticipate, and the system can adapt to completely new environments without reprogramming.</p>
 <h3 id="autonomous-drone-racing-high-speed-navigation">Autonomous Drone Racing: High-Speed Navigation</h3>
 <p>Researchers have trained drones to race through complex obstacle courses at speeds exceeding 40 mph, achieving performance that beats human pilots. This showcases RL's ability to learn reactive, high-speed control policies.</p>
-<p><strong>Traditional approach challenges:</strong>
-- Requires perfect sensing and precise trajectory planning
-- Computational delays in processing sensor data and replanning trajectories
-- Difficult to handle aggressive maneuvers and complex aerodynamic effects
-- Brittle to sensor noise and unexpected obstacles
-- Conservative behaviors limit maximum achievable speed</p>
-<p><strong>RL approach advantages:</strong>
-- Learns end-to-end control directly from camera images to motor commands
-- Develops reactive behaviors that don't require explicit planning or trajectory optimization
-- Discovers aggressive maneuvers through exploration that push physical limits
-- Naturally handles partial observability and sensor uncertainty
-- Achieves super-human performance through extensive simulated practice</p>
-<p><strong>Key insight:</strong> The RL-trained policy makes decisions in milliseconds based on pattern recognition rather than slow deliberative planning, similar to how expert human pilots develop intuitive control. This reactive approach is essential for high-speed navigation where planning delays would be catastrophic.</p>
+<p><strong>Traditional approach limitations:</strong></p>
+<ul>
+<li>Requires perfect sensing and precise trajectory planning</li>
+<li>Computational delays in processing sensor data and replanning trajectories</li>
+<li>Difficult to handle aggressive maneuvers and complex aerodynamic effects</li>
+<li>Brittle to sensor noise and unexpected obstacles</li>
+<li>Conservative behaviors limit maximum achievable speed</li>
+</ul>
+<p><strong>RL approach advantages:</strong></p>
+<ul>
+<li>Learns end-to-end control directly from camera images to motor commands</li>
+<li>Develops reactive behaviors that don't require explicit planning or trajectory optimization</li>
+<li>Discovers aggressive maneuvers through exploration that push physical limits</li>
+<li>Naturally handles partial observability and sensor uncertainty</li>
+<li>Achieves super-human performance through extensive simulated practice</li>
+</ul>
+<p><strong>Why RL was chosen:</strong> The RL-trained policy makes decisions in milliseconds based on pattern recognition rather than slow deliberative planning, similar to how expert human pilots develop intuitive control. This reactive approach is essential for high-speed navigation where planning delays would be catastrophic.</p>
 <h3 id="anymal-quadruped-robot-traversing-rough-terrain">ANYmal: Quadruped Robot Traversing Rough Terrain</h3>
 <p>ETH Zurich's ANYmal is a four-legged robot that can climb stairs, traverse rubble, and recover from slips using RL. This example highlights RL's ability to work with minimal sensing and handle model uncertainty.</p>
-<p><strong>Traditional model-based control limitations:</strong>
-- Requires accurate terrain geometry (often unavailable in real-world scenarios)
-- Needs perfect knowledge of robot dynamics and contact models
-- Conservative behaviors to ensure stability, limiting agility
-- Separate controllers needed for different scenarios (walking, trotting, recovery)
-- Fails when assumptions about terrain or dynamics are violated</p>
-<p><strong>RL approach benefits:</strong>
-- Learns directly from proprioceptive sensors (joint positions, torques, IMU) without vision
-- Doesn't need explicit terrain geometry or mapping
-- Discovers dynamic gaits that traditional methods might consider "unsafe" but are actually more robust
-- Single learned policy handles walking, trotting, and recovery behaviors seamlessly
-- Robust to model uncertainty and external disturbances</p>
-<p><strong>Remarkable result:</strong> ANYmal can walk blindly (without vision) on very rough terrain by learning to predict terrain properties from how its legs interact with the ground. This proprioceptive sensing approach is more robust than vision-based methods in challenging lighting or visual conditions.</p>
+<p><strong>Traditional approach limitations:</strong></p>
+<ul>
+<li>Requires accurate terrain geometry (often unavailable in real-world scenarios)</li>
+<li>Needs perfect knowledge of robot dynamics and contact models</li>
+<li>Conservative behaviors to ensure stability, limiting agility</li>
+<li>Separate controllers needed for different scenarios (walking, trotting, recovery)</li>
+<li>Fails when assumptions about terrain or dynamics are violated</li>
+</ul>
+<p><strong>RL approach advantages:</strong></p>
+<ul>
+<li>Learns directly from proprioceptive sensors (joint positions, torques, IMU) without vision</li>
+<li>Doesn't need explicit terrain geometry or mapping</li>
+<li>Discovers dynamic gaits that traditional methods might consider "unsafe" but are actually more robust</li>
+<li>Single learned policy handles walking, trotting, and recovery behaviors seamlessly</li>
+<li>Robust to model uncertainty and external disturbances</li>
+</ul>
+<p><strong>Why RL was chosen:</strong> ANYmal can walk blindly (without vision) on very rough terrain by learning to predict terrain properties from how its legs interact with the ground. This proprioceptive sensing approach is more robust than vision-based methods in challenging lighting or visual conditions.</p>
 <h3 id="robotic-manipulation-dexterous-in-hand-manipulation">Robotic Manipulation: Dexterous In-Hand Manipulation</h3>
 <p>OpenAI trained a robotic hand to solve a Rubik's cube using RL, demonstrating human-level dexterity in complex manipulation tasks. This showcases RL's ability to handle high-dimensional control and contact dynamics.</p>
-<p><strong>Traditional approach limitations:</strong>
-- Extremely difficult to model contact dynamics accurately (friction, slip, deformation)
-- Hand-crafted control policies are brittle and task-specific
-- Requires precise sensing and perfect calibration
-- Fails when objects slip or unexpected perturbations occur
-- Cannot handle the complexity of multi-finger coordination</p>
-<p><strong>RL approach advantages:</strong>
-- Learns robust manipulation through millions of simulated attempts
-- Develops recovery strategies for when objects slip or move unexpectedly
-- Discovers creative fingering strategies that humans might not consider
-- Handles visual ambiguity and partial observability naturally
-- Shows emergent behaviors like flipping the cube in creative ways</p>
-<p><strong>Critical success factor:</strong> Domain randomization in simulation (varying physics parameters, visual appearance, friction coefficients, etc.) allows the learned policy to be robust enough to transfer to the real world despite the sim-to-real gap. This technique is essential for successful RL deployment in robotics.</p>
-<h3 id="game-ai-alphago-and-strategic-decision-making">Game AI: AlphaGo and Strategic Decision-Making</h3>
-<p>While not directly a robotics application, AlphaGo's achievement in mastering Go demonstrates RL's capability to solve problems previously thought to require human intuition. The principles apply directly to complex robotic decision-making.</p>
-<p><strong>Why RL was essential:</strong>
-- Search space is too large for brute-force approaches (more positions than atoms in the universe!)
-- Human expert knowledge is incomplete and biased
-- Requires long-term strategic thinking and pattern recognition
-- Optimal strategies were unknown and had to be discovered</p>
-<p><strong>What this means for robotics:</strong>
-- RL can solve problems where the optimal solution isn't known a priori
-- Can discover strategies that exceed human expertise
-- Learns hierarchical representations and abstract concepts
-- Demonstrates that RL scales to extremely complex decision-making problems
-- Shows that RL can develop intuition-like behaviors through experience</p>
-<p><strong>Robotics connection:</strong> Many robotic tasks require similar strategic thinking—balancing short-term actions with long-term goals, recognizing patterns in complex sensor data, and making decisions under uncertainty. AlphaGo's success validates RL as a framework for these challenges.</p>
+<p><strong>Traditional approach limitations:</strong></p>
+<ul>
+<li>Extremely difficult to model contact dynamics accurately (friction, slip, deformation)</li>
+<li>Hand-crafted control policies are brittle and task-specific</li>
+<li>Requires precise sensing and perfect calibration</li>
+<li>Fails when objects slip or unexpected perturbations occur</li>
+<li>Cannot handle the complexity of multi-finger coordination</li>
+</ul>
+<p><strong>RL approach advantages:</strong></p>
+<ul>
+<li>Learns robust manipulation through millions of simulated attempts</li>
+<li>Develops recovery strategies for when objects slip or move unexpectedly</li>
+<li>Discovers creative fingering strategies that humans might not consider</li>
+<li>Handles visual ambiguity and partial observability naturally</li>
+<li>Shows emergent behaviors like flipping the cube in creative ways</li>
+</ul>
+<p><strong>Why RL was chosen:</strong> Domain randomization in simulation (varying physics parameters, visual appearance, friction coefficients, etc.) allows the learned policy to be robust enough to transfer to the real world despite the sim-to-real gap. This technique is essential for successful RL deployment in robotics.</p>
 <h2 id="when-should-you-use-rl-for-robotics">When Should You Use RL for Robotics?</h2>
 <p>RL is particularly powerful when:</p>
-<p><strong>The optimal behavior is unknown</strong> - You know what you want to achieve, but not exactly how</p>
+<p><strong>You know what you want, but not how to achieve it</strong> – You have a clear goal (what you want to achieve), but the best way (how to achieve it) is unknown or too complex to specify manually</p>
 <p><strong>The environment is complex or stochastic</strong> - Too many variables to model accurately</p>
 <p><strong>You can simulate</strong> - RL needs lots of experience; simulation makes this feasible</p>
 <p><strong>Adaptability is crucial</strong> - The robot needs to handle varied, unpredictable situations</p>
 <p><strong>Trial-and-error is safe</strong> - At least in simulation, the robot can make mistakes</p>
-<p><strong>Avoid RL when:</strong>
-- You have a well-understood problem with a known solution
-- Safety is critical and you cannot guarantee safe exploration
-- You cannot simulate effectively and real-world data is scarce
-- Simple control methods would suffice
-- Interpretability and guarantees are essential</p>
+<p><strong>Avoid RL when:</strong></p>
+<ul>
+<li>You have a well-understood problem with a known solution</li>
+<li>Safety is critical and you cannot guarantee safe exploration</li>
+<li>You cannot simulate effectively and real-world data is scarce</li>
+<li>Simple control methods would suffice</li>
+<li>Interpretability and guarantees are essential</li>
+</ul>
 <h2 id="the-learning-process-a-high-level-view">The Learning Process: A High-Level View</h2>
 <p>Here's how an RL system learns, using a robot learning to walk as an example:</p>
 <ol>
-<li><strong>Start with random behavior</strong>: The robot tries random motor commands</li>
 <li>
-<p>It immediately falls over! <em>Reward: -10</em></p>
+<p><strong>Start with random behavior</strong>: The robot tries random motor commands. It immediately falls over! <em>Reward: -10</em></p>
 </li>
 <li>
-<p><strong>Try something different</strong>: Through exploration, it finds that certain joint angles keep it upright longer</p>
+<p><strong>Try something different</strong>: Through exploration, it finds that certain joint angles keep it upright longer. It stands for 2 seconds before falling. <em>Reward: +2</em></p>
 </li>
 <li>
-<p>It stands for 2 seconds before falling. <em>Reward: +2</em></p>
+<p><strong>Build on success</strong>: It remembers that these joint configurations were good and tries variations. It takes a wobbly step forward. <em>Reward: +5</em></p>
 </li>
 <li>
-<p><strong>Build on success</strong>: It remembers that these joint configurations were good and tries variations</p>
+<p><strong>Discover better strategies</strong>: Through thousands of attempts, it finds that shifting weight to one side allows stepping with the other leg. It takes several steps before falling. <em>Reward: +15</em></p>
 </li>
 <li>
-<p>It takes a wobbly step forward. <em>Reward: +5</em></p>
+<p><strong>Refine and optimize</strong>: Continue learning subtle adjustments to balance, speed, and energy efficiency. Smooth, stable walking. <em>Reward: +100</em></p>
 </li>
 <li>
-<p><strong>Discover better strategies</strong>: Through thousands of attempts, it finds that shifting weight to one side allows stepping with the other leg</p>
+<p><strong>Handle edge cases</strong>: Learn recovery behaviors when pushed or walking on slopes. Successfully recovers from perturbations. <em>Reward: +50</em></p>
 </li>
-<li>
-<p>It takes several steps before falling. <em>Reward: +15</em></p>
-</li>
-<li>
-<p><strong>Refine and optimize</strong>: Continue learning subtle adjustments to balance, speed, and energy efficiency</p>
-</li>
-<li>
-<p>Smooth, stable walking. <em>Reward: +100</em></p>
-</li>
-<li>
-<p><strong>Handle edge cases</strong>: Learn recovery behaviors when pushed or walking on slopes</p>
-</li>
-<li>Successfully recovers from perturbations. <em>Reward: +50</em></li>
 </ol>
 <p>The key insight: The robot never explicitly learned "how" to walk in human terms. It discovered patterns of actions that led to high rewards through systematic trial and error.</p>
 <h2 id="the-three-key-questions">The Three Key Questions</h2>

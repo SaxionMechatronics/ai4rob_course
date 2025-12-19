@@ -3045,10 +3045,12 @@
 <div class="arithmatex">\[
 \pi_\theta(a | s)
 \]</div>
-<p><strong>Examples:</strong>
-- <strong>Neural network</strong>: Input state, output action probabilities
-- <strong>Linear model</strong>: <span class="arithmatex">\( \pi_\theta(a|s) = \text{softmax}(\theta^T \phi(s)) \)</span>
-- <strong>Gaussian policy</strong>: <span class="arithmatex">\( \pi_\theta(a|s) = \mathcal{N}(\mu_\theta(s), \sigma_\theta(s)) \)</span></p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li><strong>Neural network</strong>: Input state, output action probabilities</li>
+<li><strong>Linear model</strong>: <span class="arithmatex">\( \pi_\theta(a|s) = \text{softmax}(\theta^T \phi(s)) \)</span></li>
+<li><strong>Gaussian policy</strong>: <span class="arithmatex">\( \pi_\theta(a|s) = \mathcal{N}(\mu_\theta(s), \sigma_\theta(s)) \)</span></li>
+</ul>
 <h3 id="the-objective">The Objective</h3>
 <p>We want to find parameters <span class="arithmatex">\( \theta \)</span> that maximize expected return:</p>
 <div class="arithmatex">\[
@@ -3069,16 +3071,20 @@ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} [G(\tau)] = \mathbb{E}_{\tau \sim 
 \nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t | s_t) G_t \right]
 \]</div>
 <p>Where <span class="arithmatex">\( G_t = \sum_{k=t}^{T} \gamma^{k-t} r_k \)</span> is the return from time <span class="arithmatex">\( t \)</span>.</p>
-<p><strong>What this means:</strong>
-- Sample trajectories using current policy <span class="arithmatex">\( \pi_\theta \)</span>
-- For each action taken, compute its log-probability gradient
-- Weight by the return obtained from that point onward
-- Average over many trajectories</p>
-<p><strong>Intuitive interpretation:</strong>
-- If action <span class="arithmatex">\( a_t \)</span> led to high return <span class="arithmatex">\( G_t \)</span>: increase <span class="arithmatex">\( \pi_\theta(a_t | s_t) \)</span>
-- If action <span class="arithmatex">\( a_t \)</span> led to low return <span class="arithmatex">\( G_t \)</span>: decrease <span class="arithmatex">\( \pi_\theta(a_t | s_t) \)</span></p>
+<p><strong>What this means:</strong></p>
+<ul>
+<li>Sample trajectories using current policy <span class="arithmatex">\( \pi_\theta \)</span></li>
+<li>For each action taken, compute its log-probability gradient</li>
+<li>Weight by the return obtained from that point onward</li>
+<li>Average over many trajectories</li>
+</ul>
+<p><strong>Intuitive interpretation:</strong></p>
+<ul>
+<li>If action <span class="arithmatex">\( a_t \)</span> led to high return <span class="arithmatex">\( G_t \)</span>: increase <span class="arithmatex">\( \pi_\theta(a_t | s_t) \)</span></li>
+<li>If action <span class="arithmatex">\( a_t \)</span> led to low return <span class="arithmatex">\( G_t \)</span>: decrease <span class="arithmatex">\( \pi_\theta(a_t | s_t) \)</span></li>
+</ul>
 <h2 id="reinforce-the-monte-carlo-policy-gradient-algorithm">REINFORCE: The Monte Carlo Policy Gradient Algorithm</h2>
-<p><strong>REINFORCE</strong> (Williams, 1992) is the classic policy gradient algorithm. It's beautifully simple!</p>
+<p><strong>REINFORCE</strong> is the classic policy gradient algorithm. It's beautifully simple!</p>
 <h3 id="the-algorithm">The Algorithm</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Initialize policy parameters θ randomly
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
@@ -3106,10 +3112,10 @@ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} [G(\tau)] = \mathbb{E}_{\tau \sim 
 <p>Why do we use <span class="arithmatex">\( \nabla_\theta \log \pi_\theta(a|s) \)</span> instead of <span class="arithmatex">\( \nabla_\theta \pi_\theta(a|s) \)</span>?</p>
 <p><strong>Mathematical reason:</strong> The policy gradient theorem gives us this form.</p>
 <p><strong>Practical reason:</strong> It's easier to compute!</p>
-<p>For a softmax policy:
-[
+<p>For a softmax policy:</p>
+<div class="arithmatex">\[
 \pi_\theta(a|s) = \frac{e^{\theta^T \phi(s, a)}}{\sum_{a'} e^{\theta^T \phi(s, a')}}
-]</p>
+\]</div>
 <div class="arithmatex">\[
 \nabla_\theta \log \pi_\theta(a|s) = \phi(s, a) - \mathbb{E}_{a' \sim \pi_\theta}[\phi(s, a')]
 \]</div>
@@ -3134,7 +3140,7 @@ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} [G(\tau)] = \mathbb{E}_{\tau \sim 
 <p><strong>Why this doesn't introduce bias:</strong> The expectation of <span class="arithmatex">\( \nabla_\theta \log \pi_\theta(a|s) \)</span> is zero, so adding/subtracting baselines doesn't change the expected gradient.</p>
 <p><strong>Why it reduces variance:</strong> By centering the returns around zero, we reduce the magnitude of gradient updates.</p>
 <h3 id="choosing-a-baseline">Choosing a Baseline</h3>
-<p><strong>Best baseline:</strong> The state-value function <span class="arithmatex">\( V(s_t) \)</span>!</p>
+<p><strong>Best baseline:</strong> The state-value function <span class="arithmatex">\( V(s_t) \)</span></p>
 <div class="arithmatex">\[
 G_t - V(s_t) = A_t
 \]</div>
@@ -3368,9 +3374,11 @@ G_t = \sum_{k=t}^{T} \gamma^{k-t} r_k
 A_t^{\text{GAE}} = \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l}
 \]</div>
 <p>Where <span class="arithmatex">\( \delta_t = r_t + \gamma V(s_{t+1}) - V(s_t) \)</span> is the TD error.</p>
-<p><strong>Parameter <span class="arithmatex">\( \lambda \)</span>:</strong> Controls bias-variance tradeoff
-- <span class="arithmatex">\( \lambda = 0 \)</span>: Low variance, high bias (like TD)
-- <span class="arithmatex">\( \lambda = 1 \)</span>: High variance, low bias (like Monte Carlo)</p>
+<p><strong>Parameter <span class="arithmatex">\( \lambda \)</span>:</strong> Controls bias-variance tradeoff</p>
+<ul>
+<li><span class="arithmatex">\( \lambda = 0 \)</span>: Low variance, high bias (like TD)</li>
+<li><span class="arithmatex">\( \lambda = 1 \)</span>: High variance, low bias (like Monte Carlo)</li>
+</ul>
 <h3 id="3-entropy-regularization">3. Entropy Regularization</h3>
 <p>Add entropy bonus to encourage exploration:</p>
 <div class="arithmatex">\[
@@ -3382,26 +3390,28 @@ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[G(\tau)] + \beta \mathcal{H}(\pi_\
 <p>REINFORCE is the foundation, but modern methods add improvements:</p>
 <h3 id="ppo-proximal-policy-optimization">PPO (Proximal Policy Optimization)</h3>
 <p><strong>Key idea:</strong> Limit how much the policy can change in one update.</p>
-<p><strong>Clipped objective:</strong>
-[
+<p><strong>Clipped objective:</strong></p>
+<div class="arithmatex">\[
 L(\theta) = \mathbb{E} \left[ \min(r_t(\theta) A_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t) \right]
-]</p>
+\]</div>
 <p>Where <span class="arithmatex">\( r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t|s_t)} \)</span> is the probability ratio.</p>
 <p><strong>Why it works:</strong> Prevents destructively large updates, more stable training.</p>
 <h3 id="trpo-trust-region-policy-optimization">TRPO (Trust Region Policy Optimization)</h3>
 <p><strong>Key idea:</strong> Constrain policy updates to stay within a "trust region."</p>
-<p><strong>Constraint:</strong>
-[
+<p><strong>Constraint:</strong></p>
+<div class="arithmatex">\[
 \mathbb{E}[D_{KL}(\pi_{\theta_{\text{old}}} || \pi_\theta)] \leq \delta
-]</p>
+\]</div>
 <p>Ensures new policy isn't too different from old policy.</p>
 <p><strong>Why it works:</strong> Guarantees monotonic improvement, very stable.</p>
 <h3 id="a3ca2c-advantage-actor-critic">A3C/A2C (Advantage Actor-Critic)</h3>
 <p><strong>Key idea:</strong> Use value function as baseline, update after every step (not full episodes).</p>
-<p><strong>Benefits:</strong>
-- Lower variance (value function baseline)
-- More sample efficient (use bootstrapping like TD)
-- Can train in parallel (A3C)</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Lower variance (value function baseline)</li>
+<li>More sample efficient (use bootstrapping like TD)</li>
+<li>Can train in parallel (A3C)</li>
+</ul>
 <p>We'll cover actor-critic methods in detail in the next section!</p>
 <h2 id="comparing-reinforce-to-q-learning">Comparing REINFORCE to Q-Learning</h2>
 <table>
@@ -3455,10 +3465,12 @@ L(\theta) = \mathbb{E} \left[ \min(r_t(\theta) A_t, \text{clip}(r_t(\theta), 1-\
 </tr>
 </tbody>
 </table>
-<p><strong>When to use REINFORCE over Q-Learning:</strong>
-- Continuous action spaces (robot control)
-- Stochastic policies needed
-- Stability more important than sample efficiency</p>
+<p><strong>When to use REINFORCE over Q-Learning:</strong></p>
+<ul>
+<li>Continuous action spaces (robot control)</li>
+<li>Stochastic policies needed</li>
+<li>Stability more important than sample efficiency</li>
+</ul>
 <h2 id="practical-tips-for-training">Practical Tips for Training</h2>
 <h3 id="1-normalize-returns">1. Normalize Returns</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">returns</span> <span class="o">=</span> <span class="p">(</span><span class="n">returns</span> <span class="o">-</span> <span class="n">returns</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">returns</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
@@ -3484,10 +3496,10 @@ L(\theta) = \mathbb{E} \left[ \min(r_t(\theta) A_t, \text{clip}(r_t(\theta), 1-\
 <li><strong>Compute advantages</strong>: Subtract baseline (optional but recommended)</li>
 <li><strong>Update policy</strong>: Gradient ascent weighted by advantages</li>
 </ol>
-<p><strong>Key equation:</strong>
-[
+<p><strong>Key equation:</strong></p>
+<div class="arithmatex">\[
 \theta \leftarrow \theta + \alpha \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t | s_t) (G_t - b(s_t))
-]</p>
+\]</div>
 <p><strong>Strengths:</strong> Simple, direct optimization, handles continuous actions, stable convergence</p>
 <p><strong>Weaknesses:</strong> Sample inefficient, high variance, on-policy</p>
 <p><strong>Modern extensions:</strong> PPO, TRPO, A3C (address sample efficiency and variance)</p>
